@@ -1,5 +1,5 @@
-export const ADDSUBJECT = {
-  title: "Add Subject",
+export const ADDYEAR = {
+  title: "Add Year",
   buttonText: "Submit",
   fieldDetail: [
     {
@@ -9,10 +9,10 @@ export const ADDSUBJECT = {
       options: ["Wassce", "Novdec", "Bece", "Toel"],
     },
     {
-      name: "subject",
-      label: "Subject",
+      name: "examsYear",
+      label: "Exam Year",
       type: "text",
-      placeholder: "Enter subject name",
+      placeholder: "Enter year name",
     },
   ],
 }
