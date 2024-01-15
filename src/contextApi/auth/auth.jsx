@@ -28,3 +28,29 @@ export const register = async (data) => {
     return false
   }
 }
+
+export const retrieve = async () => {
+  try {
+    let responseOnRetrieve = await axios.get("/api/retrieve")
+    if (responseOnRetrieve.status === SUCCESS_STATUS) {
+      return responseOnRetrieve.data
+    } else {
+      return false
+    }
+  } catch (err) {
+    console.log(err)
+  }
+}
+
+export const logout = async () => {
+  try {
+    let responseOnLogout = await axios.post("/api/logout")
+    if (responseOnLogout.status === SUCCESS_STATUS) {
+      return responseOnLogout.data
+    } else {
+      return false
+    }
+  } catch (err) {
+    console.log(err)
+  }
+}

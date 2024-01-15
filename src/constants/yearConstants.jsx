@@ -3,12 +3,6 @@ export const ADDYEAR = {
   buttonText: "Submit",
   fieldDetail: [
     {
-      name: "examType",
-      label: "Exam Type",
-      type: "select",
-      options: ["Wassce", "Novdec", "Bece", "Toel"],
-    },
-    {
       name: "examsYear",
       label: "Exam Year",
       type: "text",
@@ -16,3 +10,5 @@ export const ADDYEAR = {
     },
   ],
 }
+
+export const YEARTABLE = ["Year", "Action"]

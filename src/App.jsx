@@ -11,9 +11,14 @@ import Home from "./pages/home"
 import Login from "./pages/login"
 import AddExams from "./pages/addExam"
 import AddYear from "./pages/addYear"
-import "./App.css"
 import AddSubject from "./pages/addSubject"
 import AddQuestion from "./pages/addQuestion"
+import Exam from "./pages/Exam"
+import Question from "./pages/Question"
+import Subject from "./pages/Subject"
+import Year from "./pages/Year"
+import Topic from "./pages/Topic"
+import "./App.css"
 
 function App() {
   return (
@@ -26,6 +31,11 @@ function App() {
           <Route path="addSubject" element={<AddSubject />} />
           <Route path="addYear" element={<AddYear />} />
           <Route path="addQuestion" element={<AddQuestion />} />
+          <Route path="Exam" element={<Exam />} />
+          <Route path="Question" element={<Question />} />
+          <Route path="Subject" element={<Subject />} />
+          <Route path="Year" element={<Year />} />
+          <Route path="Topic" element={<Topic />} />
         </Route>
       </Routes>
     </Router>

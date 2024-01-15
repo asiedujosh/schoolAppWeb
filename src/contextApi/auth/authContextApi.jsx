@@ -3,7 +3,7 @@ import { notify } from "../../utils/responseUtils"
 import { BAD_REQUEST_STATUS } from "../../constants/constant"
 import axios from "../../utils/axios.config"
 
-import { login, register } from "./auth"
+import { login, register, retrieve, logout } from "./auth"
 import cookieMethods from "../../utils/cookieUtils"
 
 export const AuthApiData = createContext()
@@ -40,26 +40,31 @@ const AuthApiDataProvider = (props) => {
     }
   }
 
-  //   const processRetrieve = async () => {
-  //     let cookieData = cookieMethods.getCookies()
-  //     if (!cookieData.refreshToken) router.push("/")
-  //     axios.defaults.headers.common[
-  //       "Authorization"
-  //     ] = `Bearer ${cookieData.refreshToken}`
+  const processRetrieve = async () => {
+    let cookieData = cookieMethods.getCookies()
+    if (!cookieData.accessToken) return false
+    axios.defaults.headers.common[
+      "Authorization"
+    ] = `Bearer ${cookieData.accessToken}`
 
-  //     let response = await retrieve()
-  //     if (response) {
-  //       //console.log(response)
-  //       setUserProfile(response.user)
-  //     } else {
-  //       router.push("/")
-  //     }
-  //   }
+    let response = await retrieve()
+    if (response) {
+      // console.log(response)
+      setUserProfile(response.data)
+      setIsAuthenticated(true)
+      return true
+    } else {
+      return false
+    }
+  }
 
   const processLogout = async () => {
-    cookieMethods.deleteCookies()
-    setIsAuthenticated(false)
-    router.push("/")
+    let response = await logout()
+    if (response) {
+      cookieMethods.deleteCookies()
+      setIsAuthenticated(false)
+      return false
+    }
   }
 
   return (
@@ -76,6 +81,7 @@ const AuthApiDataProvider = (props) => {
         processLogin,
         processRegister,
         processLogout,
+        processRetrieve,
       }}
     >
       {props.children}

@@ -1,11 +1,15 @@
+import { useState, useContext, useEffect } from "react"
 import { ADDEXAM } from "../constants/examConstants"
 import InputField from "../components/inputField"
 import SubmitBtn from "../components/submitButton"
 import LoadingBtn from "../components/loadingButton"
 import UploadImage from "../components/uploadImage"
-import { useState, useContext, useEffect } from "react"
+import { ExamApiData } from "../contextApi/exams/examsContextApi"
+import { ToastContainer, toast } from "react-toastify"
+import "react-toastify/dist/ReactToastify.css"
 
 const AddExams = () => {
+  const { processAddExams } = useContext(ExamApiData)
   const [error, setError] = useState([])
   const [formData, setFormData] = useState({})
 
@@ -18,8 +22,7 @@ const AddExams = () => {
 
   const handleSubmit = (e) => {
     // e.preventDefault()
-
-    console.log(formData)
+    processAddExams(formData)
   }
 
   return (
@@ -68,6 +71,7 @@ const AddExams = () => {
           </div>
         </div>
       </div>
+      <ToastContainer />
     </>
   )
 }

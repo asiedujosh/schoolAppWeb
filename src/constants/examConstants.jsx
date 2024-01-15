@@ -10,3 +10,5 @@ export const ADDEXAM = {
     },
   ],
 }
+
+export const EXAMTABLE = ["Exam Type", "Action"]

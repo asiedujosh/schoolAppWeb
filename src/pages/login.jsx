@@ -1,6 +1,6 @@
-import { useState, useContext } from "react"
+import { useState, useContext, useEffect } from "react"
 import { AuthApiData } from "../contextApi/auth/authContextApi"
-import { Navigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import InputField from "../components/inputField"
 import SubmitBtn from "../components/submitButton"
 import LoadingBtn from "../components/loadingButton"
@@ -18,9 +18,15 @@ const Login = () => {
   const [formData, setFormData] = useState({})
   const [error, setError] = useState([])
 
-  if (isAuthenticated) {
-    return <Navigate to="/dashboard" />
-  }
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate("/dashboard")
+    } else {
+      navigate("/")
+    }
+  }, [isAuthenticated])
 
   const handleInputChange = (data, field) => {
     setError([])

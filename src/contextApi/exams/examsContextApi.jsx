@@ -1,80 +1,41 @@
 import React, { createContext, useState } from "react"
 import { notify } from "../../utils/responseUtils"
-import { BAD_REQUEST_STATUS } from "../../constants/constant"
-import axios from "../../utils/axios.config"
+import { BAD_REQUEST_STATUS, SUCCESS_STATUS } from "../../constants/constant"
 
-import { login, register } from "./auth"
+import { addExams, getAllExams } from "./exams"
 
 export const ExamApiData = createContext()
 
 const ExamApiDataProvider = (props) => {
-  const [allUsers, setAllUsers] = useState([])
-  const [userProfile, setUserProfile] = useState()
-  const [isAuthenticated, setIsAuthenticated] = useState(false)
-  const [isLoading, setIsLoading] = useState(false)
+  const [examsList, setExamsList] = useState([])
+  const [searchRecord, setSearchRecord] = useState([])
 
-  //   const router = useRouter()
-
-  const processLogin = async (data) => {
-    let response = await login(data)
+  const processGetAllExams = async () => {
+    let response = await getAllExams()
     if (response) {
-      setUserProfile(response.data.client)
-      // set the cookie
-      cookieMethods.setCookies(response.data.token)
-      axios.defaults.headers.common[
-        "Authorization"
-      ] = `Bearer ${response.data.token}`
-      setIsAuthenticated(true)
-      setIsLoading(false)
-    } else {
-      setIsLoading(false)
-      notify(BAD_REQUEST_STATUS, "Invalid Username/Password")
+      setExamsList(response.data.data)
     }
   }
 
-  const processRegister = async () => {
-    let response = await register(data)
+  const processAddExams = async (data) => {
+    let response = await addExams(data)
     if (response) {
-      console.log(response)
+      processGetAllExams()
+      notify(SUCCESS_STATUS)
     }
   }
 
-  //   const processRetrieve = async () => {
-  //     let cookieData = cookieMethods.getCookies()
-  //     if (!cookieData.refreshToken) router.push("/")
-  //     axios.defaults.headers.common[
-  //       "Authorization"
-  //     ] = `Bearer ${cookieData.refreshToken}`
+  const processUpdateExams = async () => {}
 
-  //     let response = await retrieve()
-  //     if (response) {
-  //       //console.log(response)
-  //       setUserProfile(response.user)
-  //     } else {
-  //       router.push("/")
-  //     }
-  //   }
-
-  const processLogout = async () => {
-    cookieMethods.deleteCookies()
-    setIsAuthenticated(false)
-    router.push("/")
-  }
+  const processDeleteExams = async () => {}
 
   return (
     <ExamApiData.Provider
       value={{
-        allUsers,
-        setAllUsers,
-        userProfile,
-        setUserProfile,
-        isAuthenticated,
-        setIsAuthenticated,
-        isLoading,
-        setIsLoading,
-        processLogin,
-        processRegister,
-        processLogout,
+        processAddExams,
+        processGetAllExams,
+        examsList,
+        searchRecord,
       }}
     >
       {props.children}

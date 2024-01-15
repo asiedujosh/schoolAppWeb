@@ -1,25 +1,14 @@
-// import { IndividualApiData } from "@/app/context/Individual/IndividualContextApi"
-// import { OtherApiData } from "@/app/context/Others/OtherContextApi"
-// import { StaffApiData } from "@/app/context/Staff/StaffContextApi"
+import { useState, useContext, useEffect } from "react"
+import { YearApiData } from "../contextApi/Year/YearContextApi"
 import { ADDYEAR } from "../constants/yearConstants"
 import InputField from "../components/inputField"
 import SelectField from "../components/selectField"
 import SubmitBtn from "../components/submitButton"
-import LoadingBtn from "../components/loadingButton"
-import UploadImage from "../components/uploadImage"
-import { useState, useContext, useEffect } from "react"
-//import { ToastContainer, toast } from "react-toastify"
-//import "react-toastify/dist/ReactToastify.css"
+import { ToastContainer, toast } from "react-toastify"
+import "react-toastify/dist/ReactToastify.css"
 
 const AddYear = () => {
-  //const { processAddClient, isLoading, setIsLoading } = useContext(IndividualApiData)
-  // const { processGetAllStaff, staffList } = useContext(StaffApiData)
-  //   const {
-  //     processGetAllCompany,
-  //     companyList,
-  //     processGetAllPackage,
-  //     packageList,
-  //   } = useContext(OtherApiData)
+  const { processAddYear } = useContext(YearApiData)
 
   const [error, setError] = useState([])
   const [formData, setFormData] = useState({})
@@ -33,8 +22,8 @@ const AddYear = () => {
 
   const handleSubmit = (e) => {
     // e.preventDefault()
-
-    console.log(formData)
+    processAddYear(formData)
+    // console.log(formData)
   }
 
   return (
@@ -87,6 +76,7 @@ const AddYear = () => {
           </div>
         </div>
       </div>
+      <ToastContainer />
     </>
   )
 }

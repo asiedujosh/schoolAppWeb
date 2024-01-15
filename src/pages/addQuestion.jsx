@@ -1,28 +1,73 @@
-// import { IndividualApiData } from "@/app/context/Individual/IndividualContextApi"
-// import { OtherApiData } from "@/app/context/Others/OtherContextApi"
-// import { StaffApiData } from "@/app/context/Staff/StaffContextApi"
+import { useState, useContext, useEffect } from "react"
+import { ExamApiData } from "../contextApi/exams/examsContextApi"
+import { SubjectApiData } from "../contextApi/subjects/subjectContextApi"
+import { YearApiData } from "../contextApi/year/yearContextApi"
+import { TopicApiData } from "../contextApi/topic/topicContextApi"
+import { AuthApiData } from "../contextApi/auth/authContextApi"
+import { QuestionApiData } from "../contextApi/questions/questionContextApi"
 import { ADDQUESTIONS } from "../constants/questionConstants"
 import InputField from "../components/inputField"
 import SelectField from "../components/selectField"
 import TextAreaField from "../components/textAreaField"
 import SubmitBtn from "../components/submitButton"
-import LoadingBtn from "../components/loadingButton"
-import { useState, useContext, useEffect } from "react"
-//import { ToastContainer, toast } from "react-toastify"
-//import "react-toastify/dist/ReactToastify.css"
+import AddTopic from "./addTopic"
+import { ToastContainer, toast } from "react-toastify"
+import "react-toastify/dist/ReactToastify.css"
 
 const AddQuestion = () => {
-  //const { processAddClient, isLoading, setIsLoading } = useContext(IndividualApiData)
-  // const { processGetAllStaff, staffList } = useContext(StaffApiData)
-  //   const {
-  //     processGetAllCompany,
-  //     companyList,
-  //     processGetAllPackage,
-  //     packageList,
-  //   } = useContext(OtherApiData)
+  const { processAddQuestion } = useContext(QuestionApiData)
+  const { userProfile } = useContext(AuthApiData)
+  const { examsList } = useContext(ExamApiData)
+  const { subjectList } = useContext(SubjectApiData)
+  const { yearList } = useContext(YearApiData)
+  const { topicList } = useContext(TopicApiData)
+  const [examOptions, setExamOptions] = useState()
+  const [subjectOptions, setSubjectOptions] = useState()
+  const [topicOptions, setTopicOptions] = useState()
+  const [yearOptions, setYearOptions] = useState()
+  const [formData, setFormData] = useState({
+    answer: "None",
+  })
 
-  const [error, setError] = useState([])
-  const [formData, setFormData] = useState({})
+  useEffect(() => {
+    let exams = []
+    examsList &&
+      examsList.map((item) => {
+        exams.push(item.exam)
+      })
+    setExamOptions(exams)
+    setFormData({ ...formData, examType: exams[0] })
+  }, [examsList])
+
+  useEffect(() => {
+    let subjects = []
+    subjectList &&
+      subjectList.map((item) => {
+        subjects.push(item.subject)
+      })
+    setSubjectOptions(subjects)
+    setFormData({ ...formData, subject: subjects[0] })
+  }, [subjectList])
+
+  useEffect(() => {
+    let years = []
+    yearList &&
+      yearList.map((item) => {
+        years.push(item.year)
+      })
+    setYearOptions(years)
+    setFormData({ ...formData, year: years[0] })
+  }, [yearList])
+
+  useEffect(() => {
+    let topics = []
+    topicList &&
+      topicList.map((item) => {
+        topics.push(item.topic)
+      })
+    setTopicOptions(topics)
+    setFormData({ ...formData, topic: topics[0] })
+  }, [topicList])
 
   const handleInputChange = (data, field) => {
     setFormData({
@@ -31,9 +76,48 @@ const AddQuestion = () => {
     })
   }
 
-  const handleSubmit = (e) => {
+  const handleOptionAssign = (item) => {
+    let Option
+    switch (item.name) {
+      case "examType":
+        Option = examOptions
+        break
+      case "subject":
+        Option = subjectOptions
+        break
+      case "year":
+        Option = yearOptions
+        break
+      case "topic":
+        Option = topicOptions
+        break
+      default:
+        Option = ["None", "A", "B", "C", "D", "E", "F", "G", "H"]
+    }
+    return Option
+  }
+
+  //Map Id to corresponding options
+  const mapId = (item, itemList, name) => {
+    let filteredItem = itemList.filter((items) => items[name] === item)
+    return filteredItem && filteredItem[0] && filteredItem[0].id
+    // return filteredItem[0].id
+  }
+
+  const handleSubmit = () => {
     // e.preventDefault()
-    console.log(formData)
+    let newQuestData = {
+      examType: mapId(formData.examType, examsList, "exam"),
+      subject: mapId(formData.subject, subjectList, "subject"),
+      year: mapId(formData.year, yearList, "year"),
+      topic: mapId(formData.topic, topicList, "topic"),
+      questionNo: formData.questionNo,
+      question: formData.question,
+      answerOptions: formData.answerOptions,
+      answer: formData.answer,
+      publisher: "admin",
+    }
+    processAddQuestion(newQuestData)
   }
 
   return (
@@ -75,7 +159,7 @@ const AddQuestion = () => {
                           key={item.id}
                           field={item}
                           value={formData}
-                          options={item.options}
+                          options={handleOptionAssign(item)}
                           change={(data, field) => {
                             handleInputChange(data, field)
                           }}
@@ -95,15 +179,20 @@ const AddQuestion = () => {
                     )
                   })}
                 </div>
+                <div className="mt-2 min-w-full flex items-center justify-center">
+                  <SubmitBtn
+                    text={ADDQUESTIONS.buttonText}
+                    submit={handleSubmit}
+                  />
+                </div>
               </div>
-            </div>
-
-            <div className="mt-2 min-w-full flex items-center justify-center">
-              <SubmitBtn text={ADDQUESTIONS.buttonText} submit={handleSubmit} />
+              <AddTopic />
+              {/**Card 2 */}
             </div>
           </div>
         </div>
       </div>
+      <ToastContainer />
     </>
   )
 }

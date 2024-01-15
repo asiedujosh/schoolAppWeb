@@ -27,7 +27,7 @@ export const ADDQUESTIONS = {
       options: ["Balance Equation", "Chemicals", "Matter"],
     },
     {
-      name: "question No",
+      name: "questionNo",
       label: "Question No",
       type: "text",
       placeholder: "Add your question",
@@ -43,6 +43,12 @@ export const ADDQUESTIONS = {
       label: "Optional Ans (Separate each option with a '**' sign)",
       type: "text",
       placeholder: "Separate each optional ans with ** symbol",
+    },
+    {
+      name: "answer",
+      label: "answer",
+      type: "select",
+      options: ["A", "B", "C", "D", "E", "F", "G", "H"],
     },
   ],
 }
