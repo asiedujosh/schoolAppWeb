@@ -1,5 +1,5 @@
 import { useState, useContext, useEffect } from "react"
-import { YearApiData } from "../contextApi/Year/YearContextApi"
+import { YearApiData } from "../contextApi/year/yearContextApi"
 import { ADDYEAR } from "../constants/yearConstants"
 import InputField from "../components/inputField"
 import SelectField from "../components/selectField"
