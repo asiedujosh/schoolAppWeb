@@ -7,6 +7,7 @@ import { AuthApiData } from "../contextApi/auth/authContextApi"
 import { QuestionApiData } from "../contextApi/questions/questionContextApi"
 import { ADDQUESTIONS } from "../constants/questionConstants"
 import InputField from "../components/inputField"
+import UploadImageTwo from "../components/uploadMultipleImage"
 import SelectField from "../components/selectField"
 import TextAreaField from "../components/textAreaField"
 import SubmitBtn from "../components/submitButton"
@@ -17,47 +18,19 @@ import "react-toastify/dist/ReactToastify.css"
 const AddQuestion = () => {
   const { processAddQuestion } = useContext(QuestionApiData)
   const { userProfile } = useContext(AuthApiData)
-  const { examsList } = useContext(ExamApiData)
-  const { subjectList } = useContext(SubjectApiData)
-  const { yearList } = useContext(YearApiData)
+  const { examsList, examOptions } = useContext(ExamApiData)
+  const { subjectList, subjectOptions } = useContext(SubjectApiData)
+  const { yearList, yearOptions } = useContext(YearApiData)
   const { topicList } = useContext(TopicApiData)
-  const [examOptions, setExamOptions] = useState()
-  const [subjectOptions, setSubjectOptions] = useState()
   const [topicOptions, setTopicOptions] = useState()
-  const [yearOptions, setYearOptions] = useState()
+  const [imageOptions, setImageOptions] = useState([])
+
   const [formData, setFormData] = useState({
+    examType: examOptions[0] || null,
+    subject: subjectOptions[0] || null,
+    year: yearOptions[0] || null,
     answer: "None",
   })
-
-  useEffect(() => {
-    let exams = []
-    examsList &&
-      examsList.map((item) => {
-        exams.push(item.exam)
-      })
-    setExamOptions(exams)
-    setFormData({ ...formData, examType: exams[0] })
-  }, [examsList])
-
-  useEffect(() => {
-    let subjects = []
-    subjectList &&
-      subjectList.map((item) => {
-        subjects.push(item.subject)
-      })
-    setSubjectOptions(subjects)
-    setFormData({ ...formData, subject: subjects[0] })
-  }, [subjectList])
-
-  useEffect(() => {
-    let years = []
-    yearList &&
-      yearList.map((item) => {
-        years.push(item.year)
-      })
-    setYearOptions(years)
-    setFormData({ ...formData, year: years[0] })
-  }, [yearList])
 
   useEffect(() => {
     let topics = []
@@ -106,6 +79,10 @@ const AddQuestion = () => {
 
   const handleSubmit = () => {
     // e.preventDefault()
+    let imageInfo = []
+    imageOptions.map((item) => {
+      imageInfo.push(item.base64Data)
+    })
     let newQuestData = {
       examType: mapId(formData.examType, examsList, "exam"),
       subject: mapId(formData.subject, subjectList, "subject"),
@@ -113,11 +90,27 @@ const AddQuestion = () => {
       topic: mapId(formData.topic, topicList, "topic"),
       questionNo: formData.questionNo,
       question: formData.question,
+      questionEquation: formData.questionEquation,
+      hints: formData.hints ? formData.hints : null,
       answerOptions: formData.answerOptions,
+      optionsWithEquation: formData.optionsWithEquation
+        ? formData.optionsWithEquation
+        : null,
+      imageOptions: imageInfo,
       answer: formData.answer,
-      publisher: "admin",
+      publisher: userProfile.username,
     }
-    processAddQuestion(newQuestData)
+    if (
+      (newQuestData.answerOptions !== null &&
+        newQuestData.answerOptions !== "") ||
+      (newQuestData.optionsWithEquation !== null &&
+        newQuestData.optionsWithEquation !== "") ||
+      (newQuestData.imageOptions !== null && newQuestData.imageOptions !== "")
+    ) {
+      processAddQuestion(newQuestData)
+    } else {
+      console.log("One of the Options fields should not be empty")
+    }
   }
 
   return (
@@ -139,45 +132,200 @@ const AddQuestion = () => {
                   {ADDQUESTIONS.title}
                 </h2>
 
-                <div className="space-y-4">
-                  {ADDQUESTIONS.fieldDetail.map((item) => {
-                    return (
-                      (item.type === "text" && (
-                        <InputField
-                          key={item.id}
-                          field={item}
-                          value={formData}
-                          defaultVal={item.defaultValue}
-                          readOnly={item.readOnly}
-                          change={(data, field) => {
-                            handleInputChange(data, field)
-                          }}
-                        />
-                      )) ||
-                      (item.type === "select" && (
-                        <SelectField
-                          key={item.id}
-                          field={item}
-                          value={formData}
-                          options={handleOptionAssign(item)}
-                          change={(data, field) => {
-                            handleInputChange(data, field)
-                          }}
-                        />
-                      )) ||
-                      (item.type === "textArea" && (
-                        <TextAreaField
-                          key={item.id}
-                          field={item}
-                          value={formData}
-                          options={item.options}
-                          change={(data, field) => {
-                            handleInputChange(data, field)
-                          }}
-                        />
-                      ))
-                    )
-                  })}
+                <div className="">
+                  <div className="flex w-full justify-between">
+                    {ADDQUESTIONS.fieldDetail0.map((item) => {
+                      return (
+                        (item.type === "text" && (
+                          <InputField
+                            key={item.id}
+                            field={item}
+                            value={formData}
+                            defaultVal={item.defaultValue}
+                            readOnly={item.readOnly}
+                            change={(data, field) => {
+                              handleInputChange(data, field)
+                            }}
+                          />
+                        )) ||
+                        (item.type === "select" && (
+                          <SelectField
+                            key={item.id}
+                            field={item}
+                            value={formData}
+                            options={handleOptionAssign(item)}
+                            change={(data, field) => {
+                              handleInputChange(data, field)
+                            }}
+                          />
+                        ))
+                      )
+                    })}
+                  </div>
+
+                  <div className="flex w-full justify-between">
+                    {ADDQUESTIONS.fieldDetail1.map((item) => {
+                      return (
+                        (item.type === "text" && (
+                          <InputField
+                            key={item.id}
+                            field={item}
+                            value={formData}
+                            defaultVal={item.defaultValue}
+                            readOnly={item.readOnly}
+                            change={(data, field) => {
+                              handleInputChange(data, field)
+                            }}
+                          />
+                        )) ||
+                        (item.type === "select" && (
+                          <SelectField
+                            key={item.id}
+                            field={item}
+                            value={formData}
+                            options={handleOptionAssign(item)}
+                            change={(data, field) => {
+                              handleInputChange(data, field)
+                            }}
+                          />
+                        ))
+                      )
+                    })}
+                  </div>
+
+                  <div>
+                    <h6 className="text-lg font-bold my-2">Question Section</h6>
+                    {ADDQUESTIONS.fieldDetail2.map((item) => {
+                      return (
+                        (item.type === "text" && (
+                          <InputField
+                            key={item.id}
+                            field={item}
+                            value={formData}
+                            defaultVal={item.defaultValue}
+                            readOnly={item.readOnly}
+                            change={(data, field) => {
+                              handleInputChange(data, field)
+                            }}
+                          />
+                        )) ||
+                        (item.type === "select" && (
+                          <SelectField
+                            key={item.id}
+                            field={item}
+                            value={formData}
+                            options={handleOptionAssign(item)}
+                            change={(data, field) => {
+                              handleInputChange(data, field)
+                            }}
+                          />
+                        )) ||
+                        (item.type === "textArea" && (
+                          <TextAreaField
+                            key={item.id}
+                            field={item}
+                            value={formData}
+                            options={item.options}
+                            change={(data, field) => {
+                              handleInputChange(data, field)
+                            }}
+                          />
+                        ))
+                      )
+                    })}
+                  </div>
+
+                  <div>
+                    <h6 className="text-lg font-bold my-2">
+                      Optional Answers Section
+                    </h6>
+                    {ADDQUESTIONS.fieldDetail3.map((item) => {
+                      return (
+                        (item.type === "text" && (
+                          <InputField
+                            key={item.id}
+                            field={item}
+                            value={formData}
+                            defaultVal={item.defaultValue}
+                            readOnly={item.readOnly}
+                            change={(data, field) => {
+                              handleInputChange(data, field)
+                            }}
+                          />
+                        )) ||
+                        (item.type === "select" && (
+                          <SelectField
+                            key={item.id}
+                            field={item}
+                            value={formData}
+                            options={handleOptionAssign(item)}
+                            change={(data, field) => {
+                              handleInputChange(data, field)
+                            }}
+                          />
+                        )) ||
+                        (item.type === "textArea" && (
+                          <TextAreaField
+                            key={item.id}
+                            field={item}
+                            value={formData}
+                            options={item.options}
+                            change={(data, field) => {
+                              handleInputChange(data, field)
+                            }}
+                          />
+                        ))
+                      )
+                    })}
+                    <div>
+                      <label className="text-gray-600">Image Options</label>
+                      <UploadImageTwo
+                        change={[imageOptions, setImageOptions]}
+                      />
+                    </div>
+                  </div>
+
+                  <div>
+                    <h6 className="text-lg font-bold my-2">Answer Section</h6>
+                    {ADDQUESTIONS.fieldDetail4.map((item) => {
+                      return (
+                        (item.type === "text" && (
+                          <InputField
+                            key={item.id}
+                            field={item}
+                            value={formData}
+                            defaultVal={item.defaultValue}
+                            readOnly={item.readOnly}
+                            change={(data, field) => {
+                              handleInputChange(data, field)
+                            }}
+                          />
+                        )) ||
+                        (item.type === "select" && (
+                          <SelectField
+                            key={item.id}
+                            field={item}
+                            value={formData}
+                            options={handleOptionAssign(item)}
+                            change={(data, field) => {
+                              handleInputChange(data, field)
+                            }}
+                          />
+                        )) ||
+                        (item.type === "textArea" && (
+                          <TextAreaField
+                            key={item.id}
+                            field={item}
+                            value={formData}
+                            options={item.options}
+                            change={(data, field) => {
+                              handleInputChange(data, field)
+                            }}
+                          />
+                        ))
+                      )
+                    })}
+                  </div>
                 </div>
                 <div className="mt-2 min-w-full flex items-center justify-center">
                   <SubmitBtn

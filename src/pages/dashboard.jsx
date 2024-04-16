@@ -3,8 +3,13 @@ import { ExamApiData } from "../contextApi/exams/examsContextApi"
 import { useNavigate } from "react-router-dom"
 import { YearApiData } from "../contextApi/year/yearContextApi"
 import { SubjectApiData } from "../contextApi/subjects/subjectContextApi"
+import { QuestionApiData } from "../contextApi/questions/questionContextApi"
 import { AuthApiData } from "../contextApi/auth/authContextApi"
+import { PackageApiData } from "../contextApi/package/packageContextApi"
 import { TopicApiData } from "../contextApi/topic/topicContextApi"
+import { StaffApiData } from "../contextApi/staff/staffContextApi"
+import { UserApiData } from "../contextApi/users/userContextApi"
+import { SubscribersApiData } from "../contextApi/subscribers/subscribersContextApi"
 
 import { Outlet } from "react-router-dom"
 import Sidebar from "../components/sidebar"
@@ -13,10 +18,16 @@ import Card from "../components/card"
 
 const Dashboard = () => {
   const { isAuthenticated, processRetrieve } = useContext(AuthApiData)
+  const { processCountQuestion } = useContext(QuestionApiData)
   const { processGetAllExams } = useContext(ExamApiData)
   const { processGetAllSubject } = useContext(SubjectApiData)
   const { processGetAllYear } = useContext(YearApiData)
   const { processGetAllTopic } = useContext(TopicApiData)
+  const { processGetAllStaff } = useContext(StaffApiData)
+  const { processGetAllUser } = useContext(UserApiData)
+  const { processGetAllPackage } = useContext(PackageApiData)
+  const { processGetAllSubscribers, processCountSubscribers } =
+    useContext(SubscribersApiData)
 
   const navigate = useNavigate()
 
@@ -25,6 +36,12 @@ const Dashboard = () => {
     processGetAllSubject()
     processGetAllYear()
     processGetAllTopic()
+    processCountQuestion()
+    processCountSubscribers()
+    processGetAllStaff()
+    processGetAllUser()
+    processGetAllPackage()
+    processGetAllSubscribers()
   }, [])
 
   useEffect(() => {

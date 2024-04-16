@@ -60,7 +60,7 @@ const Login = () => {
     // } else {
     //   processLogin(formData)
     // }
-    console.log(formData)
+    // console.log(formData)
     processLogin(formData)
   }
 

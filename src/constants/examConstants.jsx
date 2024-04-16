@@ -1,5 +1,6 @@
 export const ADDEXAM = {
   title: "Add Exam Type",
+  editTitle: "Edit Exam Type",
   buttonText: "Submit",
   fieldDetail: [
     {
@@ -7,6 +8,12 @@ export const ADDEXAM = {
       label: "Exam Type",
       type: "text",
       placeholder: "Enter your exam type name",
+    },
+    {
+      name: "position",
+      label: "Position",
+      type: "number",
+      placeholder: "Enter position on carousel",
     },
   ],
 }

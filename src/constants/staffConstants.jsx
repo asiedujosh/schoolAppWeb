@@ -9,30 +9,6 @@ export const ADDSTAFF = {
       placeholder: "Enter username",
     },
     {
-      name: "name",
-      label: "Full Name",
-      type: "text",
-      placeholder: "Enter full name",
-    },
-    {
-      name: "contact",
-      label: "Contact",
-      type: "text",
-      placeholder: "Enter tel number",
-    },
-    {
-      name: "location",
-      label: "Location",
-      type: "text",
-      placeholder: "Enter location",
-    },
-    {
-      name: "email",
-      label: "Email",
-      type: "text",
-      placeholder: "Enter email",
-    },
-    {
       name: "password",
       label: "Password",
       type: "password",
@@ -45,10 +21,24 @@ export const ADDSTAFF = {
       placeholder: "Confirm password",
     },
     {
-      name: "position",
-      label: "Position",
+      name: "tel",
+      label: "Telephone",
+      type: "text",
+      placeholder: "Enter tel number",
+    },
+    {
+      name: "email",
+      label: "Email",
+      type: "text",
+      placeholder: "Enter email",
+    },
+    {
+      name: "role",
+      label: "Role",
       type: "select",
       options: ["Admin", "Loader", "Support"],
     },
   ],
 }
+
+export const STAFFTABLE = ["Username", "Telephone", "Role", "Action"]

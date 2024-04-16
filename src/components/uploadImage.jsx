@@ -1,6 +1,6 @@
 import { useState } from "react"
 
-const UploadImage = ({ change }) => {
+const UploadImage = ({ change, imagePreview }) => {
   const [image, setImage] = useState(null)
 
   const handleImageUpload = (e) => {
@@ -21,8 +21,24 @@ const UploadImage = ({ change }) => {
   return (
     <div className="flex flex-col md:flex-row items-center p-4 bg-white shadow-md rounded-md">
       <div className="w-full md:w-1/2 pr-0 md:pr-4">
-        {image ? (
-          <img src={image} alt="Preview" className="w-full h-auto rounded-md" />
+        {!imagePreview ? (
+          image ? (
+            <img
+              src={image}
+              alt="Preview"
+              className="w-full h-auto rounded-md"
+            />
+          ) : (
+            <div className="bg-gray-200 w-full h-40 rounded-md flex items-center justify-center">
+              No Image
+            </div>
+          )
+        ) : imagePreview ? (
+          <img
+            src={imagePreview}
+            alt="Preview"
+            className="w-full h-auto rounded-md"
+          />
         ) : (
           <div className="bg-gray-200 w-full h-40 rounded-md flex items-center justify-center">
             No Image

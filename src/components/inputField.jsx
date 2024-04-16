@@ -6,7 +6,7 @@ const InputField = ({ field, value, change }) => {
   }
 
   return (
-    <div className="mb-4">
+    <div className="mb-4 w-full mx-2 my-2">
       <label className="text-gray-600">{field.label}</label>
       <input
         type={field.type}

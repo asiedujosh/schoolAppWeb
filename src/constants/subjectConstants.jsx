@@ -1,5 +1,6 @@
 export const ADDSUBJECT = {
   title: "Add Subject",
+  editTitle: "Edit Title",
   buttonText: "Submit",
   fieldDetail: [
     {

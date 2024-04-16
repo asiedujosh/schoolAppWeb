@@ -2,19 +2,43 @@ import React, { createContext, useState } from "react"
 import { notify } from "../../utils/responseUtils"
 import { BAD_REQUEST_STATUS, SUCCESS_STATUS } from "../../constants/constant"
 
-import { addYear, getAllYear } from "./year"
+import {
+  addYear,
+  getAllYear,
+  editYear,
+  deleteYear,
+  searchYearRecords,
+} from "./year"
 
 export const YearApiData = createContext()
 
 const YearApiDataProvider = (props) => {
   const [yearList, setYearList] = useState([])
-  const [searchRecord, setSearchRecord] = useState([])
+  const [yearOptions, setYearOptions] = useState()
+  const [searchYearRecord, setSearchYearRecord] = useState([])
 
-  const processGetAllYear = async (data) => {
+  const processSearchYear = async (data) => {
+    let responseOnSearch = await searchYearRecords(data)
+    if (responseOnSearch) {
+      setSearchYearRecord(responseOnSearch.data.data)
+    }
+  }
+
+  const processGetAllYear = async () => {
     let response = await getAllYear()
     if (response) {
       setYearList(response.data.data)
+      processYearOptions(response.data.data)
     }
+  }
+
+  const processYearOptions = async (data) => {
+    let years = []
+    data &&
+      data.map((item) => {
+        years.push(item.year)
+      })
+    setYearOptions(years)
   }
 
   const processAddYear = async (data) => {
@@ -25,9 +49,21 @@ const YearApiDataProvider = (props) => {
     }
   }
 
-  const processUpdateYear = async () => {}
+  const processUpdateYear = async (data) => {
+    let response = await editYear(data)
+    if (response) {
+      processGetAllYear()
+      notify(SUCCESS_STATUS)
+    }
+  }
 
-  const processDeleteYear = async () => {}
+  const processDeleteYear = async (data) => {
+    let response = await deleteYear(data)
+    if (response) {
+      processGetAllYear()
+      notify(SUCCESS_STATUS)
+    }
+  }
 
   return (
     <YearApiData.Provider
@@ -36,8 +72,11 @@ const YearApiDataProvider = (props) => {
         processAddYear,
         processUpdateYear,
         processDeleteYear,
-        searchRecord,
+        searchYearRecord,
         yearList,
+        yearOptions,
+        setYearOptions,
+        processSearchYear,
       }}
     >
       {props.children}

@@ -1,5 +1,6 @@
 export const ADDYEAR = {
   title: "Add Year",
+  editTitle: "Edit Year",
   buttonText: "Submit",
   fieldDetail: [
     {

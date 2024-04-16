@@ -1,12 +1,12 @@
 import { useContext, useEffect, useState } from "react"
-// import { IndividualApiData } from "@/app/context/Individual/IndividualContextApi"
+import { YearApiData } from "../contextApi/year/yearContextApi"
 import SearchContainer from "./searchContainer"
 import YearTable from "./yearTable"
 // import PaginationContainer from "./paginationContainer"
 // import PrintButton from "./printButton"
 
 const YearTableContainer = () => {
-  //   const { processSearchRecord } = useContext(IndividualApiData)
+  const { processSearchYear } = useContext(YearApiData)
   const [searchTerm, setSearchTerm] = useState("")
   //   const [currentPage, setCurrentPage] = useState(1)
 
@@ -19,9 +19,7 @@ const YearTableContainer = () => {
   }
 
   const handleSearchSubmit = () => {
-    //e.preventDefault()
-    console.log(searchTerm)
-    //processSearchRecord(searchTerm)
+    processSearchYear(searchTerm)
   }
 
   return (

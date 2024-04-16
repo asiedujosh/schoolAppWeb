@@ -1,7 +1,9 @@
+import QuestionTableContainer from "../components/questionTableContainer"
+
 const Question = () => {
   return (
     <div>
-      <h2>Question page</h2>
+      <QuestionTableContainer />
     </div>
   )
 }

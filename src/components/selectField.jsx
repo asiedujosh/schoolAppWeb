@@ -9,7 +9,7 @@ const SelectField = ({ field, value, change, options }) => {
     change(e.target.value, field.name)
   }
   return (
-    <div class={field.marginButtom}>
+    <div className="mb-4 w-full my-2 mx-2">
       <label for="username" class="text-gray-600">
         {field.label}
       </label>

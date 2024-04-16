@@ -1,27 +1,21 @@
 import { useContext, useEffect, useState } from "react"
-// import { IndividualApiData } from "@/app/context/Individual/IndividualContextApi"
+import { SubjectApiData } from "../contextApi/subjects/subjectContextApi"
 import SearchContainer from "./searchContainer"
 import SubjectTable from "./subjectTable"
 // import PaginationContainer from "./paginationContainer"
 // import PrintButton from "./printButton"
 
 const SubjectTableContainer = () => {
-  //   const { processSearchRecord } = useContext(IndividualApiData)
+  const { processSearchSubject } = useContext(SubjectApiData)
   const [searchTerm, setSearchTerm] = useState("")
   //   const [currentPage, setCurrentPage] = useState(1)
 
-  // let handleSearchTerm = (e) => {
-  //   //processSearchRecord()
-  // }
   const handleSearchChange = (data) => {
-    console.log(data)
     setSearchTerm(data)
   }
 
   const handleSearchSubmit = () => {
-    //e.preventDefault()
-    console.log(searchTerm)
-    //processSearchRecord(searchTerm)
+    processSearchSubject(searchTerm)
   }
 
   return (

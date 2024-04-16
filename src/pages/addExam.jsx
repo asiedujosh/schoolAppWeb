@@ -21,8 +21,9 @@ const AddExams = () => {
   }
 
   const handleSubmit = (e) => {
-    // e.preventDefault()
+    e.preventDefault()
     processAddExams(formData)
+    console.log(formData)
   }
 
   return (
@@ -40,7 +41,7 @@ const AddExams = () => {
             <div className="flex flex-col md:flex-row justify-center">
               {/* Card 1 */}
               <div className="w-full p-6 bg-gray-100 rounded-lg shadow-md mt-2 md:mt-0 md:m-2">
-                <div className="space-y-4">
+                <div className="space-y-2">
                   {ADDEXAM.fieldDetail.map((item) => {
                     return (
                       <InputField

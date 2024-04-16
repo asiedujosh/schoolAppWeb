@@ -25,9 +25,21 @@ const TopicApiDataProvider = (props) => {
     }
   }
 
-  const processUpdateTopic = async () => {}
+  const processUpdateTopic = async (data) => {
+    let response = await editTopic(data)
+    if (response) {
+      processGetAllTopic()
+      notify(SUCCESS_STATUS)
+    }
+  }
 
-  const processDeleteTopic = async () => {}
+  const processDeleteTopic = async (data) => {
+    let response = await deleteTopic(data)
+    if (response) {
+      processGetAllTopic()
+      notify(SUCCESS_STATUS)
+    }
+  }
 
   return (
     <TopicApiData.Provider

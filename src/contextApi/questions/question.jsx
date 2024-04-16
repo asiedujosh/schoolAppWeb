@@ -15,6 +15,20 @@ export const addQuestion = async (data) => {
   }
 }
 
+export const countQuestions = async () => {
+  try {
+    let responseOnCountQuestions = await axios.get("/api/countQuestions")
+    if (responseOnCountQuestions.status === SUCCESS_STATUS) {
+      return responseOnCountQuestions.data
+    } else {
+      return false
+    }
+  } catch (err) {
+    console.log(err)
+    return false
+  }
+}
+
 export const getAllQuestion = async () => {
   try {
     let responseOnGetAllQuestion = await axios.get("/api/getAllQuestion")
@@ -26,5 +40,40 @@ export const getAllQuestion = async () => {
   } catch (err) {
     console.log(err)
     return false
+  }
+}
+
+export const editQuestion = async (data) => {
+  try {
+    let responseOnEditQuestion = await axios.put(
+      `/api/questionUpdate/${data.id}`,
+      data
+    )
+    if (responseOnEditQuestion.status === SUCCESS_STATUS) {
+      return responseOnEditQuestion.data
+    } else {
+      return false
+    }
+  } catch (err) {
+    console.log(err)
+  }
+}
+
+export const deleteQuestion = async (data) => {
+  //console.log(data);
+
+  try {
+    let responseOnDeleteQuestion = await axios.delete("/api/deleteQuestion", {
+      data: data, // Pass the data in the config object
+      headers: {
+        "Content-Type": "application/json", // Set the Content-Type header if sending JSON data
+      },
+    })
+
+    if (responseOnDeleteQuestion.status === SUCCESS_STATUS) {
+      return responseOnDeleteQuestion.data
+    }
+  } catch (err) {
+    console.error(err)
   }
 }

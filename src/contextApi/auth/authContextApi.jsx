@@ -13,13 +13,21 @@ const AuthApiDataProvider = (props) => {
   const [userProfile, setUserProfile] = useState()
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
+  const [admin, setAdmin] = useState(false)
 
   //   const router = useRouter()
 
   const processLogin = async (data) => {
     let response = await login(data)
     if (response) {
-      setUserProfile(response.data.client)
+      console.log(response.data.data)
+      setUserProfile(response.data.data)
+      if (
+        response.data.data.role == "1" ||
+        response.data.data.role == "Admin"
+      ) {
+        setAdmin((prev) => !prev)
+      }
       // set the cookie
       cookieMethods.setCookies(response.data.token)
       axios.defaults.headers.common[
@@ -51,6 +59,9 @@ const AuthApiDataProvider = (props) => {
     if (response) {
       // console.log(response)
       setUserProfile(response.data)
+      if (response.data.role == "1" || response.data.role == "Admin") {
+        setAdmin(true)
+      }
       setIsAuthenticated(true)
       return true
     } else {
@@ -72,6 +83,7 @@ const AuthApiDataProvider = (props) => {
       value={{
         allUsers,
         setAllUsers,
+        admin,
         userProfile,
         setUserProfile,
         isAuthenticated,
