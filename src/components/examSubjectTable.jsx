@@ -39,10 +39,6 @@ const ExamSubjectTable = () => {
                 {examsName(examsList, item.examId)}
               </td>
               <td className="border border-gray-200 py-4 px-2">
-                {yearName(yearList, item.yearId)}
-                {item.subjectId}
-              </td>
-              <td className="border border-gray-200 py-4 px-2">
                 {subjectName(subjectList, item.subjectId)}
                 {item.subjectId}
               </td>

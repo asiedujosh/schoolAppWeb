@@ -50,6 +50,7 @@ export const editExams = async (data) => {
       `/api/examsUpdate/${data.id}`,
       data
     )
+    console.log(data)
     if (responseOnEditExams.status === SUCCESS_STATUS) {
       return responseOnEditExams.data
     } else {

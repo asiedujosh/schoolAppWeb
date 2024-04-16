@@ -17,6 +17,7 @@ const EditExams = () => {
   const [formData, setFormData] = useState({
     id: id,
     examType: null,
+    position: null,
     imageUpload: null,
   })
 
@@ -43,8 +44,14 @@ const EditExams = () => {
   const handleSubmit = (e) => {
     // e.preventDefault()
     //processAddExams(formData)
-    console.log(formData)
-    processUpdateExams(formData)
+    let submitData = {
+      id: formData.id,
+      examType: formData.examType,
+      position: formData.position,
+      imageUpload: formData.imageUpload || formData.image,
+    }
+    console.log(submitData)
+    processUpdateExams(submitData)
   }
 
   return (

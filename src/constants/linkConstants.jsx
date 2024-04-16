@@ -36,11 +36,4 @@ export const ADDLINK = {
   ],
 }
 
-export const EXAMSUBJECTTABLE = [
-  "Exam",
-  "Year",
-  "Subject",
-  "Offer",
-  "Amount",
-  "Action",
-]
+export const EXAMSUBJECTTABLE = ["Exam", "Subject", "Offer", "Amount", "Action"]
