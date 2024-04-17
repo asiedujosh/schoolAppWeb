@@ -1,5 +1,5 @@
 export const TIMEOUT = { timeout: 10000 }
-export const URL = "http://api.nunyaexam.com/"
+export const URL = "https://api.nunyaexam.com/"
 // export const URL = "http://127.0.0.1:8000/"
 // export const URL = "https://apiv4.awesomehandsacademy.com/"
 export const imageCompressionApiKey = "PBR9Nz4nsMsqVSKCKhBcqyV6ZnwwdwCR"

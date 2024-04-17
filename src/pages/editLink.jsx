@@ -22,7 +22,13 @@ const EditLink = () => {
   const [examNameOnlyState, setExamNameOnlyState] = useState([])
   const [yearNameOnlyState, setYearNameOnlyState] = useState([])
   const [subjectNameOnlyState, setSubjectNameOnlyState] = useState([])
-  const [formData, setFormData] = useState({})
+  const [formData, setFormData] = useState({
+    examType: null,
+    year: null,
+    subject: null,
+    offerType: null,
+    amount: null,
+  })
 
   useEffect(() => {
     let onlyExamNameList = []
