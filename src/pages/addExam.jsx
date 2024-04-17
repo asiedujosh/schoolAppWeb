@@ -20,10 +20,8 @@ const AddExams = () => {
     })
   }
 
-  const handleSubmit = (e) => {
-    e.preventDefault()
+  const handleSubmit = () => {
     processAddExams(formData)
-    console.log(formData)
   }
 
   return (
