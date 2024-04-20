@@ -17,7 +17,9 @@ const EditLink = () => {
   const { examsList } = useContext(ExamApiData)
   const { subjectList } = useContext(SubjectApiData)
   const { yearList } = useContext(YearApiData)
-  const { processAddExamSubjectLink } = useContext(ExamSubjectApiData)
+  const { processGetAllExamSubjectLink, examSubjectLinkList } =
+    useContext(ExamSubjectApiData)
+  const { processUpdateExamSubject } = useContext(ExamSubjectApiData)
   const [error, setError] = useState([])
   const [examNameOnlyState, setExamNameOnlyState] = useState([])
   const [yearNameOnlyState, setYearNameOnlyState] = useState([])
@@ -29,6 +31,19 @@ const EditLink = () => {
     offerType: null,
     amount: null,
   })
+
+  useEffect(() => {
+    let data = examSubjectLinkList.filter((item) => item.id == id)
+    console.log(data)
+    setFormData({
+      ...formData,
+      examType: data[0].examType,
+      year: data[0].year,
+      subject: data[0].subject,
+      offerType: data[0].offerType,
+      amount: data[0].price,
+    })
+  }, [])
 
   useEffect(() => {
     let onlyExamNameList = []
@@ -84,6 +99,7 @@ const EditLink = () => {
     )[0].id
 
     let newData = {
+      id: id,
       examId: choseExamId,
       yearId: choseYearId,
       subjectId: choseSubjectId,
@@ -91,8 +107,7 @@ const EditLink = () => {
       price: formData.amount,
     }
 
-    // console.log(newData)
-    processAddExamSubjectLink(newData)
+    processUpdateExamSubject(newData)
   }
 
   return (

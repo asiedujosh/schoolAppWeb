@@ -6,10 +6,6 @@ import { Link } from "react-router-dom"
 const PackageTable = () => {
   const { packageList, searchRecord } = useContext(PackageApiData)
 
-  let viewProfile = (id) => {
-    console.log(id)
-  }
-
   return (
     <>
       <table className="w-full table-auto rounded">
@@ -45,14 +41,14 @@ const PackageTable = () => {
                         Edit
                       </Link>
 
-                      <span
+                      {/* <span
                         onClick={() => {
                           processDeletePackage(item.id)
                         }}
                         className="bg-red-500 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded"
                       >
                         Delete
-                      </span>
+                      </span> */}
                     </div>
                   </td>
                 </tr>
@@ -68,20 +64,20 @@ const PackageTable = () => {
                   <td className="w-1/4 border border-gray-200 py-4 px-2">
                     <div className="flex space-x-2">
                       <Link
-                        to={`/dashboard/editYear/${item.id}/edit`}
+                        to={`/dashboard/editPackage/${item.id}/edit`}
                         className="bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded"
                       >
                         Edit
                       </Link>
 
-                      <span
+                      {/* <span
                         onClick={() => {
                           processDeletePackage(item.id)
                         }}
                         className="bg-red-500 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded"
                       >
                         Delete
-                      </span>
+                      </span> */}
                     </div>
                   </td>
                 </tr>

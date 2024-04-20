@@ -1,12 +1,12 @@
 import { useContext, useEffect, useState } from "react"
-// import { IndividualApiData } from "@/app/context/Individual/IndividualContextApi"
+import PaginationContainer from "./paginationContainer"
 import SearchContainer from "./searchContainer"
 import TopicTable from "./topicTable"
-// import PaginationContainer from "./paginationContainer"
-// import PrintButton from "./printButton"
+import { TopicApiData } from "../contextApi/topic/topicContextApi"
 
 const TopicTableContainer = () => {
-  //   const { processSearchRecord } = useContext(IndividualApiData)
+  const { processGetAllTopic, paginationData, searchStaffRecord } =
+    useContext(TopicApiData)
   const [searchTerm, setSearchTerm] = useState("")
   //   const [currentPage, setCurrentPage] = useState(1)
 
@@ -41,8 +41,10 @@ const TopicTableContainer = () => {
       <div className="overflow-auto" style={{ height: "80%" }}>
         <TopicTable />
       </div>
-      {/* <PaginationContainer />
-      <PrintButton /> */}
+      <PaginationContainer
+        paginationData={paginationData}
+        paginationFunction={processGetAllTopic}
+      />
     </div>
   )
 }

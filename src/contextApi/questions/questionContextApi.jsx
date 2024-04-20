@@ -19,6 +19,7 @@ const QuestionApiDataProvider = (props) => {
   const [searchRecord, setSearchRecord] = useState([])
   const [questionFormData, setQuestionFormData] = useState({})
   const [editClear, setEditClear] = useState(false)
+  const [paginationData, setPaginationData] = useState()
 
   const preparingQuestForEdit = (id) => {
     setQuestionFormData()
@@ -43,10 +44,11 @@ const QuestionApiDataProvider = (props) => {
     // setEditClear((prev) => !prev)
   }
 
-  const processGetAllQuestion = async () => {
-    let response = await getAllQuestion()
+  const processGetAllQuestion = async (data) => {
+    let response = await getAllQuestion(data || 1)
     if (response) {
-      setQuestionList(response.data.data)
+      setQuestionList(response.data.data.data)
+      setPaginationData(response.data.pagination)
     }
   }
 
@@ -83,10 +85,9 @@ const QuestionApiDataProvider = (props) => {
   }
 
   const processDeleteQuestion = async (data) => {
-    // console.log(data)
     let response = await deleteQuestion(data)
     if (response) {
-      pprocessGetAllQuestion()
+      processGetAllQuestion()
       notify(SUCCESS_STATUS)
     }
   }
@@ -94,6 +95,7 @@ const QuestionApiDataProvider = (props) => {
   return (
     <QuestionApiData.Provider
       value={{
+        paginationData,
         processGetAllQuestion,
         processAddQuestion,
         processUpdateQuestion,

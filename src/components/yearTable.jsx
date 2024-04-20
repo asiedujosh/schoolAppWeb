@@ -4,11 +4,8 @@ import { YearApiData } from "../contextApi/year/yearContextApi"
 import { Link } from "react-router-dom"
 
 const YearTable = () => {
-  const { yearList, searchYearRecord } = useContext(YearApiData)
-
-  let viewProfile = (id) => {
-    console.log(id)
-  }
+  const { yearList, searchYearRecord, processDeleteYear } =
+    useContext(YearApiData)
 
   return (
     <>
@@ -41,7 +38,7 @@ const YearTable = () => {
 
                       <span
                         onClick={() => {
-                          processDeleteCompany(item.id)
+                          processDeleteYear({ id: item.id })
                         }}
                         className="bg-red-500 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded"
                       >
@@ -67,7 +64,7 @@ const YearTable = () => {
 
                       <span
                         onClick={() => {
-                          processDeleteCompany(item.id)
+                          processDeleteYear({ id: item.id })
                         }}
                         className="bg-red-500 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded"
                       >

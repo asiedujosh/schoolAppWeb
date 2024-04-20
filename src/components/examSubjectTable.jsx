@@ -12,12 +12,11 @@ const ExamSubjectTable = () => {
   const { examsList } = useContext(ExamApiData)
   const { subjectList } = useContext(SubjectApiData)
   const { yearList } = useContext(YearApiData)
-  const { processGetAllExamSubjectLink, examSubjectLinkList } =
-    useContext(ExamSubjectApiData)
-
-  let viewProfile = (id) => {
-    console.log(id)
-  }
+  const {
+    processGetAllExamSubjectLink,
+    examSubjectLinkList,
+    processDeleteExamSubject,
+  } = useContext(ExamSubjectApiData)
 
   return (
     <>
@@ -39,8 +38,7 @@ const ExamSubjectTable = () => {
                 {examsName(examsList, item.examId)}
               </td>
               <td className="border border-gray-200 py-4 px-2">
-                {subjectName(subjectList, item.subjectId)}
-                {item.subjectId}
+                {subjectName(subjectList, item.subjectId)}({item.subjectId})
               </td>
               <td className="border border-gray-200 py-4 px-2">
                 {item.offerType}
@@ -49,7 +47,7 @@ const ExamSubjectTable = () => {
               <td className="w-1/4 border border-gray-200 py-4 px-2">
                 <div className="flex space-x-2">
                   <Link
-                    to={`/dashboard/editExamSubjectLink/${item.id}/edit`}
+                    to={`/dashboard/editLink/${item.id}/edit`}
                     className="bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded"
                   >
                     Edit
@@ -57,9 +55,10 @@ const ExamSubjectTable = () => {
 
                   <span
                     onClick={() => {
+                      processDeleteExamSubject({ id: item.id })
                       //   processDeleteCompany(item.id)
                     }}
-                    className="bg-red-500 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded"
+                    className="bg-red-500 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded cursor-pointer"
                   >
                     Delete
                   </span>

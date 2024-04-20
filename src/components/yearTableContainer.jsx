@@ -1,4 +1,5 @@
 import { useContext, useEffect, useState } from "react"
+import PaginationContainer from "./paginationContainer"
 import { YearApiData } from "../contextApi/year/yearContextApi"
 import SearchContainer from "./searchContainer"
 import YearTable from "./yearTable"
@@ -6,7 +7,8 @@ import YearTable from "./yearTable"
 // import PrintButton from "./printButton"
 
 const YearTableContainer = () => {
-  const { processSearchYear } = useContext(YearApiData)
+  const { processGetAllYear, paginationData, processSearchYear } =
+    useContext(YearApiData)
   const [searchTerm, setSearchTerm] = useState("")
   //   const [currentPage, setCurrentPage] = useState(1)
 
@@ -39,8 +41,10 @@ const YearTableContainer = () => {
       <div className="overflow-auto" style={{ height: "80%" }}>
         <YearTable />
       </div>
-      {/* <PaginationContainer />
-      <PrintButton /> */}
+      <PaginationContainer
+        paginationData={paginationData}
+        paginationFunction={processGetAllYear}
+      />
     </div>
   )
 }

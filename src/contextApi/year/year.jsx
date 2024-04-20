@@ -1,5 +1,5 @@
 import axios from "../../utils/axios.config"
-import { SUCCESS_STATUS } from "../../constants/constant"
+import { LISTONPAGES, SUCCESS_STATUS } from "../../constants/constant"
 
 export const addYear = async (data) => {
   try {
@@ -30,9 +30,11 @@ export const searchYearRecords = async (data) => {
   }
 }
 
-export const getAllYear = async () => {
+export const getAllYear = async (data) => {
   try {
-    let responseOnGetAllYear = await axios.get("/api/getAllYear")
+    let responseOnGetAllYear = await axios.get(
+      `/api/getAllYear?page=${data}&perPage=${LISTONPAGES}`
+    )
     if (responseOnGetAllYear.status === SUCCESS_STATUS) {
       return responseOnGetAllYear.data
     } else {
@@ -60,12 +62,7 @@ export const editYear = async (data) => {
 export const deleteYear = async (data) => {
   //console.log(data);
   try {
-    let responseOnDeleteYear = await axios.delete("/api/deleteYear", {
-      data: data, // Pass the data in the config object
-      headers: {
-        "Content-Type": "application/json", // Set the Content-Type header if sending JSON data
-      },
-    })
+    let responseOnDeleteYear = await axios.delete(`/api/deleteYear/${data.id}`)
 
     if (responseOnDeleteYear.status === SUCCESS_STATUS) {
       return responseOnDeleteYear.data

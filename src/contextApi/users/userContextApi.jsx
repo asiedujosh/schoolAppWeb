@@ -9,6 +9,7 @@ export const UserApiData = createContext()
 const UserApiDataProvider = (props) => {
   const [userList, setUserList] = useState([])
   const [searchUserRecord, setSearchUserRecord] = useState([])
+  const [paginationData, setPaginationData] = useState()
 
   const processSearchUser = async (data) => {
     let responseOnSearch = await searchUserRecords(data)
@@ -17,12 +18,11 @@ const UserApiDataProvider = (props) => {
     }
   }
 
-  const processGetAllUser = async () => {
-    let response = await getAllUser()
-    console.log(response)
+  const processGetAllUser = async (data) => {
+    let response = await getAllUser(data || 1)
     if (response) {
-      console.log(response)
-      setUserList(response.data.data)
+      setUserList(response.data.data.data)
+      setPaginationData(response.data.pagination)
     }
   }
 
@@ -43,6 +43,7 @@ const UserApiDataProvider = (props) => {
         userList,
         searchUserRecord,
         processSearchUser,
+        paginationData,
       }}
     >
       {props.children}

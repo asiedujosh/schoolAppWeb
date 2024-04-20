@@ -5,17 +5,21 @@ import { BAD_REQUEST_STATUS, SUCCESS_STATUS } from "../../constants/constant"
 import {
   getAllExamSubjectLinked,
   addExamSubjectRelation,
+  editExamSubjectLink,
+  deleteExamSubjectLink,
 } from "./examSubjectRelation"
 
 export const ExamSubjectApiData = createContext()
 
 const ExamSubjectApiDataProvider = (props) => {
   const [examSubjectLinkList, setExamSubjectLinkList] = useState([])
+  const [paginationData, setPaginationData] = useState()
 
-  const processGetAllExamSubjectLink = async () => {
-    let response = await getAllExamSubjectLinked()
+  const processGetAllExamSubjectLink = async (data) => {
+    let response = await getAllExamSubjectLinked(data || 1)
     if (response) {
-      setExamSubjectLinkList(response.data.data)
+      setExamSubjectLinkList(response.data.data.data)
+      setPaginationData(response.data.pagination)
     }
   }
 
@@ -39,7 +43,7 @@ const ExamSubjectApiDataProvider = (props) => {
     // console.log(data)
     let response = await deleteExamSubjectLink(data)
     if (response) {
-      processGetAllExamSubjectLink()()
+      processGetAllExamSubjectLink()
       notify(SUCCESS_STATUS)
     }
   }
@@ -52,6 +56,7 @@ const ExamSubjectApiDataProvider = (props) => {
         processUpdateExamSubject,
         processDeleteExamSubject,
         examSubjectLinkList,
+        paginationData,
       }}
     >
       {props.children}

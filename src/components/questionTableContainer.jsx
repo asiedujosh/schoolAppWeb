@@ -4,6 +4,7 @@ import { ExamApiData } from "../contextApi/exams/examsContextApi"
 import { SubjectApiData } from "../contextApi/subjects/subjectContextApi"
 import { YearApiData } from "../contextApi/year/yearContextApi"
 import { QUESTIONSEARCH } from "../constants/questionConstants"
+import PaginationContainer from "./paginationContainer"
 import QuestionTable from "./questionTable"
 import SelectField from "./selectField"
 import InputField from "./inputField"
@@ -15,7 +16,7 @@ const QuestionTableContainer = () => {
   const { examsList } = useContext(ExamApiData)
   const { subjectList } = useContext(SubjectApiData)
   const { yearList } = useContext(YearApiData)
-  const { processGetAllQuestion } = useContext(QuestionApiData)
+  const { processGetAllQuestion, paginationData } = useContext(QuestionApiData)
   const [examOptions, setExamOptions] = useState()
   const [subjectOptions, setSubjectOptions] = useState()
   const [yearOptions, setYearOptions] = useState()
@@ -132,8 +133,10 @@ const QuestionTableContainer = () => {
       <div className="overflow-auto" style={{ height: "80%" }}>
         <QuestionTable />
       </div>
-      {/* <PaginationContainer />
-      <PrintButton /> */}
+      <PaginationContainer
+        paginationData={paginationData}
+        paginationFunction={processGetAllQuestion}
+      />
     </div>
   )
 }

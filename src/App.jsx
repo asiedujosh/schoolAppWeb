@@ -13,6 +13,7 @@ import "./App.css"
 
 // Lazy load components using dynamic import()
 const AddPackage = React.lazy(() => import("./pages/addPackage"))
+const EditPackage = React.lazy(() => import("./pages/editPackage"))
 const Package = React.lazy(() => import("./pages/Package"))
 const Subscriber = React.lazy(() => import("./pages/subscriber"))
 const AddExams = React.lazy(() => import("./pages/addExam"))
@@ -22,6 +23,9 @@ const AddQuestion = React.lazy(() => import("./pages/addQuestion"))
 const AddNews = React.lazy(() => import("./pages/addNews"))
 const Exam = React.lazy(() => import("./pages/Exam"))
 const EditExam = React.lazy(() => import("./pages/editExam"))
+const EditLink = React.lazy(() => import("./pages/editLink"))
+const EditStaff = React.lazy(() => import("./pages/editStaff"))
+const EditTopic = React.lazy(() => import("./pages/editTopic"))
 const Staff = React.lazy(() => import("./pages/Staff"))
 const Users = React.lazy(() => import("./pages/Users"))
 const AddStaff = React.lazy(() => import("./pages/addStaff"))
@@ -150,10 +154,34 @@ function App() {
             }
           />
           <Route
+            path="editPackage/:id/edit"
+            element={
+              <React.Suspense fallback={<div>Loading...</div>}>
+                <EditPackage />
+              </React.Suspense>
+            }
+          />
+          <Route
             path="editSubject/:id/edit"
             element={
               <React.Suspense fallback={<div>Loading...</div>}>
                 <EditSubject />
+              </React.Suspense>
+            }
+          />
+          <Route
+            path="editLink/:id/edit"
+            element={
+              <React.Suspense fallback={<div>Loading...</div>}>
+                <EditLink />
+              </React.Suspense>
+            }
+          />
+          <Route
+            path="editTopic/:id/edit"
+            element={
+              <React.Suspense fallback={<div>Loading...</div>}>
+                <EditTopic />
               </React.Suspense>
             }
           />
@@ -174,7 +202,7 @@ function App() {
             }
           />
           <Route
-            path="Topic"
+            path="topic"
             element={
               <React.Suspense fallback={<div>Loading...</div>}>
                 <Topic />
@@ -186,6 +214,14 @@ function App() {
             element={
               <React.Suspense fallback={<div>Loading...</div>}>
                 <EditExam />
+              </React.Suspense>
+            }
+          />
+          <Route
+            path="editStaff/:id/edit"
+            element={
+              <React.Suspense fallback={<div>Loading...</div>}>
+                <EditStaff />
               </React.Suspense>
             }
           />

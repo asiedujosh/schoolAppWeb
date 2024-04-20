@@ -88,7 +88,14 @@ const Login = () => {
             }}
           />
 
-          <SubmitBtn text={LOGIN_PAGE_TEXT.buttonText} submit={handleSubmit} />
+          {isLoading ? (
+            <LoadingBtn />
+          ) : (
+            <SubmitBtn
+              text={LOGIN_PAGE_TEXT.buttonText}
+              submit={handleSubmit}
+            />
+          )}
         </div>
       </div>
       <ToastContainer />

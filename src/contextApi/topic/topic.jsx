@@ -1,5 +1,5 @@
 import axios from "../../utils/axios.config"
-import { SUCCESS_STATUS } from "../../constants/constant"
+import { SUCCESS_STATUS, LISTONPAGES } from "../../constants/constant"
 
 export const addTopic = async (data) => {
   console.log(data)
@@ -16,9 +16,11 @@ export const addTopic = async (data) => {
   }
 }
 
-export const getAllTopic = async () => {
+export const getAllTopic = async (data) => {
   try {
-    let responseOnGetAllTopic = await axios.get("/api/getAllTopic")
+    let responseOnGetAllTopic = await axios.get(
+      `/api/getAllTopic?page=${data}&perPage=${LISTONPAGES}`
+    )
     if (responseOnGetAllTopic.status === SUCCESS_STATUS) {
       return responseOnGetAllTopic.data
     } else {
@@ -49,12 +51,9 @@ export const editTopic = async (data) => {
 export const deleteTopic = async (data) => {
   //console.log(data);
   try {
-    let responseOnDeleteTopic = await axios.delete("/api/deleteTopic", {
-      data: data, // Pass the data in the config object
-      headers: {
-        "Content-Type": "application/json", // Set the Content-Type header if sending JSON data
-      },
-    })
+    let responseOnDeleteTopic = await axios.delete(
+      `/api/deleteTopic/${data.id}`
+    )
 
     if (responseOnDeleteTopic.status === SUCCESS_STATUS) {
       return responseOnDeleteTopic.data

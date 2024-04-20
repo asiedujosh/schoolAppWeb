@@ -30,7 +30,7 @@ const Home = () => {
           <LabelBtn text="Linked Exams & Subject" path="examSubjectLinkTable" />
         </div>
         <div class="w-full md:w-1/2 lg:w-1/3 p-2">
-          <LabelBtn text="Special Packages" path="addSubject" />
+          <LabelBtn text="Topics" path="topic" />
         </div>
       </div>
       <div className="border-b border-gray-200 my-5"></div>

@@ -16,6 +16,7 @@ const YearApiDataProvider = (props) => {
   const [yearList, setYearList] = useState([])
   const [yearOptions, setYearOptions] = useState()
   const [searchYearRecord, setSearchYearRecord] = useState([])
+  const [paginationData, setPaginationData] = useState()
 
   const processSearchYear = async (data) => {
     let responseOnSearch = await searchYearRecords(data)
@@ -24,11 +25,12 @@ const YearApiDataProvider = (props) => {
     }
   }
 
-  const processGetAllYear = async () => {
-    let response = await getAllYear()
+  const processGetAllYear = async (data) => {
+    let response = await getAllYear(data || 1)
     if (response) {
-      setYearList(response.data.data)
-      processYearOptions(response.data.data)
+      setYearList(response.data.data.data)
+      processYearOptions(response.data.data.data)
+      setPaginationData(response.data.pagination)
     }
   }
 
@@ -77,6 +79,7 @@ const YearApiDataProvider = (props) => {
         yearOptions,
         setYearOptions,
         processSearchYear,
+        paginationData
       }}
     >
       {props.children}

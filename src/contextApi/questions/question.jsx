@@ -1,5 +1,5 @@
 import axios from "../../utils/axios.config"
-import { SUCCESS_STATUS } from "../../constants/constant"
+import { LISTONPAGES, SUCCESS_STATUS } from "../../constants/constant"
 
 export const addQuestion = async (data) => {
   try {
@@ -29,9 +29,11 @@ export const countQuestions = async () => {
   }
 }
 
-export const getAllQuestion = async () => {
+export const getAllQuestion = async (data) => {
   try {
-    let responseOnGetAllQuestion = await axios.get("/api/getAllQuestion")
+    let responseOnGetAllQuestion = await axios.get(
+      `/api/getAllQuestion?page=${data}&perPage=${LISTONPAGES}`
+    )
     if (responseOnGetAllQuestion.status === SUCCESS_STATUS) {
       return responseOnGetAllQuestion.data
     } else {
@@ -60,15 +62,11 @@ export const editQuestion = async (data) => {
 }
 
 export const deleteQuestion = async (data) => {
-  //console.log(data);
-
+  console.log(data)
   try {
-    let responseOnDeleteQuestion = await axios.delete("/api/deleteQuestion", {
-      data: data, // Pass the data in the config object
-      headers: {
-        "Content-Type": "application/json", // Set the Content-Type header if sending JSON data
-      },
-    })
+    let responseOnDeleteQuestion = await axios.delete(
+      `/api/deleteQuestion/${data.id}`
+    )
 
     if (responseOnDeleteQuestion.status === SUCCESS_STATUS) {
       return responseOnDeleteQuestion.data

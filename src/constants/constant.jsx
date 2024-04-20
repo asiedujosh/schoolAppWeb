@@ -4,6 +4,8 @@ export const URL = "https://api.nunyaexam.com/"
 // export const URL = "https://apiv4.awesomehandsacademy.com/"
 export const imageCompressionApiKey = "PBR9Nz4nsMsqVSKCKhBcqyV6ZnwwdwCR"
 
+export const LISTONPAGES = 10
+
 //System Responses
 
 //Status Code

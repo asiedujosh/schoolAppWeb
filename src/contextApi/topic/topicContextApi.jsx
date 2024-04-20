@@ -2,18 +2,20 @@ import React, { createContext, useState } from "react"
 import { notify } from "../../utils/responseUtils"
 import { BAD_REQUEST_STATUS, SUCCESS_STATUS } from "../../constants/constant"
 
-import { addTopic, getAllTopic } from "./topic"
+import { addTopic, getAllTopic, editTopic, deleteTopic } from "./topic"
 
 export const TopicApiData = createContext()
 
 const TopicApiDataProvider = (props) => {
   const [topicList, setTopicList] = useState([])
   const [searchRecord, setSearchRecord] = useState([])
+  const [paginationData, setPaginationData] = useState()
 
-  const processGetAllTopic = async () => {
-    let response = await getAllTopic()
+  const processGetAllTopic = async (data) => {
+    let response = await getAllTopic(data || 1)
     if (response) {
-      setTopicList(response.data.data)
+      setTopicList(response.data.data.data)
+      setPaginationData(response.data.pagination)
     }
   }
 
@@ -49,6 +51,7 @@ const TopicApiDataProvider = (props) => {
         processUpdateTopic,
         processDeleteTopic,
         searchRecord,
+        paginationData,
         topicList,
       }}
     >

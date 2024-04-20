@@ -1,5 +1,5 @@
 import axios from "../../utils/axios.config"
-import { SUCCESS_STATUS } from "../../constants/constant"
+import { LISTONPAGES, SUCCESS_STATUS } from "../../constants/constant"
 
 export const addSubject = async (data) => {
   try {
@@ -30,9 +30,11 @@ export const searchSubjectRecords = async (data) => {
   }
 }
 
-export const getAllSubject = async () => {
+export const getAllSubject = async (data) => {
   try {
-    let responseOnGetAllSubject = await axios.get("/api/getAllSubject")
+    let responseOnGetAllSubject = await axios.get(
+      `/api/getAllSubject?page=${data}&perPage=${LISTONPAGES}`
+    )
     if (responseOnGetAllSubject.status === SUCCESS_STATUS) {
       return responseOnGetAllSubject.data
     } else {
@@ -62,14 +64,10 @@ export const editSubject = async (data) => {
 
 export const deleteSubject = async (data) => {
   //console.log(data);
-
   try {
-    let responseOnDeleteSubject = await axios.delete("/api/deleteSubject", {
-      data: data, // Pass the data in the config object
-      headers: {
-        "Content-Type": "application/json", // Set the Content-Type header if sending JSON data
-      },
-    })
+    let responseOnDeleteSubject = await axios.delete(
+      `/api/deleteSubject/${data.id}`
+    )
 
     if (responseOnDeleteSubject.status === SUCCESS_STATUS) {
       return responseOnDeleteSubject.data

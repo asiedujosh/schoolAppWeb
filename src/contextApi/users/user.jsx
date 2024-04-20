@@ -1,9 +1,11 @@
 import axios from "../../utils/axios.config"
-import { SUCCESS_STATUS } from "../../constants/constant"
+import { LISTONPAGES, SUCCESS_STATUS } from "../../constants/constant"
 
-export const getAllUser = async () => {
+export const getAllUser = async (data) => {
   try {
-    let responseOnGetAllUser = await axios.get("/api/getAllUsers")
+    let responseOnGetAllUser = await axios.get(
+      `/api/getAllUsers?page=${data}&perPage=${LISTONPAGES}`
+    )
     if (responseOnGetAllUser.status === SUCCESS_STATUS) {
       return responseOnGetAllUser.data
     } else {

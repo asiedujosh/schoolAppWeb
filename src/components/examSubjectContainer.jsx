@@ -2,18 +2,20 @@ import { useContext, useEffect, useState } from "react"
 import { ExamSubjectApiData } from "../contextApi/examSubjectRelation/examRelationContextApi"
 import SearchContainer from "./searchContainer"
 import ExamSubjectTable from "./examSubjectTable"
-// import PaginationContainer from "./paginationContainer"
+import PaginationContainer from "./paginationContainer"
 // import PrintButton from "./printButton"
 
 const ExamSubjectTableContainer = () => {
-  const { processSearchExamsSubjectTable, processGetAllExamSubjectLink } =
-    useContext(ExamSubjectApiData)
+  const {
+    processSearchExamsSubjectTable,
+    paginationData,
+    processGetAllExamSubjectLink,
+  } = useContext(ExamSubjectApiData)
   const [searchTerm, setSearchTerm] = useState("")
   //   const [currentPage, setCurrentPage] = useState(1)
 
   useEffect(() => {
-    console.log("trigeering th function")
-    processGetAllExamSubjectLink()
+    processGetAllExamSubjectLink(1)
   }, [])
 
   const handleSearchChange = (data) => {
@@ -43,8 +45,10 @@ const ExamSubjectTableContainer = () => {
       <div className="overflow-auto" style={{ height: "80%" }}>
         <ExamSubjectTable />
       </div>
-      {/* <PaginationContainer />
-      <PrintButton /> */}
+      <PaginationContainer
+        paginationData={paginationData}
+        paginationFunction={processGetAllExamSubjectLink}
+      />
     </div>
   )
 }

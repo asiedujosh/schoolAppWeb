@@ -1,4 +1,5 @@
 import { useContext, useEffect, useState } from "react"
+import PaginationContainer from "./paginationContainer"
 import { ExamApiData } from "../contextApi/exams/examsContextApi"
 import SearchContainer from "./searchContainer"
 import ExamTable from "./examTable"
@@ -6,7 +7,8 @@ import ExamTable from "./examTable"
 // import PrintButton from "./printButton"
 
 const ExamTableContainer = () => {
-  const { processSearchExams } = useContext(ExamApiData)
+  const { processSearchExams, processGetAllExams, paginationData } =
+    useContext(ExamApiData)
   const [searchTerm, setSearchTerm] = useState("")
   //   const [currentPage, setCurrentPage] = useState(1)
 
@@ -37,8 +39,10 @@ const ExamTableContainer = () => {
       <div className="overflow-auto" style={{ height: "80%" }}>
         <ExamTable />
       </div>
-      {/* <PaginationContainer />
-      <PrintButton /> */}
+      <PaginationContainer
+        paginationData={paginationData}
+        paginationFunction={processGetAllExams}
+      />
     </div>
   )
 }

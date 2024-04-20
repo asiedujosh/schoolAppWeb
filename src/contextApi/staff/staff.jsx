@@ -1,5 +1,5 @@
 import axios from "../../utils/axios.config"
-import { SUCCESS_STATUS } from "../../constants/constant"
+import { SUCCESS_STATUS, LISTONPAGES } from "../../constants/constant"
 
 export const addStaff = async (data) => {
   try {
@@ -15,9 +15,11 @@ export const addStaff = async (data) => {
   }
 }
 
-export const getAllStaff = async () => {
+export const getAllStaff = async (data) => {
   try {
-    let responseOnGetAllStaff = await axios.get("/api/getAllStaff")
+    let responseOnGetAllStaff = await axios.get(
+      `/api/getAllStaff?page=${data}&perPage=${LISTONPAGES}`
+    )
     if (responseOnGetAllStaff.status === SUCCESS_STATUS) {
       return responseOnGetAllStaff.data
     } else {
@@ -32,7 +34,7 @@ export const getAllStaff = async () => {
 export const editStaff = async (data) => {
   try {
     let responseOnEditStaff = await axios.put(
-      `/api/staffUpdate/${data.dataId}`,
+      `/api/staffUpdate/${data.id}`,
       data
     )
     if (responseOnEditStaff.status === SUCCESS_STATUS) {
@@ -49,12 +51,9 @@ export const deleteStaff = async (data) => {
   //console.log(data);
 
   try {
-    let responseOnDeleteStaff = await axios.delete("/api/deleteStaff", {
-      data: data, // Pass the data in the config object
-      headers: {
-        "Content-Type": "application/json", // Set the Content-Type header if sending JSON data
-      },
-    })
+    let responseOnDeleteStaff = await axios.delete(
+      `/api/deleteStaff/${data.id}`
+    )
 
     if (responseOnDeleteStaff.status === SUCCESS_STATUS) {
       return responseOnDeleteStaff.data

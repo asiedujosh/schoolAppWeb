@@ -10,11 +10,13 @@ export const StaffApiData = createContext()
 const StaffApiDataProvider = (props) => {
   const [staffList, setStaffList] = useState([])
   const [searchStaffRecord, setSearchStaffRecord] = useState([])
+  const [paginationData, setPaginationData] = useState()
 
-  const processGetAllStaff = async () => {
-    let response = await getAllStaff()
+  const processGetAllStaff = async (data) => {
+    let response = await getAllStaff(data || 1)
     if (response) {
-      setStaffList(response.data.data)
+      setStaffList(response.data.data.data)
+      setPaginationData(response.data.pagination)
     }
   }
 
@@ -34,11 +36,11 @@ const StaffApiDataProvider = (props) => {
     }
   }
 
-  const processDeleteStaff = async () => {
+  const processDeleteStaff = async (data) => {
     // console.log(data)
     let response = await deleteStaff(data)
     if (response) {
-      pprocessGetAllStaff()
+      processGetAllStaff()
       notify(SUCCESS_STATUS)
     }
   }
@@ -52,6 +54,7 @@ const StaffApiDataProvider = (props) => {
         processDeleteStaff,
         staffList,
         searchStaffRecord,
+        paginationData,
       }}
     >
       {props.children}

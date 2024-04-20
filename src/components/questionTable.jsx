@@ -5,8 +5,13 @@ import { QuestionApiData } from "../contextApi/questions/questionContextApi"
 import { Link } from "react-router-dom"
 
 const QuestionTable = () => {
-  const { questionList, searchRecord, preparingQuestForEdit, editClear } =
-    useContext(QuestionApiData)
+  const {
+    questionList,
+    searchRecord,
+    preparingQuestForEdit,
+    editClear,
+    processDeleteQuestion,
+  } = useContext(QuestionApiData)
 
   const navigate = useNavigate()
 
@@ -42,14 +47,26 @@ const QuestionTable = () => {
                 <td className="border border-gray-200 py-4 px-2">
                   {item.question}
                 </td>
-                <td className="border border-gray-200 py-4 px-2">
-                  <span
-                    onClick={() => {
-                      viewProfile(item.clientId)
-                    }}
-                  >
-                    View
-                  </span>
+                <td className="w-1/4 border border-gray-200 py-4 px-2">
+                  <div className="flex space-x-2">
+                    <span
+                      onClick={() => {
+                        viewEdit(item.id)
+                      }}
+                      className="bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded"
+                    >
+                      Edit
+                    </span>
+
+                    <span
+                      onClick={() => {
+                        processDeleteQuestion({ id: item.id })
+                      }}
+                      className="bg-red-500 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded"
+                    >
+                      Delete
+                    </span>
+                  </div>
                 </td>
               </tr>
             ))}
@@ -75,7 +92,7 @@ const QuestionTable = () => {
 
                   <span
                     onClick={() => {
-                      processDeleteCompany(item.id)
+                      processDeleteQuestion({ id: item.id })
                     }}
                     className="bg-red-500 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded"
                   >

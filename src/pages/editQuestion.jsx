@@ -32,18 +32,22 @@ const EditQuestion = () => {
   const [formData, setFormData] = useState({
     id: id,
     examType:
-      questionFormData &&
-      examsList.filter((item) => item.id == questionFormData.examType)[0].exam,
+      (questionFormData &&
+        examsList.find((item) => item.id == questionFormData.examType)?.exam) ||
+      "Not Available",
     subject:
-      questionFormData &&
-      subjectList.filter((item) => item.id == questionFormData.subject)[0]
-        .subject,
+      (questionFormData &&
+        subjectList.find((item) => item.id == questionFormData.subject)
+          ?.subject) ||
+      "Not Available",
     year:
-      questionFormData &&
-      yearList.filter((item) => item.id == questionFormData.year)[0].year,
+      (questionFormData &&
+        yearList.find((item) => item.id == questionFormData.year)?.year) ||
+      "Not Available",
     topic:
-      questionFormData &&
-      topicList.filter((item) => item.id == questionFormData.topic)[0],
+      (questionFormData &&
+        topicList.filter((item) => item.id == questionFormData.topic)[0]) ||
+      "Not Available",
     answer: questionFormData && questionFormData.answer,
     questionNo: questionFormData && questionFormData.questionNo,
     question: questionFormData && questionFormData.question,

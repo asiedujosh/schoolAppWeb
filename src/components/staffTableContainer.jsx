@@ -1,9 +1,12 @@
 import { useContext, useEffect, useState } from "react"
-// import { IndividualApiData } from "@/app/context/Individual/IndividualContextApi"
+import PaginationContainer from "./paginationContainer"
+import { StaffApiData } from "../contextApi/staff/staffContextApi"
 import SearchContainer from "./searchContainer"
 import StaffTable from "./staffTable"
 
 const StaffTableContainer = () => {
+  const { processGetAllStaff, paginationData, searchStaffRecord } =
+    useContext(StaffApiData)
   const [searchTerm, setSearchTerm] = useState("")
 
   const handleSearchChange = (data) => {
@@ -34,8 +37,10 @@ const StaffTableContainer = () => {
       <div className="overflow-auto" style={{ height: "80%" }}>
         <StaffTable />
       </div>
-      {/* <PaginationContainer />
-      <PrintButton /> */}
+      <PaginationContainer
+        paginationData={paginationData}
+        paginationFunction={processGetAllStaff}
+      />
     </div>
   )
 }

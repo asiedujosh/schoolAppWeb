@@ -4,7 +4,8 @@ import { SubjectApiData } from "../contextApi/subjects/subjectContextApi"
 import { Link } from "react-router-dom"
 
 const SubjectTable = () => {
-  const { subjectList, searchSubjectRecord } = useContext(SubjectApiData)
+  const { subjectList, searchSubjectRecord, processDeleteSubject } =
+    useContext(SubjectApiData)
 
   return (
     <>
@@ -37,7 +38,7 @@ const SubjectTable = () => {
 
                       <span
                         onClick={() => {
-                          processDeleteCompany(item.id)
+                          processDeleteSubject({ id: item.id })
                         }}
                         className="bg-red-500 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded"
                       >
@@ -63,7 +64,7 @@ const SubjectTable = () => {
 
                       <span
                         onClick={() => {
-                          processDeleteCompany(item.id)
+                          processDeleteSubject({ id: item.id })
                         }}
                         className="bg-red-500 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded"
                       >

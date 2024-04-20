@@ -16,6 +16,7 @@ const SubjectApiDataProvider = (props) => {
   const [subjectList, setSubjectList] = useState([])
   const [searchSubjectRecord, setSearchSubjectRecord] = useState([])
   const [subjectOptions, setSubjectOptions] = useState()
+  const [paginationData, setPaginationData] = useState()
 
   const processSearchSubject = async (data) => {
     let responseOnSearch = await searchSubjectRecords(data)
@@ -24,11 +25,12 @@ const SubjectApiDataProvider = (props) => {
     }
   }
 
-  const processGetAllSubject = async () => {
-    let response = await getAllSubject()
+  const processGetAllSubject = async (data) => {
+    let response = await getAllSubject(data || 1)
     if (response) {
-      setSubjectList(response.data.data)
-      processSubjectOptions(response.data.data)
+      setSubjectList(response.data.data.data)
+      processSubjectOptions(response.data.data.data)
+      setPaginationData(response.data.pagination)
     }
   }
 
@@ -62,7 +64,7 @@ const SubjectApiDataProvider = (props) => {
     // console.log(data)
     let response = await deleteSubject(data)
     if (response) {
-      processGetAllExams()
+      processGetAllSubject()
       notify(SUCCESS_STATUS)
     }
   }
@@ -78,6 +80,7 @@ const SubjectApiDataProvider = (props) => {
         subjectList,
         searchSubjectRecord,
         subjectOptions,
+        paginationData,
       }}
     >
       {props.children}

@@ -1,5 +1,5 @@
 import axios from "../../utils/axios.config"
-import { SUCCESS_STATUS } from "../../constants/constant"
+import { LISTONPAGES, SUCCESS_STATUS } from "../../constants/constant"
 
 export const addExams = async (data) => {
   try {
@@ -30,9 +30,11 @@ export const searchExamRecords = async (data) => {
   }
 }
 
-export const getAllExams = async () => {
+export const getAllExams = async (data) => {
   try {
-    let responseOnGetAllExams = await axios.get("/api/getAllExam")
+    let responseOnGetAllExams = await axios.get(
+      `/api/getAllExam?page=${data}&perPage=${LISTONPAGES}`
+    )
     if (responseOnGetAllExams.status === SUCCESS_STATUS) {
       return responseOnGetAllExams.data
     } else {
@@ -50,7 +52,6 @@ export const editExams = async (data) => {
       `/api/examsUpdate/${data.id}`,
       data
     )
-    console.log(data)
     if (responseOnEditExams.status === SUCCESS_STATUS) {
       return responseOnEditExams.data
     } else {
@@ -62,15 +63,11 @@ export const editExams = async (data) => {
 }
 
 export const deleteExams = async (data) => {
-  //console.log(data);
-
+  // console.log(data)
   try {
-    let responseOnDeleteExams = await axios.delete("/api/deleteExams", {
-      data: data, // Pass the data in the config object
-      headers: {
-        "Content-Type": "application/json", // Set the Content-Type header if sending JSON data
-      },
-    })
+    let responseOnDeleteExams = await axios.delete(
+      `/api/deleteExams/${data.id}`
+    )
 
     if (responseOnDeleteExams.status === SUCCESS_STATUS) {
       return responseOnDeleteExams.data

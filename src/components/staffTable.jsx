@@ -4,11 +4,8 @@ import { StaffApiData } from "../contextApi/staff/staffContextApi"
 import { Link } from "react-router-dom"
 
 const StaffTable = () => {
-  const { staffList, searchStaffRecord } = useContext(StaffApiData)
-
-  let viewProfile = (id) => {
-    console.log(id)
-  }
+  const { staffList, searchStaffRecord, processDeleteStaff } =
+    useContext(StaffApiData)
 
   return (
     <>
@@ -41,7 +38,7 @@ const StaffTable = () => {
                   <td className="w-1/4 border border-gray-200 py-4 px-2">
                     <div className="flex space-x-2">
                       <Link
-                        to={`/dashboard/editYear/${item.id}/edit`}
+                        to={`/dashboard/editStaff/${item.id}/edit`}
                         className="bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded"
                       >
                         Edit
@@ -49,7 +46,7 @@ const StaffTable = () => {
 
                       <span
                         onClick={() => {
-                          processDeleteCompany(item.id)
+                          processDeleteStaff({ id: item.id })
                         }}
                         className="bg-red-500 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded"
                       >
@@ -73,7 +70,7 @@ const StaffTable = () => {
                   <td className="w-1/4 border border-gray-200 py-4 px-2">
                     <div className="flex space-x-2">
                       <Link
-                        to={`/dashboard/editYear/${item.id}/edit`}
+                        to={`/dashboard/editStaff/${item.id}/edit`}
                         className="bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded"
                       >
                         Edit
@@ -81,7 +78,7 @@ const StaffTable = () => {
 
                       <span
                         onClick={() => {
-                          processDeleteCompany(item.id)
+                          processDeleteStaff({ id: item.id })
                         }}
                         className="bg-red-500 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded"
                       >

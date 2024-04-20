@@ -3,15 +3,7 @@ import { Link } from "react-router-dom"
 
 const Sidebar = () => {
   // Add your sidebar links here
-  const links = [
-    "Exam",
-    "Question",
-    "Staff",
-    "Settings",
-    "Subject",
-    "Report",
-    "Analyses",
-  ]
+  const links = ["Exam", "Question", "Staff", "Subject"]
 
   return (
     <div className="bg-gray-800 text-white p-4" style={{ width: "10vw" }}>

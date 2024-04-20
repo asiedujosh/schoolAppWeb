@@ -33,7 +33,7 @@ const UserTable = () => {
                     {item.packageId}
                   </td>
                   <td className="w-1/4 border border-gray-200 py-4 px-2">
-                    <div className="flex space-x-2">
+                    {/* <div className="flex space-x-2">
                       <span
                         onClick={() => {
                           console.log("Delete User")
@@ -43,7 +43,7 @@ const UserTable = () => {
                       >
                         Delete
                       </span>
-                    </div>
+                    </div> */}
                   </td>
                 </tr>
               ))
@@ -60,7 +60,7 @@ const UserTable = () => {
                   </td>
                   <td className="w-1/4 border border-gray-200 py-4 px-2">
                     <div className="flex space-x-2">
-                      <span
+                      {/* <span
                         onClick={() => {
                           console.log("Delete User")
                           //processDeleteCompany(item.id)
@@ -68,7 +68,7 @@ const UserTable = () => {
                         className="bg-red-500 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded"
                       >
                         Delete
-                      </span>
+                      </span> */}
                     </div>
                   </td>
                 </tr>

@@ -1,9 +1,12 @@
 import { useContext, useEffect, useState } from "react"
-// import { IndividualApiData } from "@/app/context/Individual/IndividualContextApi"
+import PaginationContainer from "./paginationContainer"
+import { UserApiData } from "../contextApi/users/userContextApi"
 import SearchContainer from "./searchContainer"
 import UserTable from "./userTable"
 
 const UserTableContainer = () => {
+  const { processSearchUser, processGetAllUser, paginationData } =
+    useContext(UserApiData)
   const [searchTerm, setSearchTerm] = useState("")
 
   const handleSearchChange = (data) => {
@@ -34,8 +37,10 @@ const UserTableContainer = () => {
       <div className="overflow-auto" style={{ height: "80%" }}>
         <UserTable />
       </div>
-      {/* <PaginationContainer />
-      <PrintButton /> */}
+      <PaginationContainer
+        paginationData={paginationData}
+        paginationFunction={processGetAllUser}
+      />
     </div>
   )
 }

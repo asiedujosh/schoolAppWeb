@@ -17,6 +17,7 @@ const ExamApiDataProvider = (props) => {
   const [searchExamRecord, setSearchExamRecord] = useState([])
   const [searchPaginationData, setSearchPaginationData] = useState(null)
   const [examOptions, setExamOptions] = useState()
+  const [paginationData, setPaginationData] = useState()
 
   const processSearchExams = async (data) => {
     let responseOnSearch = await searchExamRecords(data)
@@ -25,11 +26,12 @@ const ExamApiDataProvider = (props) => {
     }
   }
 
-  const processGetAllExams = async () => {
-    let response = await getAllExams()
+  const processGetAllExams = async (data) => {
+    let response = await getAllExams(data || 1)
     if (response) {
-      setExamsList(response.data.data)
-      processExamsOptions(response.data.data)
+      setExamsList(response.data.data.data)
+      processExamsOptions(response.data.data.data)
+      setPaginationData(response.data.pagination)
     }
   }
 
@@ -76,6 +78,7 @@ const ExamApiDataProvider = (props) => {
         processDeleteExams,
         examsList,
         processSearchExams,
+        paginationData,
         searchExamRecord,
         examOptions,
       }}
