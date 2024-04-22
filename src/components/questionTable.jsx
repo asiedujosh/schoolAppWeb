@@ -15,10 +15,6 @@ const QuestionTable = () => {
 
   const navigate = useNavigate()
 
-  let viewProfile = (id) => {
-    console.log(id)
-  }
-
   let viewEdit = (id) => {
     preparingQuestForEdit(id)
     navigate(`/dashboard/editQuestion/${id}/edit`)
@@ -71,37 +67,38 @@ const QuestionTable = () => {
               </tr>
             ))}
 
-          {questionList.map((item) => (
-            <tr key={item.id} className="border-t border-gray-200">
-              <td className="border border-gray-200 py-4 px-2">
-                {item.questionNo}
-              </td>
-              <td className="border border-gray-200 py-4 px-2">
-                {item.question}
-              </td>
-              <td className="w-1/4 border border-gray-200 py-4 px-2">
-                <div className="flex space-x-2">
-                  <span
-                    onClick={() => {
-                      viewEdit(item.id)
-                    }}
-                    className="bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded"
-                  >
-                    Edit
-                  </span>
+          {searchRecord.length == 0 &&
+            questionList.map((item) => (
+              <tr key={item.id} className="border-t border-gray-200">
+                <td className="border border-gray-200 py-4 px-2">
+                  {item.questionNo}
+                </td>
+                <td className="border border-gray-200 py-4 px-2">
+                  {item.question}
+                </td>
+                <td className="w-1/4 border border-gray-200 py-4 px-2">
+                  <div className="flex space-x-2">
+                    <span
+                      onClick={() => {
+                        viewEdit(item.id)
+                      }}
+                      className="bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded"
+                    >
+                      Edit
+                    </span>
 
-                  <span
-                    onClick={() => {
-                      processDeleteQuestion({ id: item.id })
-                    }}
-                    className="bg-red-500 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded"
-                  >
-                    Delete
-                  </span>
-                </div>
-              </td>
-            </tr>
-          ))}
+                    <span
+                      onClick={() => {
+                        processDeleteQuestion({ id: item.id })
+                      }}
+                      className="bg-red-500 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded"
+                    >
+                      Delete
+                    </span>
+                  </div>
+                </td>
+              </tr>
+            ))}
         </tbody>
       </table>
     </>

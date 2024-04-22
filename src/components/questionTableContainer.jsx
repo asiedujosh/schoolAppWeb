@@ -16,7 +16,8 @@ const QuestionTableContainer = () => {
   const { examsList } = useContext(ExamApiData)
   const { subjectList } = useContext(SubjectApiData)
   const { yearList } = useContext(YearApiData)
-  const { processGetAllQuestion, paginationData } = useContext(QuestionApiData)
+  const { processGetAllQuestion, paginationData, processSearchQuestion } =
+    useContext(QuestionApiData)
   const [examOptions, setExamOptions] = useState()
   const [subjectOptions, setSubjectOptions] = useState()
   const [yearOptions, setYearOptions] = useState()
@@ -62,10 +63,10 @@ const QuestionTableContainer = () => {
   }, [yearList])
 
   const handleInputChange = (data, field) => {
-    setFormData({
-      ...formData,
+    setFormData((prevState) => ({
+      ...prevState,
       [field]: data,
-    })
+    }))
   }
 
   // const handleSearchChange = (data) => {
@@ -74,9 +75,22 @@ const QuestionTableContainer = () => {
   // }
 
   const handleSearchSubmit = () => {
+    let examId =
+      examsList.filter((item) => item.exam == formData.examType)[0]?.id || 1
+    let yearId =
+      yearList.filter((item) => item.year == formData.year)[0]?.id || 1
+    let subjectId =
+      subjectList.filter((item) => item.subject == formData.subject)[0]?.id || 1
+
+    let newSearchData = {
+      examType: examId,
+      year: yearId,
+      subject: subjectId,
+    }
+
     //e.preventDefault()
-    console.log(searchTerm)
-    //processSearchRecord(searchTerm)
+    // console.log(newSearchData)
+    processSearchQuestion(newSearchData)
   }
 
   return (

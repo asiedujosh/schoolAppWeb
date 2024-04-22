@@ -29,6 +29,22 @@ export const countQuestions = async () => {
   }
 }
 
+export const searchQuestion = async (data) => {
+  try {
+    let responseOnQuestionSearch = await axios.get(
+      `/api/searchQuestion?examType=${data.examType}&year=${data.year}&subject=${data.subject}`
+    )
+    if (responseOnQuestionSearch.status === SUCCESS_STATUS) {
+      return responseOnQuestionSearch.data
+    } else {
+      return false
+    }
+  } catch (err) {
+    console.log(err)
+    return false
+  }
+}
+
 export const getAllQuestion = async (data) => {
   try {
     let responseOnGetAllQuestion = await axios.get(

@@ -62,7 +62,7 @@ const Home = () => {
             </div>
             <div className="w-full sm:w-1/2 lg:w-1/4 px-4">
               <Card title="Package" link="Package" qty={packageList.length} />
-              <LabelBtn text="+ Package" path="addPackage" />
+              {/* <LabelBtn text="+ Package" path="addPackage" /> */}
             </div>
             <div className="w-full sm:w-1/2 lg:w-1/4 px-4">
               <Card
@@ -81,13 +81,13 @@ const Home = () => {
           <Card title="Quizes" link="Quiz" />
         </div> */}
       </div>
-      <div className="border-b border-gray-200 my-10"></div>
+      {/* <div className="border-b border-gray-200 my-10"></div>
       <div className="flex flex-wrap -mx-4 my-6">
         <div className="w-full sm:w-1/2 lg:w-1/4 px-4">
           <Card title="News" link="News" />
           <LabelBtn text="+ News" path="addNews" />
         </div>
-      </div>
+      </div> */}
     </>
   )
 }

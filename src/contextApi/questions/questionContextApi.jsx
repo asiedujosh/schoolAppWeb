@@ -7,6 +7,7 @@ import {
   addQuestion,
   deleteQuestion,
   editQuestion,
+  searchQuestion,
   getAllQuestion,
   countQuestions,
 } from "./question"
@@ -49,6 +50,13 @@ const QuestionApiDataProvider = (props) => {
     if (response) {
       setQuestionList(response.data.data.data)
       setPaginationData(response.data.pagination)
+    }
+  }
+
+  const processSearchQuestion = async (data) => {
+    let response = await searchQuestion(data)
+    if (response) {
+      setSearchRecord(response.data.data)
     }
   }
 
@@ -102,6 +110,7 @@ const QuestionApiDataProvider = (props) => {
         processDeleteQuestion,
         preparingQuestForEdit,
         processCountQuestion,
+        processSearchQuestion,
         noOfQuestions,
         questionList,
         searchRecord,

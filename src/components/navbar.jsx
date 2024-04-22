@@ -20,9 +20,9 @@ const Navbar = () => {
       </div>
       <div>
         <div className="flex">
-          <button className="text-gray-400 hover:text-white mr-4">
+          {/* <button className="text-gray-400 hover:text-white mr-4">
             Notifications
-          </button>
+          </button> */}
           <button
             className="text-gray-400 hover:text-white"
             onClick={() => handleLogout()}

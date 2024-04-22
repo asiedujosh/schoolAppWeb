@@ -79,7 +79,6 @@ const YearApiDataProvider = (props) => {
         yearOptions,
         setYearOptions,
         processSearchYear,
-        paginationData
       }}
     >
       {props.children}
