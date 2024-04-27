@@ -41,7 +41,11 @@ const QuestionTable = () => {
                   {item.questionNo}
                 </td>
                 <td className="border border-gray-200 py-4 px-2">
-                  {item.question}
+                  <div
+                    dangerouslySetInnerHTML={{
+                      __html: item.question,
+                    }}
+                  />
                 </td>
                 <td className="w-1/4 border border-gray-200 py-4 px-2">
                   <div className="flex space-x-2">
@@ -74,7 +78,11 @@ const QuestionTable = () => {
                   {item.questionNo}
                 </td>
                 <td className="border border-gray-200 py-4 px-2">
-                  {item.question}
+                  <div
+                    dangerouslySetInnerHTML={{
+                      __html: item.question,
+                    }}
+                  />
                 </td>
                 <td className="w-1/4 border border-gray-200 py-4 px-2">
                   <div className="flex space-x-2">

@@ -135,7 +135,7 @@ const EditQuestion = () => {
       year: mapId(formData.year, yearList, "year"),
       topic: mapId(formData.topic, topicList, "topic"),
       questionNo: formData.questionNo,
-      question: formData.question,
+      question: formData.question.level.content,
       questionEquation: formData.questionEquation,
       answerOptions: formData.answerOptions,
       optionsWithEquation: formData.optionsWithEquation,
@@ -160,7 +160,7 @@ const EditQuestion = () => {
     // console.log(newQuestData)
     // processAddQuestion(newQuestData)
 
-    //processUpdateQuestion(newQuestData)
+    processUpdateQuestion(newQuestData)
   }
 
   return (

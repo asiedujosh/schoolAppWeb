@@ -9,6 +9,7 @@ const modules = {
     ["bold", "italic", "underline", "strike", "blockquote"],
     [{ list: "ordered" }, { list: "bullet" }],
     ["image"],
+    ["formula", "table"],
   ],
 }
 

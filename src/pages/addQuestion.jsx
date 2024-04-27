@@ -10,6 +10,7 @@ import InputField from "../components/inputField"
 import UploadImageTwo from "../components/uploadMultipleImage"
 import SelectField from "../components/selectField"
 import TextAreaField from "../components/textAreaField"
+import TextAreaField3 from "../components/textAreaField3"
 import SubmitBtn from "../components/submitButton"
 import AddTopic from "./addTopic"
 import { ToastContainer, toast } from "react-toastify"
@@ -89,7 +90,7 @@ const AddQuestion = () => {
       year: mapId(formData.year, yearList, "year"),
       topic: mapId(formData.topic, topicList, "topic"),
       questionNo: formData.questionNo,
-      question: formData.question,
+      question: formData.question.level.content,
       questionEquation: formData.questionEquation,
       hints: formData.hints ? formData.hints : null,
       answerOptions: formData.answerOptions,
@@ -107,6 +108,7 @@ const AddQuestion = () => {
         newQuestData.optionsWithEquation !== "") ||
       (newQuestData.imageOptions !== null && newQuestData.imageOptions !== "")
     ) {
+      console.log(newQuestData)
       processAddQuestion(newQuestData)
     } else {
       console.log("One of the Options fields should not be empty")
@@ -221,7 +223,7 @@ const AddQuestion = () => {
                           />
                         )) ||
                         (item.type === "textArea" && (
-                          <TextAreaField
+                          <TextAreaField3
                             key={item.id}
                             field={item}
                             value={formData}
