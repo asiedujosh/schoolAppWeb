@@ -21,6 +21,7 @@ const QuestionApiDataProvider = (props) => {
   const [questionFormData, setQuestionFormData] = useState({})
   const [editClear, setEditClear] = useState(false)
   const [paginationData, setPaginationData] = useState()
+  const [loading, setLoading] = useState(false)
 
   const preparingQuestForEdit = (id) => {
     setQuestionFormData()
@@ -69,6 +70,7 @@ const QuestionApiDataProvider = (props) => {
   }
 
   const processAddQuestion = async (data) => {
+    setLoading((prev) => !prev)
     let signs = ["span", "em"]
 
     signs.map((item) => {
@@ -81,14 +83,21 @@ const QuestionApiDataProvider = (props) => {
     let response = await addQuestion(data)
     if (response) {
       notify(SUCCESS_STATUS)
+      setLoading((prev) => !prev)
+    } else {
+      setLoading((prev) => !prev)
     }
   }
 
   const processUpdateQuestion = async (data) => {
+    setLoading((prev) => !prev)
     let response = await editQuestion(data)
     if (response) {
       processGetAllQuestion()
       notify(SUCCESS_STATUS)
+      setLoading((prev) => !prev)
+    } else {
+      setLoading((prev) => !prev)
     }
   }
 
@@ -116,6 +125,8 @@ const QuestionApiDataProvider = (props) => {
         searchRecord,
         questionFormData,
         editClear,
+        loading,
+        setLoading,
       }}
     >
       {props.children}

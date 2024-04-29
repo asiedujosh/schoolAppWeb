@@ -13,11 +13,12 @@ import TextAreaField from "../components/textAreaField"
 import TextAreaField3 from "../components/textAreaField3"
 import SubmitBtn from "../components/submitButton"
 import AddTopic from "./addTopic"
+import LoadingBtn from "../components/loadingButton"
 import { ToastContainer, toast } from "react-toastify"
 import "react-toastify/dist/ReactToastify.css"
 
 const AddQuestion = () => {
-  const { processAddQuestion } = useContext(QuestionApiData)
+  const { processAddQuestion, loading } = useContext(QuestionApiData)
   const { userProfile } = useContext(AuthApiData)
   const { examsList, examOptions } = useContext(ExamApiData)
   const { subjectList, subjectOptions } = useContext(SubjectApiData)
@@ -167,30 +168,27 @@ const AddQuestion = () => {
 
                   <div className="flex w-full justify-between">
                     {ADDQUESTIONS.fieldDetail1.map((item) => {
-                      return (
-                        (item.type === "text" && (
-                          <InputField
-                            key={item.id}
-                            field={item}
-                            value={formData}
-                            defaultVal={item.defaultValue}
-                            readOnly={item.readOnly}
-                            change={(data, field) => {
-                              handleInputChange(data, field)
-                            }}
-                          />
-                        )) ||
-                        (item.type === "select" && (
-                          <SelectField
-                            key={item.id}
-                            field={item}
-                            value={formData}
-                            options={handleOptionAssign(item)}
-                            change={(data, field) => {
-                              handleInputChange(data, field)
-                            }}
-                          />
-                        ))
+                      return item.type === "select" ? (
+                        <SelectField
+                          key={item.id}
+                          field={item}
+                          value={formData}
+                          options={handleOptionAssign(item)}
+                          change={(data, field) => {
+                            handleInputChange(data, field)
+                          }}
+                        />
+                      ) : (
+                        <InputField
+                          key={item.id}
+                          field={item}
+                          value={formData}
+                          defaultVal={item.defaultValue}
+                          readOnly={item.readOnly}
+                          change={(data, field) => {
+                            handleInputChange(data, field)
+                          }}
+                        />
                       )
                     })}
                   </div>
@@ -330,10 +328,14 @@ const AddQuestion = () => {
                   </div>
                 </div>
                 <div className="mt-2 min-w-full flex items-center justify-center">
-                  <SubmitBtn
-                    text={ADDQUESTIONS.buttonText}
-                    submit={handleSubmit}
-                  />
+                  {loading ? (
+                    <LoadingBtn />
+                  ) : (
+                    <SubmitBtn
+                      text={ADDQUESTIONS.buttonText}
+                      submit={handleSubmit}
+                    />
+                  )}
                 </div>
               </div>
               <AddTopic />

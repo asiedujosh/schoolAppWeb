@@ -30,7 +30,7 @@ export const ADDQUESTIONS = {
     {
       name: "questionNo",
       label: "Question No",
-      type: "text",
+      type: "number",
       placeholder: "Add your question",
     },
     {
@@ -84,8 +84,8 @@ export const ADDQUESTIONS = {
     {
       name: "questionNo",
       label: "Question No",
-      type: "text",
-      placeholder: "Add your question",
+      type: "number",
+      placeholder: "Add question No",
     },
   ],
 

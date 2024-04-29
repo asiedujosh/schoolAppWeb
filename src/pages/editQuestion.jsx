@@ -135,7 +135,7 @@ const EditQuestion = () => {
       year: mapId(formData.year, yearList, "year"),
       topic: mapId(formData.topic, topicList, "topic"),
       questionNo: formData.questionNo,
-      question: formData.question.level.content,
+      question: formData.question?.level?.content || questionFormData.question,
       questionEquation: formData.questionEquation,
       answerOptions: formData.answerOptions,
       optionsWithEquation: formData.optionsWithEquation,
@@ -216,30 +216,27 @@ const EditQuestion = () => {
 
                   <div className="flex w-full justify-between">
                     {ADDQUESTIONS.fieldDetail1.map((item) => {
-                      return (
-                        (item.type === "text" && (
-                          <InputField
-                            key={item.id}
-                            field={item}
-                            value={formData}
-                            defaultVal={item.defaultValue}
-                            readOnly={item.readOnly}
-                            change={(data, field) => {
-                              handleInputChange(data, field)
-                            }}
-                          />
-                        )) ||
-                        (item.type === "select" && (
-                          <SelectField
-                            key={item.id}
-                            field={item}
-                            value={formData}
-                            options={handleOptionAssign(item)}
-                            change={(data, field) => {
-                              handleInputChange(data, field)
-                            }}
-                          />
-                        ))
+                      return item.type === "select" ? (
+                        <SelectField
+                          key={item.id}
+                          field={item}
+                          value={formData}
+                          options={handleOptionAssign(item)}
+                          change={(data, field) => {
+                            handleInputChange(data, field)
+                          }}
+                        />
+                      ) : (
+                        <InputField
+                          key={item.id}
+                          field={item}
+                          value={formData}
+                          defaultVal={item.defaultValue}
+                          readOnly={item.readOnly}
+                          change={(data, field) => {
+                            handleInputChange(data, field)
+                          }}
+                        />
                       )
                     })}
                   </div>
