@@ -103,6 +103,7 @@ const QuestionApiDataProvider = (props) => {
     let response = await editQuestion(data)
     if (response) {
       processGetAllQuestion()
+      setSearchRecord([])
       notify(SUCCESS_STATUS)
       setLoading((prev) => !prev)
     } else {
@@ -114,6 +115,7 @@ const QuestionApiDataProvider = (props) => {
     let response = await deleteQuestion(data)
     if (response) {
       processGetAllQuestion()
+      setSearchRecord([])
       notify(SUCCESS_STATUS)
     }
   }
@@ -132,6 +134,7 @@ const QuestionApiDataProvider = (props) => {
         noOfQuestions,
         questionList,
         searchRecord,
+        setSearchRecord,
         questionFormData,
         editClear,
         loading,

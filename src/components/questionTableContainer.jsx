@@ -22,6 +22,8 @@ const QuestionTableContainer = () => {
     paginationData,
     processSearchQuestion,
     searchLoad,
+    searchRecord,
+    setSearchRecord,
   } = useContext(QuestionApiData)
   const [examOptions, setExamOptions] = useState()
   const [subjectOptions, setSubjectOptions] = useState()
@@ -74,10 +76,10 @@ const QuestionTableContainer = () => {
     }))
   }
 
-  // const handleSearchChange = (data) => {
-  //   console.log(data)
-  //   setSearchTerm(data)
-  // }
+  const handleClearSearch = () => {
+    // console.log(data)
+    setSearchRecord([])
+  }
 
   const handleSearchSubmit = () => {
     let examId =
@@ -143,23 +145,30 @@ const QuestionTableContainer = () => {
             }}
           />
         </div>
-        <div className="w-full mx-4 mt-6">
-          <div className="">
+        <div className="flex w-full mx-4 mt-6 space-x-2">
+          <div className="mt-2 w-full">
             {searchLoad ? (
               <LoadingBtn />
             ) : (
               <SubmitBtn text={"Search"} submit={handleSearchSubmit} />
             )}
           </div>
+          {searchRecord.length > 0 && (
+            <div className="mt-2 w-full">
+              <SubmitBtn text={"Clear"} submit={handleClearSearch} />
+            </div>
+          )}
         </div>
       </div>
       <div className="overflow-auto" style={{ height: "80%" }}>
         <QuestionTable />
       </div>
-      <PaginationContainer
-        paginationData={paginationData}
-        paginationFunction={processGetAllQuestion}
-      />
+      {searchRecord.length == 0 && (
+        <PaginationContainer
+          paginationData={paginationData}
+          paginationFunction={processGetAllQuestion}
+        />
+      )}
     </div>
   )
 }
