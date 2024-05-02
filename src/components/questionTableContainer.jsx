@@ -8,6 +8,7 @@ import PaginationContainer from "./paginationContainer"
 import QuestionTable from "./questionTable"
 import SelectField from "./selectField"
 import InputField from "./inputField"
+import LoadingBtn from "./loadingButton"
 import SubmitBtn from "./submitButton"
 // import PaginationContainer from "./paginationContainer"
 // import PrintButton from "./printButton"
@@ -16,8 +17,12 @@ const QuestionTableContainer = () => {
   const { examsList } = useContext(ExamApiData)
   const { subjectList } = useContext(SubjectApiData)
   const { yearList } = useContext(YearApiData)
-  const { processGetAllQuestion, paginationData, processSearchQuestion } =
-    useContext(QuestionApiData)
+  const {
+    processGetAllQuestion,
+    paginationData,
+    processSearchQuestion,
+    searchLoad,
+  } = useContext(QuestionApiData)
   const [examOptions, setExamOptions] = useState()
   const [subjectOptions, setSubjectOptions] = useState()
   const [yearOptions, setYearOptions] = useState()
@@ -140,7 +145,11 @@ const QuestionTableContainer = () => {
         </div>
         <div className="w-full mx-4 mt-6">
           <div className="">
-            <SubmitBtn text={"Search"} submit={handleSearchSubmit} />
+            {searchLoad ? (
+              <LoadingBtn />
+            ) : (
+              <SubmitBtn text={"Search"} submit={handleSearchSubmit} />
+            )}
           </div>
         </div>
       </div>

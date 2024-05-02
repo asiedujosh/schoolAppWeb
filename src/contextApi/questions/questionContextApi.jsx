@@ -22,10 +22,17 @@ const QuestionApiDataProvider = (props) => {
   const [editClear, setEditClear] = useState(false)
   const [paginationData, setPaginationData] = useState()
   const [loading, setLoading] = useState(false)
+  const [searchLoad, setSearchLoad] = useState(false)
 
   const preparingQuestForEdit = (id) => {
     setQuestionFormData()
-    let data = questionList.filter((item) => item.id == id)
+    let data
+    data = questionList.filter((item) => item.id == id)
+    if (data.length == 0) {
+      data = searchRecord.filter((item) => item.id == id)
+    }
+
+    console.log(data)
 
     setQuestionFormData((prevFormData) => ({
       ...prevFormData,
@@ -55,9 +62,11 @@ const QuestionApiDataProvider = (props) => {
   }
 
   const processSearchQuestion = async (data) => {
+    setSearchLoad((prev) => !prev)
     let response = await searchQuestion(data)
     if (response) {
       setSearchRecord(response.data.data)
+      setSearchLoad((prev) => !prev)
     }
   }
 
@@ -127,6 +136,7 @@ const QuestionApiDataProvider = (props) => {
         editClear,
         loading,
         setLoading,
+        searchLoad,
       }}
     >
       {props.children}
