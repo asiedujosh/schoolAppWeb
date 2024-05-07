@@ -47,7 +47,10 @@ const QuestionTable = () => {
                     }}
                   />
                 </td>
-                <td className="w-1/4 border border-gray-200 py-4 px-2">
+                <td className="border border-gray-200 py-4 px-2 ">
+                  {item.answer}
+                </td>
+                <td className="w-1/6 border border-gray-200 py-4 px-2">
                   <div className="flex space-x-2">
                     <span
                       onClick={() => {
@@ -85,7 +88,10 @@ const QuestionTable = () => {
                     }}
                   />
                 </td>
-                <td className="w-1/4 border border-gray-200 py-4 px-2">
+                <td className="border border-gray-200 py-4 px-2">
+                  {item.answer}
+                </td>
+                <td className="w-1/6 border border-gray-200 py-4 px-2">
                   <div className="flex space-x-2">
                     <span
                       onClick={() => {

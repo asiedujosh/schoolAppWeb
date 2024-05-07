@@ -138,7 +138,7 @@ export const ADDQUESTIONS = {
   ],
 }
 
-export const QUESTIONTABLE = ["Question No", "Question", "Action"]
+export const QUESTIONTABLE = ["Question No", "Question", "Answer", "Action"]
 
 export const QUESTIONSEARCH = [
   {

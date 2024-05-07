@@ -1,4 +1,5 @@
 import { useState, useContext, useEffect } from "react"
+import { trimAsterisks } from "../utils/trimStars"
 import { ExamApiData } from "../contextApi/exams/examsContextApi"
 import { SubjectApiData } from "../contextApi/subjects/subjectContextApi"
 import { YearApiData } from "../contextApi/year/yearContextApi"
@@ -11,6 +12,7 @@ import BaseImage from "../components/base64ImageCard"
 import UploadImageEdit from "../components/uploadMultipleImageEdit"
 import { useParams } from "react-router-dom"
 import SelectField from "../components/selectField"
+import OptionAnsInput from "../components/optionAnsInputField"
 import TextAreaField2 from "../components/textAreaField2"
 import SubmitBtn from "../components/submitButton"
 import AddTopic from "./addTopic"
@@ -61,6 +63,17 @@ const EditQuestion = () => {
 
   const [imageOptions, setImageOptions] = useState([])
   const [editedQuestion, setEditedQuestion] = useState("")
+  const [options, setOptions] = useState([])
+
+  useEffect(() => {
+    let newData = []
+    let trimStr = trimAsterisks(questionFormData.answerOptions)
+    let splitOptions = trimStr.split("**")
+    splitOptions.map((item, index) => {
+      newData.push({ id: index + 1, value: item })
+    })
+    setOptions(newData)
+  }, [])
 
   useEffect(() => {
     let topics = []
@@ -119,14 +132,34 @@ const EditQuestion = () => {
     setFormData({ ...formData, imageOptions: null })
   }
 
-  const handleSubmit = () => {
-    // e.preventDefault()
+  const handleOptionChange = (data, id) => {
+    const index = options.findIndex((option) => option.id === id)
 
+    if (index !== -1) {
+      // If option with given ID exists, replace it
+      const updatedOptions = [...options]
+      updatedOptions[index] = { id: id, value: data }
+      setOptions(updatedOptions)
+    } else {
+      // If option with given ID doesn't exist, add it
+      setOptions([...options, { id: id, value: data }])
+    }
+  }
+
+  const handleAddOption = () => {
+    setOptions([...options, { id: options.length + 1 }])
+  }
+
+  const handleSubmit = () => {
     let imageInfo = []
     imageOptions.length > 0 &&
       imageOptions.map((item) => {
         imageInfo.push(item.base64Data)
       })
+
+    let optionalAns = []
+    options.map((item) => optionalAns.push(`${item.value}*`))
+    let optionalAnsString = optionalAns.join("*")
 
     let newQuestData = {
       id: id,
@@ -137,7 +170,7 @@ const EditQuestion = () => {
       questionNo: formData.questionNo,
       question: formData.question?.level?.content || questionFormData.question,
       questionEquation: formData.questionEquation,
-      answerOptions: formData.answerOptions,
+      answerOptions: optionalAnsString.slice(0, -1),
       optionsWithEquation: formData.optionsWithEquation,
       imageOptions: imageInfo.length > 0 ? imageInfo : formData.imageOptions,
       hints: formData.hints,
@@ -152,6 +185,7 @@ const EditQuestion = () => {
         newQuestData.optionsWithEquation !== "") ||
       (newQuestData.imageOptions !== null && newQuestData.imageOptions !== "")
     ) {
+      console.log(newQuestData)
       processUpdateQuestion(newQuestData)
     } else {
       console.log("One of the Options fields should not be empty")
@@ -160,7 +194,7 @@ const EditQuestion = () => {
     // console.log(newQuestData)
     // processAddQuestion(newQuestData)
 
-    processUpdateQuestion(newQuestData)
+    // processUpdateQuestion(newQuestData)
   }
 
   return (
@@ -287,7 +321,7 @@ const EditQuestion = () => {
                     <h6 className="text-lg font-bold my-2">
                       Optional Answers Section
                     </h6>
-                    {ADDQUESTIONS.fieldDetail3.map((item) => {
+                    {/* {ADDQUESTIONS.fieldDetail3.map((item) => {
                       return (
                         (item.type === "text" && (
                           <InputField
@@ -324,8 +358,32 @@ const EditQuestion = () => {
                           />
                         ))
                       )
+                    })} */}
+
+                    {options.map((option) => {
+                      // console.log(option.value)
+                      return (
+                        <OptionAnsInput
+                          key={option}
+                          field={option}
+                          value={option}
+                          defaultVal={option.value}
+                          change={(data, field) => {
+                            handleOptionChange(data, field)
+                          }}
+                        />
+                      )
                     })}
-                    <div>
+
+                    <button
+                      type="button"
+                      onClick={handleAddOption}
+                      className="bg-gray-800 py-2 rounded-md px-4 text-white"
+                    >
+                      Add Option
+                    </button>
+
+                    <div className="mt-10">
                       <label className="text-gray-600">Image Options</label>
                       <UploadImageEdit
                         change={[imageOptions, setImageOptions]}

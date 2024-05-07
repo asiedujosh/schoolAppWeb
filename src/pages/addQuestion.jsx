@@ -14,6 +14,7 @@ import TextAreaField3 from "../components/textAreaField3"
 import SubmitBtn from "../components/submitButton"
 import AddTopic from "./addTopic"
 import LoadingBtn from "../components/loadingButton"
+import OptionAnsInput from "../components/optionAnsInputField"
 import { ToastContainer, toast } from "react-toastify"
 import "react-toastify/dist/ReactToastify.css"
 
@@ -34,6 +35,25 @@ const AddQuestion = () => {
     answer: "None",
   })
 
+  const [options, setOptions] = useState([
+    {
+      id: 1,
+      value: null,
+    },
+    {
+      id: 2,
+      value: null,
+    },
+    {
+      id: 3,
+      value: null,
+    },
+    {
+      id: 4,
+      value: null,
+    },
+  ])
+
   useEffect(() => {
     let topics = []
     topicList &&
@@ -49,6 +69,20 @@ const AddQuestion = () => {
       ...formData,
       [field]: data,
     })
+  }
+
+  const handleOptionChange = (data, id) => {
+    const index = options.findIndex((option) => option.id === id)
+
+    if (index !== -1) {
+      // If option with given ID exists, replace it
+      const updatedOptions = [...options]
+      updatedOptions[index] = { id: id, value: data }
+      setOptions(updatedOptions)
+    } else {
+      // If option with given ID doesn't exist, add it
+      setOptions([...options, { id: id, value: data }])
+    }
   }
 
   const handleOptionAssign = (item) => {
@@ -79,12 +113,21 @@ const AddQuestion = () => {
     // return filteredItem[0].id
   }
 
+  const handleAddOption = () => {
+    setOptions([...options, { id: options.length + 1 }])
+  }
+
   const handleSubmit = () => {
-    // e.preventDefault()
+    
     let imageInfo = []
     imageOptions.map((item) => {
       imageInfo.push(item.base64Data)
     })
+
+    let optionalAns = []
+    options.map((item) => optionalAns.push(`${item.value}*`))
+    let optionalAnsString = optionalAns.join("*")
+
     let newQuestData = {
       examType: mapId(formData.examType, examsList, "exam"),
       subject: mapId(formData.subject, subjectList, "subject"),
@@ -94,7 +137,7 @@ const AddQuestion = () => {
       question: formData.question.level.content,
       questionEquation: formData.questionEquation,
       hints: formData.hints ? formData.hints : null,
-      answerOptions: formData.answerOptions,
+      answerOptions: optionalAnsString.slice(0, -1),
       optionsWithEquation: formData.optionsWithEquation
         ? formData.optionsWithEquation
         : null,
@@ -109,7 +152,7 @@ const AddQuestion = () => {
         newQuestData.optionsWithEquation !== "") ||
       (newQuestData.imageOptions !== null && newQuestData.imageOptions !== "")
     ) {
-      console.log(newQuestData)
+      // console.log(newQuestData)
       processAddQuestion(newQuestData)
     } else {
       console.log("One of the Options fields should not be empty")
@@ -235,11 +278,11 @@ const AddQuestion = () => {
                     })}
                   </div>
 
-                  <div>
+                  <div className="mt-10">
                     <h6 className="text-lg font-bold my-2">
                       Optional Answers Section
                     </h6>
-                    {ADDQUESTIONS.fieldDetail3.map((item) => {
+                    {/* {ADDQUESTIONS.fieldDetail3.map((item) => {
                       return (
                         (item.type === "text" && (
                           <InputField
@@ -276,8 +319,29 @@ const AddQuestion = () => {
                           />
                         ))
                       )
+                    })} */}
+
+                    {options?.map((option) => {
+                      // console.log(option)
+                      return (
+                        <OptionAnsInput
+                          key={option}
+                          field={option}
+                          value={option}
+                          change={(data, field) => {
+                            handleOptionChange(data, field)
+                          }}
+                        />
+                      )
                     })}
-                    <div>
+                    <button
+                      type="button"
+                      onClick={handleAddOption}
+                      className="bg-gray-800 py-2 rounded-md px-4 text-white"
+                    >
+                      Add Option
+                    </button>
+                    <div className="mt-10">
                       <label className="text-gray-600">Image Options</label>
                       <UploadImageTwo
                         change={[imageOptions, setImageOptions]}
