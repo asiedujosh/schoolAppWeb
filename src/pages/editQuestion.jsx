@@ -185,16 +185,11 @@ const EditQuestion = () => {
         newQuestData.optionsWithEquation !== "") ||
       (newQuestData.imageOptions !== null && newQuestData.imageOptions !== "")
     ) {
-      console.log(newQuestData)
+      // console.log(newQuestData)
       processUpdateQuestion(newQuestData)
     } else {
       console.log("One of the Options fields should not be empty")
     }
-
-    // console.log(newQuestData)
-    // processAddQuestion(newQuestData)
-
-    // processUpdateQuestion(newQuestData)
   }
 
   return (

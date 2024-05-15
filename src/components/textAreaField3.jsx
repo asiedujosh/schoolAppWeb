@@ -23,6 +23,7 @@ const TextAreaField3 = ({ field, value, change }) => {
           height: 500,
           menubar: false,
           plugins: [
+            "quickbars",
             "advlist",
             "autolink",
             "lists",
@@ -43,9 +44,9 @@ const TextAreaField3 = ({ field, value, change }) => {
             "wordcount",
           ],
           toolbar:
-            "undo redo | blocks | " +
-            "bold italic forecolor | alignleft aligncenter " +
-            "alignright alignjustify | bullist numlist outdent indent | " +
+            "undo redo | blocks | math" +
+            "bold italic underline forecolor | alignleft aligncenter " +
+            "alignright alignjustify | bullist numlist outdent indent |" +
             "table tabledelete | tableprops tablerowprops tablecellprops | tableinsertrowbefore tableinsertrowafter tabledeleterow | tableinsertcolbefore tableinsertcolafter tabledeletecol" +
             "removeformat | image | help",
           content_style:

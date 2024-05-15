@@ -7,12 +7,12 @@ import {
 } from "react-router-dom"
 import Dashboard from "./pages/dashboard"
 import Home from "./pages/home"
-import Test from "./pages/test"
 import Login from "./pages/login"
 import "./App.css"
 
 // Lazy load components using dynamic import()
 const AddPackage = React.lazy(() => import("./pages/addPackage"))
+const ComingSoon = React.lazy(() => import("./pages/comingSoon"))
 const EditPackage = React.lazy(() => import("./pages/editPackage"))
 const Package = React.lazy(() => import("./pages/Package"))
 const Subscriber = React.lazy(() => import("./pages/subscriber"))
@@ -20,6 +20,7 @@ const AddExams = React.lazy(() => import("./pages/addExam"))
 const AddYear = React.lazy(() => import("./pages/addYear"))
 const AddSubject = React.lazy(() => import("./pages/addSubject"))
 const AddQuestion = React.lazy(() => import("./pages/addQuestion"))
+const AddOralQuestion = React.lazy(() => import("./pages/addOralQuestion"))
 const AddNews = React.lazy(() => import("./pages/addNews"))
 const Exam = React.lazy(() => import("./pages/Exam"))
 const EditExam = React.lazy(() => import("./pages/editExam"))
@@ -32,6 +33,7 @@ const AddStaff = React.lazy(() => import("./pages/addStaff"))
 const EditQuestion = React.lazy(() => import("./pages/editQuestion"))
 const ViewExam = React.lazy(() => import("./pages/viewExam"))
 const Question = React.lazy(() => import("./pages/Question"))
+const OralQuestion = React.lazy(() => import("./pages/oralQuestion"))
 const Subject = React.lazy(() => import("./pages/Subject"))
 const EditSubject = React.lazy(() => import("./pages/editSubject"))
 const Year = React.lazy(() => import("./pages/Year"))
@@ -98,6 +100,14 @@ function App() {
             }
           />
           <Route
+            path="addOralQuestion"
+            element={
+              <React.Suspense fallback={<div>Loading...</div>}>
+                <AddOralQuestion />
+              </React.Suspense>
+            }
+          />
+          <Route
             path="Exam"
             element={
               <React.Suspense fallback={<div>Loading...</div>}>
@@ -126,6 +136,14 @@ function App() {
             element={
               <React.Suspense fallback={<div>Loading...</div>}>
                 <Question />
+              </React.Suspense>
+            }
+          />
+          <Route
+            path="oralQuestion"
+            element={
+              <React.Suspense fallback={<div>Loading...</div>}>
+                <OralQuestion />
               </React.Suspense>
             }
           />
@@ -278,6 +296,30 @@ function App() {
             element={
               <React.Suspense fallback={<div>Loading...</div>}>
                 <AddLink />
+              </React.Suspense>
+            }
+          />
+          <Route
+            path="Slider"
+            element={
+              <React.Suspense fallback={<div>Loading...</div>}>
+                <ComingSoon />
+              </React.Suspense>
+            }
+          />
+          <Route
+            path="Setting"
+            element={
+              <React.Suspense fallback={<div>Loading...</div>}>
+                <ComingSoon />
+              </React.Suspense>
+            }
+          />
+          <Route
+            path="Notification"
+            element={
+              <React.Suspense fallback={<div>Loading...</div>}>
+                <ComingSoon />
               </React.Suspense>
             }
           />

@@ -5,32 +5,25 @@ import { YearApiData } from "../contextApi/year/yearContextApi"
 import { TopicApiData } from "../contextApi/topic/topicContextApi"
 import { AuthApiData } from "../contextApi/auth/authContextApi"
 import { QuestionApiData } from "../contextApi/questions/questionContextApi"
-import { ADDQUESTIONS } from "../constants/questionConstants"
+import { ADDQUESTIONS } from "../constants/oralQuestionConstants"
 import InputField from "../components/inputField"
-import UploadImageTwo from "../components/uploadMultipleImage"
+import UploadAudio from "../components/uploadAudio"
 import SelectField from "../components/selectField"
-import TextAreaField from "../components/textAreaField"
-import TextAreaField3 from "../components/textAreaField3"
 import SubmitBtn from "../components/submitButton"
 import AddTopic from "./addTopic"
 import LoadingBtn from "../components/loadingButton"
 import OptionAnsInput from "../components/optionAnsInputField"
 import { ToastContainer, toast } from "react-toastify"
 import "react-toastify/dist/ReactToastify.css"
-import CurtainPrompt from "../components/curtainPrompt"
 
-const AddQuestion = () => {
-  const { processAddQuestion, loading, processCheckQuestionNo } =
-    useContext(QuestionApiData)
+const AddOralQuestion = () => {
+  const { processAddOralQuestion, loading } = useContext(QuestionApiData)
   const { userProfile } = useContext(AuthApiData)
   const { examsList, examOptions } = useContext(ExamApiData)
   const { subjectList, subjectOptions } = useContext(SubjectApiData)
   const { yearList, yearOptions } = useContext(YearApiData)
   const { topicList } = useContext(TopicApiData)
   const [topicOptions, setTopicOptions] = useState()
-  const [imageOptions, setImageOptions] = useState([])
-  const [prompt, setPrompt] = useState(false)
-  const [finalData, setFinalData] = useState()
 
   const [formData, setFormData] = useState({
     examType: examOptions[0] || null,
@@ -121,21 +114,7 @@ const AddQuestion = () => {
     setOptions([...options, { id: options.length + 1 }])
   }
 
-  const proceedSubmit = () => {
-    setPrompt((prev) => !prev)
-    processAddQuestion(finalData)
-  }
-
-  const dontProceedSubmit = () => {
-    setPrompt((prev) => !prev)
-  }
-
-  const handleSubmit = async () => {
-    let imageInfo = []
-    imageOptions.map((item) => {
-      imageInfo.push(item.base64Data)
-    })
-
+  const handleSubmit = () => {
     let optionalAns = []
     options.map((item) => optionalAns.push(`${item.value}*`))
     let optionalAnsString = optionalAns.join("*")
@@ -146,35 +125,20 @@ const AddQuestion = () => {
       year: mapId(formData.year, yearList, "year"),
       topic: mapId(formData.topic, topicList, "topic"),
       questionNo: formData.questionNo,
-      question: formData.question.level.content,
-      questionEquation: formData.questionEquation,
+      question: formData.audioUpload,
       hints: formData.hints ? formData.hints : null,
       answerOptions: optionalAnsString.slice(0, -1),
-      optionsWithEquation: formData.optionsWithEquation
-        ? formData.optionsWithEquation
-        : null,
-      imageOptions: imageInfo,
       answer: formData.answer,
       publisher: userProfile.username,
     }
     if (
-      (newQuestData.answerOptions !== null &&
-        newQuestData.answerOptions !== "") ||
-      (newQuestData.optionsWithEquation !== null &&
-        newQuestData.optionsWithEquation !== "") ||
-      (newQuestData.imageOptions !== null && newQuestData.imageOptions !== "")
+      newQuestData.answerOptions !== null &&
+      newQuestData.answerOptions !== ""
     ) {
-      // console.log(newQuestData)
-      setFinalData(newQuestData)
-
-      let checkQuestionNoResult = await processCheckQuestionNo(newQuestData)
-      if (checkQuestionNoResult) {
-        setPrompt((prev) => !prev)
-      } else {
-        processAddQuestion(newQuestData)
-      }
+      console.log(newQuestData)
+      processAddOralQuestion(newQuestData)
     } else {
-      alert("One of the Options fields should not be empty")
+      console.log("One of the Options fields should not be empty")
     }
   }
 
@@ -257,44 +221,11 @@ const AddQuestion = () => {
 
                   <div>
                     <h6 className="text-lg font-bold my-2">Question Section</h6>
-                    {ADDQUESTIONS.fieldDetail2.map((item) => {
-                      return (
-                        (item.type === "text" && (
-                          <InputField
-                            key={item.id}
-                            field={item}
-                            value={formData}
-                            defaultVal={item.defaultValue}
-                            readOnly={item.readOnly}
-                            change={(data, field) => {
-                              handleInputChange(data, field)
-                            }}
-                          />
-                        )) ||
-                        (item.type === "select" && (
-                          <SelectField
-                            key={item.id}
-                            field={item}
-                            value={formData}
-                            options={handleOptionAssign(item)}
-                            change={(data, field) => {
-                              handleInputChange(data, field)
-                            }}
-                          />
-                        )) ||
-                        (item.type === "textArea" && (
-                          <TextAreaField3
-                            key={item.id}
-                            field={item}
-                            value={formData}
-                            options={item.options}
-                            change={(data, field) => {
-                              handleInputChange(data, field)
-                            }}
-                          />
-                        ))
-                      )
-                    })}
+                    <UploadAudio
+                      change={(data, field) => {
+                        handleInputChange(data, field)
+                      }}
+                    />
                   </div>
 
                   <div className="mt-10">
@@ -322,12 +253,6 @@ const AddQuestion = () => {
                     >
                       Add Option
                     </button>
-                    <div className="mt-10">
-                      <label className="text-gray-600">Image Options</label>
-                      <UploadImageTwo
-                        change={[imageOptions, setImageOptions]}
-                      />
-                    </div>
                   </div>
 
                   <div>
@@ -390,19 +315,8 @@ const AddQuestion = () => {
         </div>
       </div>
       <ToastContainer />
-      {prompt && (
-        <CurtainPrompt
-          promptTitle={
-            formData.questionNo
-              ? `Question number ${formData?.questionNo} already exist, do you want to continue?`
-              : `Question has no number, do you want to continue?`
-          }
-          yesFunction={proceedSubmit}
-          noFunction={dontProceedSubmit}
-        />
-      )}
     </>
   )
 }
 
-export default AddQuestion
+export default AddOralQuestion
