@@ -17,6 +17,23 @@ export const addExams = async (data) => {
   }
 }
 
+export const checkExamAvailability = async (data) => {
+  try {
+    let responseOnCheckExamAvailability = await axios.get(
+      `/api/checkExamAvailability?exam=${data.examType}`
+    )
+    if (responseOnCheckExamAvailability) {
+      if (responseOnCheckExamAvailability.status === SUCCESS_STATUS) {
+        return responseOnCheckExamAvailability.data
+      }
+    } else {
+      return false
+    }
+  } catch (err) {
+    console.log(err)
+  }
+}
+
 export const searchExamRecords = async (data) => {
   try {
     let responseOnSearchExam = await axios.get(

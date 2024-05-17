@@ -110,6 +110,23 @@ export const checkQuestionNo = async (data) => {
   }
 }
 
+export const checkOralQuestionNo = async (data) => {
+  try {
+    let responseOnCheckOralQuestionNo = await axios.get(
+      `/api/checkOralQuestionNo?examType=${data.examType}&year=${data.year}&subject=${data.subject}&questionNo=${data.questionNo}`
+    )
+    if (responseOnCheckOralQuestionNo) {
+      if (responseOnCheckOralQuestionNo.status === SUCCESS_STATUS) {
+        return responseOnCheckOralQuestionNo.data
+      }
+    } else {
+      return false
+    }
+  } catch (err) {
+    console.log(err)
+  }
+}
+
 export const searchOralQuestion = async (data) => {
   try {
     let responseOnSearchOralQuestion = await axios.get(

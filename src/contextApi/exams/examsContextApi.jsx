@@ -7,6 +7,7 @@ import {
   getAllExams,
   editExams,
   deleteExams,
+  checkExamAvailability,
   searchExamRecords,
 } from "./exams"
 
@@ -23,6 +24,14 @@ const ExamApiDataProvider = (props) => {
     let responseOnSearch = await searchExamRecords(data)
     if (responseOnSearch) {
       setSearchExamRecord(responseOnSearch.data.data)
+    }
+  }
+
+  const processCheckExamAvailability = async (data) => {
+    let response = await checkExamAvailability(data)
+    if (response) {
+      return response.data.data
+      // setPrompt((prev) => !prev)
     }
   }
 
@@ -82,6 +91,7 @@ const ExamApiDataProvider = (props) => {
         processGetAllExams,
         processUpdateExams,
         processDeleteExams,
+        processCheckExamAvailability,
         examsList,
         processSearchExams,
         paginationData,

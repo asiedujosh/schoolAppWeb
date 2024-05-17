@@ -7,6 +7,7 @@ import {
   getAllYear,
   editYear,
   deleteYear,
+  checkYearAvailability,
   searchYearRecords,
 } from "./year"
 
@@ -22,6 +23,14 @@ const YearApiDataProvider = (props) => {
     let responseOnSearch = await searchYearRecords(data)
     if (responseOnSearch) {
       setSearchYearRecord(responseOnSearch.data.data)
+    }
+  }
+
+  const processCheckYearAvailability = async (data) => {
+    let response = await checkYearAvailability(data)
+    if (response) {
+      return response.data.data
+      // setPrompt((prev) => !prev)
     }
   }
 
@@ -80,6 +89,7 @@ const YearApiDataProvider = (props) => {
         processAddYear,
         processUpdateYear,
         processDeleteYear,
+        processCheckYearAvailability,
         searchYearRecord,
         yearList,
         yearOptions,

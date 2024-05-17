@@ -34,6 +34,23 @@ export const searchSubjectRecords = async (data) => {
   }
 }
 
+export const checkSubjectAvailability = async (data) => {
+  try {
+    let responseOnCheckSubjectAvailability = await axios.get(
+      `/api/checkSubjectAvailability?subject=${data.subject}`
+    )
+    if (responseOnCheckSubjectAvailability) {
+      if (responseOnCheckSubjectAvailability.status === SUCCESS_STATUS) {
+        return responseOnCheckSubjectAvailability.data
+      }
+    } else {
+      return false
+    }
+  } catch (err) {
+    console.log(err)
+  }
+}
+
 export const getAllSubject = async (data) => {
   try {
     let responseOnGetAllSubject = await axios.get(

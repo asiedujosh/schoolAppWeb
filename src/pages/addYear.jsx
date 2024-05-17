@@ -6,11 +6,13 @@ import SelectField from "../components/selectField"
 import SubmitBtn from "../components/submitButton"
 import { ToastContainer, toast } from "react-toastify"
 import "react-toastify/dist/ReactToastify.css"
+import CurtainPrompt from "../components/curtainPrompt"
 
 const AddYear = () => {
-  const { processAddYear } = useContext(YearApiData)
-
-  const [error, setError] = useState([])
+  const { processAddYear, processCheckYearAvailability } =
+    useContext(YearApiData)
+  const [prompt, setPrompt] = useState(false)
+  const [finalData, setFinalData] = useState()
   const [formData, setFormData] = useState({})
 
   const handleInputChange = (data, field) => {
@@ -20,9 +22,26 @@ const AddYear = () => {
     })
   }
 
-  const handleSubmit = (e) => {
+  const proceedSubmit = () => {
+    setPrompt((prev) => !prev)
+    processAddYear(finalData)
+  }
+
+  const dontProceedSubmit = () => {
+    setPrompt((prev) => !prev)
+  }
+
+  const handleSubmit = async () => {
+    setFinalData(formData)
+
+    let checkYearAvails = await processCheckYearAvailability(formData)
+    if (checkYearAvails) {
+      setPrompt((prev) => !prev)
+    } else {
+      processAddYear(formData)
+    }
     // e.preventDefault()
-    processAddYear(formData)
+
     // console.log(formData)
   }
 
@@ -77,6 +96,17 @@ const AddYear = () => {
         </div>
       </div>
       <ToastContainer />
+      {prompt && (
+        <CurtainPrompt
+          promptTitle={
+            formData.examsYear
+              ? `Year ${formData?.examsYear} already exist, do you want to continue?`
+              : `Year name is empty, do you want to continue?`
+          }
+          yesFunction={proceedSubmit}
+          noFunction={dontProceedSubmit}
+        />
+      )}
     </>
   )
 }

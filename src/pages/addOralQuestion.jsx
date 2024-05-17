@@ -15,15 +15,19 @@ import LoadingBtn from "../components/loadingButton"
 import OptionAnsInput from "../components/optionAnsInputField"
 import { ToastContainer, toast } from "react-toastify"
 import "react-toastify/dist/ReactToastify.css"
+import CurtainPrompt from "../components/curtainPrompt"
 
 const AddOralQuestion = () => {
-  const { processAddOralQuestion, loading } = useContext(QuestionApiData)
+  const { processAddOralQuestion, loading, processCheckOralQuestionNo } =
+    useContext(QuestionApiData)
   const { userProfile } = useContext(AuthApiData)
   const { examsList, examOptions } = useContext(ExamApiData)
   const { subjectList, subjectOptions } = useContext(SubjectApiData)
   const { yearList, yearOptions } = useContext(YearApiData)
   const { topicList } = useContext(TopicApiData)
   const [topicOptions, setTopicOptions] = useState()
+  const [prompt, setPrompt] = useState(false)
+  const [finalData, setFinalData] = useState()
 
   const [formData, setFormData] = useState({
     examType: examOptions[0] || null,
@@ -68,7 +72,7 @@ const AddOralQuestion = () => {
     })
   }
 
-  const handleOptionChange = (data, id) => {
+  const handleOptionChange = async (data, id) => {
     const index = options.findIndex((option) => option.id === id)
 
     if (index !== -1) {
@@ -114,7 +118,16 @@ const AddOralQuestion = () => {
     setOptions([...options, { id: options.length + 1 }])
   }
 
-  const handleSubmit = () => {
+  const proceedSubmit = () => {
+    setPrompt((prev) => !prev)
+    processAddOralQuestion(finalData)
+  }
+
+  const dontProceedSubmit = () => {
+    setPrompt((prev) => !prev)
+  }
+
+  const handleSubmit = async () => {
     let optionalAns = []
     options.map((item) => optionalAns.push(`${item.value}*`))
     let optionalAnsString = optionalAns.join("*")
@@ -141,7 +154,13 @@ const AddOralQuestion = () => {
       newQuestData.answerOptions !== null &&
       newQuestData.answerOptions !== ""
     ) {
-      processAddOralQuestion(newQuestData)
+      setFinalData(newQuestData)
+      let checkQuestionNoResult = await processCheckOralQuestionNo(newQuestData)
+      if (checkQuestionNoResult) {
+        setPrompt((prev) => !prev)
+      } else {
+        processAddOralQuestion(newQuestData)
+      }
     } else {
       alert("One of the Options fields should not be empty")
     }
@@ -320,6 +339,17 @@ const AddOralQuestion = () => {
         </div>
       </div>
       <ToastContainer />
+      {prompt && (
+        <CurtainPrompt
+          promptTitle={
+            formData.questionNo
+              ? `Question number ${formData?.questionNo} already exist, do you want to continue?`
+              : `Question has no number, do you want to continue?`
+          }
+          yesFunction={proceedSubmit}
+          noFunction={dontProceedSubmit}
+        />
+      )}
     </>
   )
 }

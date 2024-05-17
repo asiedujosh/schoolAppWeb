@@ -7,10 +7,13 @@ import SubmitBtn from "../components/submitButton"
 import LoadingBtn from "../components/loadingButton"
 import { ToastContainer, toast } from "react-toastify"
 import "react-toastify/dist/ReactToastify.css"
+import CurtainPrompt from "../components/curtainPrompt"
 
 const AddSubject = () => {
-  const { processAddSubject } = useContext(SubjectApiData)
-  const [error, setError] = useState([])
+  const { processAddSubject, processCheckSubjectAvailability } =
+    useContext(SubjectApiData)
+  const [prompt, setPrompt] = useState(false)
+  const [finalData, setFinalData] = useState()
   const [formData, setFormData] = useState({})
 
   const handleInputChange = (data, field) => {
@@ -20,10 +23,24 @@ const AddSubject = () => {
     })
   }
 
-  const handleSubmit = (e) => {
-    // e.preventDefault()
-    processAddSubject(formData)
-    // console.log(formData)
+  const proceedSubmit = () => {
+    setPrompt((prev) => !prev)
+    processAddSubject(finalData)
+  }
+
+  const dontProceedSubmit = () => {
+    setPrompt((prev) => !prev)
+  }
+
+  const handleSubmit = async () => {
+    setFinalData(formData)
+
+    let checkSubjectAvails = await processCheckSubjectAvailability(formData)
+    if (checkSubjectAvails) {
+      setPrompt((prev) => !prev)
+    } else {
+      processAddSubject(formData)
+    }
   }
 
   return (
@@ -79,6 +96,17 @@ const AddSubject = () => {
         </div>
       </div>
       <ToastContainer />
+      {prompt && (
+        <CurtainPrompt
+          promptTitle={
+            formData.subject
+              ? `Subject name ${formData?.subject} already exist, do you want to continue?`
+              : `Subject name is empty, do you want to continue?`
+          }
+          yesFunction={proceedSubmit}
+          noFunction={dontProceedSubmit}
+        />
+      )}
     </>
   )
 }

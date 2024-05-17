@@ -34,6 +34,23 @@ export const searchYearRecords = async (data) => {
   }
 }
 
+export const checkYearAvailability = async (data) => {
+  try {
+    let responseOnCheckYearAvailability = await axios.get(
+      `/api/checkYearAvailability?year=${data.examsYear}`
+    )
+    if (responseOnCheckYearAvailability) {
+      if (responseOnCheckYearAvailability.status === SUCCESS_STATUS) {
+        return responseOnCheckYearAvailability.data
+      }
+    } else {
+      return false
+    }
+  } catch (err) {
+    console.log(err)
+  }
+}
+
 export const getAllYear = async (data) => {
   try {
     let responseOnGetAllYear = await axios.get(

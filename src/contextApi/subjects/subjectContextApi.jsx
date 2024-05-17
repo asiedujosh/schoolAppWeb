@@ -8,6 +8,7 @@ import {
   editSubject,
   deleteSubject,
   searchSubjectRecords,
+  checkSubjectAvailability
 } from "./subject"
 
 export const SubjectApiData = createContext()
@@ -22,6 +23,14 @@ const SubjectApiDataProvider = (props) => {
     let responseOnSearch = await searchSubjectRecords(data)
     if (responseOnSearch) {
       setSearchSubjectRecord(responseOnSearch.data.data)
+    }
+  }
+
+  const processCheckSubjectAvailability = async (data) => {
+    let response = await checkSubjectAvailability(data)
+    if (response) {
+      return response.data.data
+      // setPrompt((prev) => !prev)
     }
   }
 
@@ -83,6 +92,7 @@ const SubjectApiDataProvider = (props) => {
         processUpdateSubject,
         processDeleteSubject,
         processSearchSubject,
+        processCheckSubjectAvailability,
         subjectList,
         searchSubjectRecord,
         subjectOptions,

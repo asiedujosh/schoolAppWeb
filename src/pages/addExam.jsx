@@ -7,10 +7,13 @@ import UploadImage from "../components/uploadImage"
 import { ExamApiData } from "../contextApi/exams/examsContextApi"
 import { ToastContainer, toast } from "react-toastify"
 import "react-toastify/dist/ReactToastify.css"
+import CurtainPrompt from "../components/curtainPrompt"
 
 const AddExams = () => {
-  const { processAddExams } = useContext(ExamApiData)
-  const [error, setError] = useState([])
+  const { processAddExams, processCheckExamAvailability } =
+    useContext(ExamApiData)
+  const [prompt, setPrompt] = useState(false)
+  const [finalData, setFinalData] = useState()
   const [formData, setFormData] = useState({})
 
   const handleInputChange = (data, field) => {
@@ -20,8 +23,24 @@ const AddExams = () => {
     })
   }
 
-  const handleSubmit = () => {
-    processAddExams(formData)
+  const proceedSubmit = () => {
+    setPrompt((prev) => !prev)
+    processAddYear(finalData)
+  }
+
+  const dontProceedSubmit = () => {
+    setPrompt((prev) => !prev)
+  }
+
+  const handleSubmit = async () => {
+    console.log(formData)
+    setFinalData(formData)
+    let checkExamAvails = await processCheckExamAvailability(formData)
+    if (checkExamAvails) {
+      setPrompt((prev) => !prev)
+    } else {
+      processAddExams(formData)
+    }
   }
 
   return (
@@ -71,6 +90,17 @@ const AddExams = () => {
         </div>
       </div>
       <ToastContainer />
+      {prompt && (
+        <CurtainPrompt
+          promptTitle={
+            formData.examType
+              ? `Exam name ${formData?.examType} already exist, do you want to continue?`
+              : `Exam name not entered, do you want to continue?`
+          }
+          yesFunction={proceedSubmit}
+          noFunction={dontProceedSubmit}
+        />
+      )}
     </>
   )
 }

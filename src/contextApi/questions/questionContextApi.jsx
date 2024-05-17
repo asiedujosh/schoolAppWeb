@@ -17,6 +17,7 @@ import {
   countQuestions,
   countOralQuestions,
   checkQuestionNo,
+  checkOralQuestionNo,
 } from "./question"
 
 export const QuestionApiData = createContext()
@@ -117,6 +118,13 @@ const QuestionApiDataProvider = (props) => {
     if (response) {
       return response.data.data
       // setPrompt((prev) => !prev)
+    }
+  }
+
+  const processCheckOralQuestionNo = async (data) => {
+    let response = await checkOralQuestionNo(data)
+    if (response) {
+      return response.data.data
     }
   }
 
@@ -250,6 +258,7 @@ const QuestionApiDataProvider = (props) => {
         processSearchOralQuestion,
         processGetAllOralQuestion,
         processCheckQuestionNo,
+        processCheckOralQuestionNo,
         noOfOralQuestions,
         noOfQuestions,
         oralQuestionList,
