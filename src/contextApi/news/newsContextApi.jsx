@@ -50,6 +50,8 @@ const NewsApiDataProvider = (props) => {
     if (response) {
       processGetAllNews()
       notify(SUCCESS_STATUS)
+    } else {
+      notify(BAD_REQUEST_STATUS)
     }
   }
 
@@ -58,6 +60,8 @@ const NewsApiDataProvider = (props) => {
     if (response) {
       processGetAllNews()
       notify(SUCCESS_STATUS)
+    } else {
+      notify(BAD_REQUEST_STATUS)
     }
   }
 
@@ -67,6 +71,8 @@ const NewsApiDataProvider = (props) => {
     if (response) {
       processGetAllNews()
       notify(SUCCESS_STATUS)
+    } else {
+      notify(BAD_REQUEST_STATUS)
     }
   }
 

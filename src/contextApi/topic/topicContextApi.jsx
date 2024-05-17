@@ -24,6 +24,8 @@ const TopicApiDataProvider = (props) => {
     if (response) {
       processGetAllTopic()
       notify(SUCCESS_STATUS)
+    } else {
+      notify(BAD_REQUEST_STATUS)
     }
   }
 
@@ -32,6 +34,8 @@ const TopicApiDataProvider = (props) => {
     if (response) {
       processGetAllTopic()
       notify(SUCCESS_STATUS)
+    } else {
+      notify(BAD_REQUEST_STATUS)
     }
   }
 
@@ -40,6 +44,8 @@ const TopicApiDataProvider = (props) => {
     if (response) {
       processGetAllTopic()
       notify(SUCCESS_STATUS)
+    } else {
+      notify(BAD_REQUEST_STATUS)
     }
   }
 

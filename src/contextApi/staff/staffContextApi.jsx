@@ -25,6 +25,8 @@ const StaffApiDataProvider = (props) => {
     if (response) {
       processGetAllStaff()
       notify(SUCCESS_STATUS)
+    } else {
+      notify(BAD_REQUEST_STATUS)
     }
   }
 
@@ -33,6 +35,8 @@ const StaffApiDataProvider = (props) => {
     if (response) {
       processGetAllStaff()
       notify(SUCCESS_STATUS)
+    } else {
+      notify(BAD_REQUEST_STATUS)
     }
   }
 
@@ -42,6 +46,8 @@ const StaffApiDataProvider = (props) => {
     if (response) {
       processGetAllStaff()
       notify(SUCCESS_STATUS)
+    } else {
+      notify(BAD_REQUEST_STATUS)
     }
   }
 

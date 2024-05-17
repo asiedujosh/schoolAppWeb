@@ -4,8 +4,10 @@ import { LISTONPAGES, SUCCESS_STATUS } from "../../constants/constant"
 export const addExams = async (data) => {
   try {
     let responseOnAddExams = await axios.post("/api/addExam", data)
-    if (responseOnAddExams.status === SUCCESS_STATUS) {
-      return responseOnAddExams.data
+    if (responseOnAddExams) {
+      if (responseOnAddExams.status === SUCCESS_STATUS) {
+        return responseOnAddExams.data
+      }
     } else {
       return false
     }
@@ -20,8 +22,10 @@ export const searchExamRecords = async (data) => {
     let responseOnSearchExam = await axios.get(
       `/api/searchExam?keyword=${data}`
     )
-    if (responseOnSearchExam.status === SUCCESS_STATUS) {
-      return responseOnSearchExam.data
+    if (responseOnSearchExam) {
+      if (responseOnAddExams.status === SUCCESS_STATUS) {
+        return responseOnSearchExam.data
+      }
     } else {
       return false
     }
@@ -35,8 +39,10 @@ export const getAllExams = async (data) => {
     let responseOnGetAllExams = await axios.get(
       `/api/getAllExam?page=${data}&perPage=${LISTONPAGES}`
     )
-    if (responseOnGetAllExams.status === SUCCESS_STATUS) {
-      return responseOnGetAllExams.data
+    if (responseOnGetAllExams) {
+      if (responseOnGetAllExams.status === SUCCESS_STATUS) {
+        return responseOnGetAllExams.data
+      }
     } else {
       return false
     }
@@ -52,8 +58,10 @@ export const editExams = async (data) => {
       `/api/examsUpdate/${data.id}`,
       data
     )
-    if (responseOnEditExams.status === SUCCESS_STATUS) {
-      return responseOnEditExams.data
+    if (responseOnEditExams) {
+      if (responseOnEditExams.status === SUCCESS_STATUS) {
+        return responseOnEditExams.data
+      }
     } else {
       return false
     }
@@ -69,8 +77,12 @@ export const deleteExams = async (data) => {
       `/api/deleteExams/${data.id}`
     )
 
-    if (responseOnDeleteExams.status === SUCCESS_STATUS) {
-      return responseOnDeleteExams.data
+    if (responseOnDeleteExams) {
+      if (responseOnDeleteExams.status === SUCCESS_STATUS) {
+        return responseOnDeleteExams.data
+      }
+    } else {
+      return false
     }
   } catch (err) {
     console.error(err)

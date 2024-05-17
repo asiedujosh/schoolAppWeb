@@ -48,6 +48,8 @@ const YearApiDataProvider = (props) => {
     if (response) {
       processGetAllYear()
       notify(SUCCESS_STATUS)
+    } else {
+      notify(BAD_REQUEST_STATUS)
     }
   }
 
@@ -56,6 +58,8 @@ const YearApiDataProvider = (props) => {
     if (response) {
       processGetAllYear()
       notify(SUCCESS_STATUS)
+    } else {
+      notify(BAD_REQUEST_STATUS)
     }
   }
 
@@ -64,6 +68,8 @@ const YearApiDataProvider = (props) => {
     if (response) {
       processGetAllYear()
       notify(SUCCESS_STATUS)
+    } else {
+      notify(BAD_REQUEST_STATUS)
     }
   }
 

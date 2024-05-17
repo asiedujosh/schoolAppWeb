@@ -7,17 +7,17 @@ import { Link } from "react-router-dom"
 const OralQuestionTable = () => {
   const {
     oralQuestionList,
-    searchRecord,
-    preparingQuestForEdit,
+    searchOralRecord,
+    preparingOralQuestForEdit,
     editClear,
-    processDeleteQuestion,
+    processDeleteOralQuestion,
   } = useContext(QuestionApiData)
 
   const navigate = useNavigate()
 
   let viewEdit = (id) => {
-    preparingQuestForEdit(id)
-    navigate(`/dashboard/editQuestion/${id}/edit`)
+    preparingOralQuestForEdit(id)
+    navigate(`/dashboard/editOralQuestion/${id}/edit`)
   }
 
   return (
@@ -34,8 +34,8 @@ const OralQuestionTable = () => {
           className="w-full overflow-y-auto"
           style={{ maxHeight: "calc(80% - 3.5rem)" }}
         >
-          {searchRecord &&
-            searchRecord.map((item) => (
+          {searchOralRecord &&
+            searchOralRecord.map((item) => (
               <tr key={item.id} className="border-t border-gray-200">
                 <td className="border border-gray-200 py-4 px-2">
                   {item.questionNo}
@@ -62,7 +62,10 @@ const OralQuestionTable = () => {
 
                     <span
                       onClick={() => {
-                        processDeleteQuestion({ id: item.id })
+                        processDeleteOralQuestion({
+                          id: item.id,
+                          oldPath: item.question,
+                        })
                       }}
                       className="bg-red-500 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded"
                     >
@@ -73,7 +76,7 @@ const OralQuestionTable = () => {
               </tr>
             ))}
 
-          {searchRecord.length == 0 &&
+          {searchOralRecord.length == 0 &&
             oralQuestionList.map((item) => (
               <tr key={item.id} className="border-t border-gray-200">
                 <td className="border border-gray-200 py-4 px-2">
@@ -100,7 +103,10 @@ const OralQuestionTable = () => {
 
                     <span
                       onClick={() => {
-                        processDeleteQuestion({ id: item.id })
+                        processDeleteOralQuestion({
+                          id: item.id,
+                          oldPath: item.question,
+                        })
                       }}
                       className="bg-red-500 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded"
                     >

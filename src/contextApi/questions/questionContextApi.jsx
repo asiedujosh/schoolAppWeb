@@ -7,7 +7,9 @@ import {
   addQuestion,
   addOralQuestion,
   deleteQuestion,
+  deleteOralQuestion,
   editQuestion,
+  editOralQuestion,
   searchQuestion,
   searchOralQuestion,
   getAllQuestion,
@@ -25,7 +27,9 @@ const QuestionApiDataProvider = (props) => {
   const [questionList, setQuestionList] = useState([])
   const [oralQuestionList, setOralQuestionList] = useState([])
   const [searchRecord, setSearchRecord] = useState([])
+  const [searchOralRecord, setSearchOralRecord] = useState([])
   const [questionFormData, setQuestionFormData] = useState({})
+  const [oralQuestionFormData, setOralQuestionFormData] = useState({})
   const [editClear, setEditClear] = useState(false)
   const [paginationData, setPaginationData] = useState()
   const [loading, setLoading] = useState(false)
@@ -57,6 +61,30 @@ const QuestionApiDataProvider = (props) => {
     }))
 
     // setEditClear((prev) => !prev)
+  }
+
+  const preparingOralQuestForEdit = (id) => {
+    setOralQuestionFormData()
+    let data
+    data = oralQuestionList.filter((item) => item.id == id)
+    if (data.length == 0) {
+      data = searchOralRecord.filter((item) => item.id == id)
+    }
+
+    setOralQuestionFormData((prevFormData) => ({
+      ...prevFormData,
+      examType: data[0].examId,
+      year: data[0].yearId,
+      subject: data[0].subjectId,
+      topic: data[0].topicId,
+      answer: data[0].answer,
+      questionNo: data[0].questionNo,
+      oldPath: data[0].question,
+      question: data[0].audio_url,
+      mimeType: data[0].mimeType,
+      answerOptions: data[0].options,
+      hints: data[0].hints,
+    }))
   }
 
   const processGetAllQuestion = async (data) => {
@@ -96,7 +124,7 @@ const QuestionApiDataProvider = (props) => {
     setSearchLoad((prev) => !prev)
     let response = await searchOralQuestion(data)
     if (response) {
-      setSearchRecord(response.data.data)
+      setSearchOralRecord(response.data.data)
       setSearchLoad((prev) => !prev)
     }
   }
@@ -133,17 +161,20 @@ const QuestionApiDataProvider = (props) => {
       notify(SUCCESS_STATUS)
       setLoading((prev) => !prev)
     } else {
+      notify(BAD_REQUEST_STATUS)
       setLoading((prev) => !prev)
     }
   }
 
   // Add Oral Questions
   const processAddOralQuestion = async (data) => {
+    setLoading((prev) => !prev)
     let response = await addOralQuestion(data)
     if (response) {
       notify(SUCCESS_STATUS)
       setLoading((prev) => !prev)
     } else {
+      notify(BAD_REQUEST_STATUS)
       setLoading((prev) => !prev)
     }
   }
@@ -158,12 +189,25 @@ const QuestionApiDataProvider = (props) => {
       notify(SUCCESS_STATUS)
       setLoading((prev) => !prev)
     } else {
+      notify(BAD_REQUEST_STATUS)
       setLoading((prev) => !prev)
     }
   }
 
   // Edit Oral Questions
-
+  const processUpdateOralQuestion = async (data) => {
+    setLoading((prev) => !prev)
+    let response = await editOralQuestion(data)
+    if (response) {
+      processGetAllOralQuestion()
+      setSearchOralRecord([])
+      notify(SUCCESS_STATUS)
+      setLoading((prev) => !prev)
+    } else {
+      notify(BAD_REQUEST_STATUS)
+      setLoading((prev) => !prev)
+    }
+  }
   // End Oral Questions
 
   const processDeleteQuestion = async (data) => {
@@ -172,6 +216,19 @@ const QuestionApiDataProvider = (props) => {
       processGetAllQuestion()
       setSearchRecord([])
       notify(SUCCESS_STATUS)
+    } else {
+      notify(BAD_REQUEST_STATUS)
+    }
+  }
+
+  const processDeleteOralQuestion = async (data) => {
+    let response = await deleteOralQuestion(data)
+    if (response) {
+      processGetAllOralQuestion()
+      setSearchOralRecord([])
+      notify(SUCESS_STATUS)
+    } else {
+      notify(BAD_REQUEST_STATUS)
     }
   }
 
@@ -183,7 +240,9 @@ const QuestionApiDataProvider = (props) => {
         processAddQuestion,
         processAddOralQuestion,
         processUpdateQuestion,
+        processUpdateOralQuestion,
         processDeleteQuestion,
+        processDeleteOralQuestion,
         preparingQuestForEdit,
         processCountOralQuestion,
         processCountQuestion,
@@ -196,8 +255,11 @@ const QuestionApiDataProvider = (props) => {
         oralQuestionList,
         questionList,
         searchRecord,
+        searchOralRecord,
         setSearchRecord,
         questionFormData,
+        oralQuestionFormData,
+        preparingOralQuestForEdit,
         editClear,
         loading,
         setLoading,

@@ -28,6 +28,8 @@ const ExamSubjectApiDataProvider = (props) => {
     if (response) {
       processGetAllExamSubjectLink()
       notify(SUCCESS_STATUS)
+    } else {
+      notify(BAD_REQUEST_STATUS)
     }
   }
 
@@ -36,6 +38,8 @@ const ExamSubjectApiDataProvider = (props) => {
     if (response) {
       processGetAllExamSubjectLink()
       notify(SUCCESS_STATUS)
+    } else {
+      notify(BAD_REQUEST_STATUS)
     }
   }
 
@@ -45,6 +49,8 @@ const ExamSubjectApiDataProvider = (props) => {
     if (response) {
       processGetAllExamSubjectLink()
       notify(SUCCESS_STATUS)
+    } else {
+      notify(BAD_REQUEST_STATUS)
     }
   }
 

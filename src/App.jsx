@@ -21,6 +21,7 @@ const AddYear = React.lazy(() => import("./pages/addYear"))
 const AddSubject = React.lazy(() => import("./pages/addSubject"))
 const AddQuestion = React.lazy(() => import("./pages/addQuestion"))
 const AddOralQuestion = React.lazy(() => import("./pages/addOralQuestion"))
+const EditOralQuestion = React.lazy(() => import("./pages/editOralQuestion"))
 const AddNews = React.lazy(() => import("./pages/addNews"))
 const Exam = React.lazy(() => import("./pages/Exam"))
 const EditExam = React.lazy(() => import("./pages/editExam"))
@@ -248,6 +249,14 @@ function App() {
             element={
               <React.Suspense fallback={<div>Loading...</div>}>
                 <EditQuestion />
+              </React.Suspense>
+            }
+          />
+          <Route
+            path="editOralQuestion/:id/edit"
+            element={
+              <React.Suspense fallback={<div>Loading...</div>}>
+                <EditOralQuestion />
               </React.Suspense>
             }
           />

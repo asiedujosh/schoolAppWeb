@@ -49,6 +49,8 @@ const ExamApiDataProvider = (props) => {
     if (response) {
       processGetAllExams()
       notify(SUCCESS_STATUS)
+    } else {
+      notify(BAD_REQUEST_STATUS)
     }
   }
 
@@ -57,6 +59,8 @@ const ExamApiDataProvider = (props) => {
     if (response) {
       processGetAllExams()
       notify(SUCCESS_STATUS)
+    } else {
+      notify(BAD_REQUEST_STATUS)
     }
   }
 
@@ -66,6 +70,8 @@ const ExamApiDataProvider = (props) => {
     if (response) {
       processGetAllExams()
       notify(SUCCESS_STATUS)
+    } else {
+      notify(BAD_REQUEST_STATUS)
     }
   }
 

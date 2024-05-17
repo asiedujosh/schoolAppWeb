@@ -49,6 +49,8 @@ const SubjectApiDataProvider = (props) => {
       processGetAllSubject()
       notify(SUCCESS_STATUS)
       //   router.push(`/users`)
+    } else {
+      notify(BAD_REQUEST_STATUS)
     }
   }
 
@@ -57,6 +59,8 @@ const SubjectApiDataProvider = (props) => {
     if (response) {
       processGetAllSubject()
       notify(SUCCESS_STATUS)
+    } else {
+      notify(BAD_REQUEST_STATUS)
     }
   }
 
@@ -66,6 +70,8 @@ const SubjectApiDataProvider = (props) => {
     if (response) {
       processGetAllSubject()
       notify(SUCCESS_STATUS)
+    } else {
+      notify(BAD_REQUEST_STATUS)
     }
   }
 

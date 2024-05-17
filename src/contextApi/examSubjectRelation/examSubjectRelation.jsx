@@ -7,8 +7,10 @@ export const addExamSubjectRelation = async (data) => {
       "/api/linkExamSubject",
       data
     )
-    if (responseOnAddExamSubject.status === SUCCESS_STATUS) {
-      return responseOnAddExamSubject.data
+    if (responseOnAddExamSubject) {
+      if (responseOnAddExamSubject.status === SUCCESS_STATUS) {
+        return responseOnAddExamSubject.data
+      }
     } else {
       return false
     }
@@ -25,8 +27,10 @@ export const editExamSubjectLink = async (data) => {
       data
     )
     // console.log(data)
-    if (responseOnLinkExamSubject.status === SUCCESS_STATUS) {
-      return responseOnLinkExamSubject.data
+    if (responseOnLinkExamSubject) {
+      if (responseOnLinkExamSubject.status === SUCCESS_STATUS) {
+        return responseOnLinkExamSubject.data
+      }
     } else {
       return false
     }
@@ -40,8 +44,10 @@ export const getAllExamSubjectLinked = async (data) => {
     let responseOnGetExamSubject = await axios.get(
       `/api/getAllLinkedExamSubject?page=${data}&perPage=${LISTONPAGES}`
     )
-    if (responseOnGetExamSubject.status === SUCCESS_STATUS) {
-      return responseOnGetExamSubject.data
+    if (responseOnGetExamSubject) {
+      if (responseOnGetExamSubject.status === SUCCESS_STATUS) {
+        return responseOnGetExamSubject.data
+      }
     } else {
       return false
     }
@@ -56,8 +62,12 @@ export const deleteExamSubjectLink = async (data) => {
     let responseOnDeleteExamSubjectLink = await axios.delete(
       `/api/deleteExamSubjectLink/${data.id}`
     )
-    if (responseOnDeleteExamSubjectLink.status === SUCCESS_STATUS) {
-      return responseOnDeleteExamSubjectLink.data
+    if (responseOnDeleteExamSubjectLink) {
+      if (responseOnDeleteExamSubjectLink.status === SUCCESS_STATUS) {
+        return responseOnDeleteExamSubjectLink.data
+      }
+    } else {
+      return false
     }
   } catch (err) {
     console.log(err)

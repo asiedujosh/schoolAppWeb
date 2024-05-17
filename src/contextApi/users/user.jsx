@@ -6,8 +6,10 @@ export const getAllUser = async (data) => {
     let responseOnGetAllUser = await axios.get(
       `/api/getAllUsers?page=${data}&perPage=${LISTONPAGES}`
     )
-    if (responseOnGetAllUser.status === SUCCESS_STATUS) {
-      return responseOnGetAllUser.data
+    if (responseOnGetAllUser) {
+      if (responseOnGetAllUser.status === SUCCESS_STATUS) {
+        return responseOnGetAllUser.data
+      }
     } else {
       return false
     }
@@ -22,8 +24,10 @@ export const searchUserRecords = async (data) => {
     let responseOnSearchUser = await axios.get(
       `/api/searchUser?keyword=${data}`
     )
-    if (responseOnSearchUser.status === SUCCESS_STATUS) {
-      return responseOnSearchUser.data
+    if (responseOnSearchUser) {
+      if (responseOnSearchUser.status === SUCCESS_STATUS) {
+        return responseOnSearchUser.data
+      }
     } else {
       return false
     }
@@ -41,8 +45,12 @@ export const deleteUser = async (data) => {
         "Content-Type": "application/json", // Set the Content-Type header if sending JSON data
       },
     })
-    if (responseOnDeleteUser.status === SUCCESS_STATUS) {
-      return responseOnDeleteUser.data
+    if (responseOnDeleteUser) {
+      if (responseOnDeleteUser.status === SUCCESS_STATUS) {
+        return responseOnDeleteUser.data
+      }
+    } else {
+      return false
     }
   } catch (err) {
     console.error(err)

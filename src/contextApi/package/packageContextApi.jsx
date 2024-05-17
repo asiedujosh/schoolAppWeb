@@ -28,6 +28,8 @@ const PackageApiDataProvider = (props) => {
     if (response) {
       processGetAllPackage()
       notify(SUCCESS_STATUS)
+    } else {
+      notify(BAD_REQUEST_STATUS)
     }
   }
 
@@ -36,6 +38,8 @@ const PackageApiDataProvider = (props) => {
     if (response) {
       processGetAllPackage()
       notify(SUCCESS_STATUS)
+    } else {
+      notify(BAD_REQUEST_STATUS)
     }
   }
 
@@ -44,6 +48,8 @@ const PackageApiDataProvider = (props) => {
     if (response) {
       processGetAllPackage()
       notify(SUCCESS_STATUS)
+    } else {
+      notify(BAD_REQUEST_STATUS)
     }
   }
 

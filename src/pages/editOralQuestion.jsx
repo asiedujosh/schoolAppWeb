@@ -1,4 +1,5 @@
 import { useState, useContext, useEffect } from "react"
+import { trimAsterisks } from "../utils/trimStars"
 import { ExamApiData } from "../contextApi/exams/examsContextApi"
 import { SubjectApiData } from "../contextApi/subjects/subjectContextApi"
 import { YearApiData } from "../contextApi/year/yearContextApi"
@@ -6,6 +7,7 @@ import { TopicApiData } from "../contextApi/topic/topicContextApi"
 import { AuthApiData } from "../contextApi/auth/authContextApi"
 import { QuestionApiData } from "../contextApi/questions/questionContextApi"
 import { ADDQUESTIONS } from "../constants/oralQuestionConstants"
+import { useParams } from "react-router-dom"
 import InputField from "../components/inputField"
 import UploadAudio from "../components/uploadAudio"
 import SelectField from "../components/selectField"
@@ -16,40 +18,57 @@ import OptionAnsInput from "../components/optionAnsInputField"
 import { ToastContainer, toast } from "react-toastify"
 import "react-toastify/dist/ReactToastify.css"
 
-const AddOralQuestion = () => {
-  const { processAddOralQuestion, loading } = useContext(QuestionApiData)
+const EditOralQuestion = () => {
+  let { id } = useParams()
+  const { processUpdateOralQuestion, loading, oralQuestionFormData } =
+    useContext(QuestionApiData)
   const { userProfile } = useContext(AuthApiData)
   const { examsList, examOptions } = useContext(ExamApiData)
   const { subjectList, subjectOptions } = useContext(SubjectApiData)
   const { yearList, yearOptions } = useContext(YearApiData)
   const { topicList } = useContext(TopicApiData)
   const [topicOptions, setTopicOptions] = useState()
+  const [options, setOptions] = useState([])
 
   const [formData, setFormData] = useState({
-    examType: examOptions[0] || null,
-    subject: subjectOptions[0] || null,
-    year: yearOptions[0] || null,
-    answer: "None",
+    id: id,
+    examType:
+      (oralQuestionFormData &&
+        examsList.find((item) => item.id == oralQuestionFormData.examType)
+          ?.exam) ||
+      "Not Available",
+    subject:
+      (oralQuestionFormData &&
+        subjectList.find((item) => item.id == oralQuestionFormData.subject)
+          ?.subject) ||
+      "Not Available",
+    year:
+      (oralQuestionFormData &&
+        yearList.find((item) => item.id == oralQuestionFormData.year)?.year) ||
+      "Not Available",
+    topic:
+      (oralQuestionFormData &&
+        topicList.filter((item) => item.id == oralQuestionFormData.topic)[0]) ||
+      "Not Available",
+    answer: oralQuestionFormData && oralQuestionFormData.answer,
+    questionNo: oralQuestionFormData && oralQuestionFormData.questionNo,
+    audioUpload: null,
+    oldAudioPath: oralQuestionFormData && oralQuestionFormData.question,
+    oldPath: oralQuestionFormData && oralQuestionFormData.oldPath,
+    answerOptions: oralQuestionFormData && oralQuestionFormData.answerOptions,
+    mimeType: oralQuestionFormData && oralQuestionFormData.mimeType,
+    hints: oralQuestionFormData && oralQuestionFormData.hints,
   })
 
-  const [options, setOptions] = useState([
-    {
-      id: 1,
-      value: null,
-    },
-    {
-      id: 2,
-      value: null,
-    },
-    {
-      id: 3,
-      value: null,
-    },
-    {
-      id: 4,
-      value: null,
-    },
-  ])
+  useEffect(() => {
+    let newData = []
+    let trimStr = trimAsterisks(oralQuestionFormData.answerOptions)
+    let splitOptions = trimStr.split("**")
+    splitOptions.map((item, index) => {
+      newData.push({ id: index + 1, value: item })
+    })
+    setOptions(newData)
+  }, [])
 
   useEffect(() => {
     let topics = []
@@ -120,30 +139,28 @@ const AddOralQuestion = () => {
     let optionalAnsString = optionalAns.join("*")
 
     let newQuestData = {
+      id: id,
       examType: mapId(formData.examType, examsList, "exam"),
       subject: mapId(formData.subject, subjectList, "subject"),
       year: mapId(formData.year, yearList, "year"),
       topic: mapId(formData.topic, topicList, "topic"),
       questionNo: formData.questionNo,
+      oldPath: formData.oldPath,
       question: formData.audioUpload,
       hints: formData.hints ? formData.hints : null,
       answerOptions: optionalAnsString.slice(0, -1),
       answer: formData.answer,
+      mimeType: formData.mimeType,
       publisher: userProfile.username,
     }
-
-    // const formSubmissionData = new FormData()
-    // for (const key in newQuestData) {
-    //   formSubmissionData.append(key, newQuestData[key])
-    // }
-
     if (
       newQuestData.answerOptions !== null &&
       newQuestData.answerOptions !== ""
     ) {
-      processAddOralQuestion(newQuestData)
+      console.log(newQuestData)
+      processUpdateOralQuestion(newQuestData)
     } else {
-      alert("One of the Options fields should not be empty")
+      console.log("One of the Options fields should not be empty")
     }
   }
 
@@ -153,7 +170,7 @@ const AddOralQuestion = () => {
         <div className="w-90 m-6 md:mt-4 p-4 bg-white rounded shadow-lg">
           <div className="flex justify-center align-items mt-4">
             <h2 className="text-gray-600 text-xl font-semibold">
-              {ADDQUESTIONS.title}
+              {ADDQUESTIONS.editTitle}
             </h2>
           </div>
           <hr class="border-t border-gray-300 w-1/2 mx-auto my-2" />
@@ -163,7 +180,7 @@ const AddOralQuestion = () => {
               {/* Card 1 */}
               <div className="w-full p-6 bg-gray-100 rounded-lg shadow-md mt-2 md:mt-0 md:m-2">
                 <h2 className="text-lg font-semibold mb-2">
-                  {ADDQUESTIONS.title}
+                  {ADDQUESTIONS.editTitle}
                 </h2>
 
                 <div className="">
@@ -226,6 +243,11 @@ const AddOralQuestion = () => {
 
                   <div>
                     <h6 className="text-lg font-bold my-2">Question Section</h6>
+                    <div>
+                      <audio controls src={formData.oldAudioPath}>
+                        Your browser does not support the audio element.
+                      </audio>
+                    </div>
                     <UploadAudio
                       change={(data, field) => {
                         handleInputChange(data, field)
@@ -245,6 +267,7 @@ const AddOralQuestion = () => {
                           key={option}
                           field={option}
                           value={option}
+                          defaultVal={option.value}
                           change={(data, field) => {
                             handleOptionChange(data, field)
                           }}
@@ -324,4 +347,4 @@ const AddOralQuestion = () => {
   )
 }
 
-export default AddOralQuestion
+export default EditOralQuestion

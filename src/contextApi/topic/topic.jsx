@@ -5,8 +5,10 @@ export const addTopic = async (data) => {
   console.log(data)
   try {
     let responseOnAddTopic = await axios.post("/api/addTopic", data)
-    if (responseOnAddTopic.status === SUCCESS_STATUS) {
-      return responseOnAddTopic.data
+    if (responseOnAddTopic) {
+      if (responseOnAddTopic.status === SUCCESS_STATUS) {
+        return responseOnAddTopic.data
+      }
     } else {
       return false
     }
@@ -21,8 +23,10 @@ export const getAllTopic = async (data) => {
     let responseOnGetAllTopic = await axios.get(
       `/api/getAllTopic?page=${data}&perPage=${LISTONPAGES}`
     )
-    if (responseOnGetAllTopic.status === SUCCESS_STATUS) {
-      return responseOnGetAllTopic.data
+    if (responseOnGetAllTopic) {
+      if (responseOnGetAllTopic.status === SUCCESS_STATUS) {
+        return responseOnGetAllTopic.data
+      }
     } else {
       return false
     }
@@ -38,8 +42,10 @@ export const editTopic = async (data) => {
       `/api/topicUpdate/${data.id}`,
       data
     )
-    if (responseOnEditTopic.status === SUCCESS_STATUS) {
-      return responseOnEditTopic.data
+    if (responseOnEditTopic) {
+      if (responseOnEditTopic.status === SUCCESS_STATUS) {
+        return responseOnEditTopic.data
+      }
     } else {
       return false
     }
@@ -54,9 +60,12 @@ export const deleteTopic = async (data) => {
     let responseOnDeleteTopic = await axios.delete(
       `/api/deleteTopic/${data.id}`
     )
-
-    if (responseOnDeleteTopic.status === SUCCESS_STATUS) {
-      return responseOnDeleteTopic.data
+    if (responseOnDeleteTopic) {
+      if (responseOnDeleteTopic.status === SUCCESS_STATUS) {
+        return responseOnDeleteTopic.data
+      }
+    } else {
+      return false
     }
   } catch (err) {
     console.error(err)

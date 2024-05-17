@@ -32,6 +32,8 @@ const UserApiDataProvider = (props) => {
     if (response) {
       pprocessGetAllUser()
       notify(SUCCESS_STATUS)
+    } else {
+      notify(BAD_REQUEST_STATUS)
     }
   }
 

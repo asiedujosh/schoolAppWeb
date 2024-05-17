@@ -18,8 +18,10 @@ import { SUCCESS_STATUS } from "../../constants/constant"
 export const getAllSubscribers = async () => {
   try {
     let responseOnGetAllSubscribers = await axios.get("/api/getAllSubscribers")
-    if (responseOnGetAllSubscribers.status === SUCCESS_STATUS) {
-      return responseOnGetAllSubscribers.data
+    if (responseOnGetAllSubscribers) {
+      if (responseOnGetAllSubscribers.status === SUCCESS_STATUS) {
+        return responseOnGetAllSubscribers.data
+      }
     } else {
       return false
     }
@@ -32,8 +34,10 @@ export const getAllSubscribers = async () => {
 export const countSubscribers = async () => {
   try {
     let responseOnCountSubscribers = await axios.get("/api/countSubscribers")
-    if (responseOnCountSubscribers.status === SUCCESS_STATUS) {
-      return responseOnCountSubscribers.data
+    if (responseOnCountSubscribers) {
+      if (responseOnCountSubscribers.status === SUCCESS_STATUS) {
+        return responseOnCountSubscribers.data
+      }
     } else {
       return false
     }

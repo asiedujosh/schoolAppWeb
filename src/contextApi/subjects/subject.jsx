@@ -4,8 +4,10 @@ import { LISTONPAGES, SUCCESS_STATUS } from "../../constants/constant"
 export const addSubject = async (data) => {
   try {
     let responseOnAddSubject = await axios.post("/api/addSubject", data)
-    if (responseOnAddSubject.status === SUCCESS_STATUS) {
-      return responseOnAddSubject.data
+    if (responseOnAddSubject) {
+      if (responseOnAddSubject.status === SUCCESS_STATUS) {
+        return responseOnAddSubject.data
+      }
     } else {
       return false
     }
@@ -20,8 +22,10 @@ export const searchSubjectRecords = async (data) => {
     let responseOnSearchSubject = await axios.get(
       `/api/searchSubject?keyword=${data}`
     )
-    if (responseOnSearchSubject.status === SUCCESS_STATUS) {
-      return responseOnSearchSubject.data
+    if (responseOnSearchSubject) {
+      if (responseOnSearchSubject.status === SUCCESS_STATUS) {
+        return responseOnSearchSubject.data
+      }
     } else {
       return false
     }
@@ -35,8 +39,10 @@ export const getAllSubject = async (data) => {
     let responseOnGetAllSubject = await axios.get(
       `/api/getAllSubject?page=${data}&perPage=${LISTONPAGES}`
     )
-    if (responseOnGetAllSubject.status === SUCCESS_STATUS) {
-      return responseOnGetAllSubject.data
+    if (responseOnGetAllSubject) {
+      if (responseOnGetAllSubject.status === SUCCESS_STATUS) {
+        return responseOnGetAllSubject.data
+      }
     } else {
       return false
     }
@@ -52,8 +58,10 @@ export const editSubject = async (data) => {
       `/api/subjectUpdate/${data.id}`,
       data
     )
-    if (responseOnEditSubject.status === SUCCESS_STATUS) {
-      return responseOnEditSubject.data
+    if (responseOnEditSubject) {
+      if (responseOnEditSubject.status === SUCCESS_STATUS) {
+        return responseOnEditSubject.data
+      }
     } else {
       return false
     }
@@ -68,9 +76,12 @@ export const deleteSubject = async (data) => {
     let responseOnDeleteSubject = await axios.delete(
       `/api/deleteSubject/${data.id}`
     )
-
-    if (responseOnDeleteSubject.status === SUCCESS_STATUS) {
-      return responseOnDeleteSubject.data
+    if (responseOnDeleteSubject) {
+      if (responseOnDeleteSubject.status === SUCCESS_STATUS) {
+        return responseOnDeleteSubject.data
+      }
+    } else {
+      return false
     }
   } catch (err) {
     console.error(err)

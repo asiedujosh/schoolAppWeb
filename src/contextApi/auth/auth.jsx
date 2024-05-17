@@ -4,8 +4,10 @@ import { SUCCESS_STATUS } from "../../constants/constant"
 export const login = async (data) => {
   try {
     let responseOnLogin = await axios.post("/api/workerLogin", data)
-    if (responseOnLogin.status === SUCCESS_STATUS) {
-      return responseOnLogin.data
+    if (responseOnLogin) {
+      if (responseOnLogin.status === SUCCESS_STATUS) {
+        return responseOnLogin.data
+      }
     } else {
       return false
     }
@@ -18,8 +20,10 @@ export const login = async (data) => {
 export const register = async (data) => {
   try {
     let responseOnRegister = await axios.post("/api/workerRegister", data)
-    if (responseOnRegister.status === SUCCESS_STATUS) {
-      return responseOnRegister.data
+    if (responseOnRegister) {
+      if (responseOnRegister.status === SUCCESS_STATUS) {
+        return responseOnRegister.data
+      }
     } else {
       return false
     }
@@ -32,8 +36,10 @@ export const register = async (data) => {
 export const retrieve = async () => {
   try {
     let responseOnRetrieve = await axios.get("/api/retrieve")
-    if (responseOnRetrieve.status === SUCCESS_STATUS) {
-      return responseOnRetrieve.data
+    if (responseOnRetrieve) {
+      if (responseOnRetrieve.status === SUCCESS_STATUS) {
+        return responseOnRetrieve.data
+      }
     } else {
       return false
     }
@@ -45,8 +51,10 @@ export const retrieve = async () => {
 export const logout = async () => {
   try {
     let responseOnLogout = await axios.post("/api/logout")
-    if (responseOnLogout.status === SUCCESS_STATUS) {
-      return responseOnLogout.data
+    if (responseOnLogout) {
+      if (responseOnLogout.status === SUCCESS_STATUS) {
+        return responseOnLogout.data
+      }
     } else {
       return false
     }
