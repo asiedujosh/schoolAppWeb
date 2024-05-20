@@ -14,24 +14,21 @@ const Sidebar = () => {
   ]
 
   return (
-    <div
-      className="bg-gray-800 text-white w-full overflow-hidden py-4"
-      style={{ width: "10vw" }}
-    >
+    <div className="bg-gray-800 text-white overflow-hidden w-40">
       <Link
         to={"/dashboard"}
-        className="text-lg font-bold border-b py-4 border-gray-500 bg-gray-800 px-14 hover:bg-gray-600"
+        className="flex w-full items-center justify-center text-lg font-bold border-b py-4 border-gray-500 bg-gray-800 hover:bg-gray-600"
       >
         Dashboard
       </Link>
-      <div className="mt-4">
+      <div>
         {links.map((link) => (
           <Link
             key={link}
             to={`/dashboard/${link}`}
-            className="block text-gray-400 border-b border-gray-500 bg-gray-800 px-14 hover:text-white py-4 hover:bg-gray-600"
+            className="flex items-center justify-center w-full text-gray-400 border-b border-gray-500 bg-gray-800 hover:text-white py-4 hover:bg-gray-600"
           >
-            {link}
+            <span className="w-1/2">{link}</span>
           </Link>
         ))}
       </div>
