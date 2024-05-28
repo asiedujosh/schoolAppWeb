@@ -4,7 +4,7 @@ import { YearApiData } from "../contextApi/year/yearContextApi"
 import { Link } from "react-router-dom"
 
 const YearTable = () => {
-  const { yearList, searchYearRecord, processDeleteYear } =
+  const { paginatedYearList, searchYearRecord, processDeleteYear } =
     useContext(YearApiData)
 
   return (
@@ -48,7 +48,7 @@ const YearTable = () => {
                   </td>
                 </tr>
               ))
-            : yearList.map((item) => (
+            : paginatedYearList.map((item) => (
                 <tr key={item.id} className="border-t border-gray-200">
                   <td className="border border-gray-200 py-4 px-2">
                     {item.year}

@@ -51,14 +51,29 @@ export const checkYearAvailability = async (data) => {
   }
 }
 
-export const getAllYear = async (data) => {
+export const getAllYear = async () => {
   try {
-    let responseOnGetAllYear = await axios.get(
-      `/api/getAllYear?page=${data}&perPage=${LISTONPAGES}`
-    )
+    let responseOnGetAllYear = await axios.get(`/api/mobileGetAllYear`)
     if (responseOnGetAllYear) {
       if (responseOnGetAllYear.status === SUCCESS_STATUS) {
         return responseOnGetAllYear.data
+      }
+    } else {
+      return false
+    }
+  } catch (err) {
+    console.log(err)
+  }
+}
+
+export const getAllPaginatedYear = async (data) => {
+  try {
+    let responseOnGetPaginatedYear = await axios.get(
+      `/api/getAllYear?page=${data}&perPage=${LISTONPAGES}`
+    )
+    if (responseOnGetPaginatedYear) {
+      if (responseOnGetPaginatedYear.status === SUCCESS_STATUS) {
+        return responseOnGetPaginatedYear.data
       }
     } else {
       return false

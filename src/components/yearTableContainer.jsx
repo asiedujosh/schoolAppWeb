@@ -7,7 +7,7 @@ import YearTable from "./yearTable"
 // import PrintButton from "./printButton"
 
 const YearTableContainer = () => {
-  const { processGetAllYear, paginationData, processSearchYear } =
+  const { processAllPaginatedYear, paginationData, processSearchYear } =
     useContext(YearApiData)
   const [searchTerm, setSearchTerm] = useState("")
   //   const [currentPage, setCurrentPage] = useState(1)
@@ -15,6 +15,10 @@ const YearTableContainer = () => {
   // let handleSearchTerm = (e) => {
   //   //processSearchRecord()
   // }
+  useEffect(() => {
+    processAllPaginatedYear()
+  }, [])
+
   const handleSearchChange = (data) => {
     console.log(data)
     setSearchTerm(data)
@@ -43,7 +47,7 @@ const YearTableContainer = () => {
       </div>
       <PaginationContainer
         paginationData={paginationData}
-        paginationFunction={processGetAllYear}
+        paginationFunction={processAllPaginatedYear}
       />
     </div>
   )

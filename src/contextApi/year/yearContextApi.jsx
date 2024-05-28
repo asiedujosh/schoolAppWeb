@@ -4,6 +4,7 @@ import { BAD_REQUEST_STATUS, SUCCESS_STATUS } from "../../constants/constant"
 
 import {
   addYear,
+  getAllPaginatedYear,
   getAllYear,
   editYear,
   deleteYear,
@@ -14,6 +15,7 @@ import {
 export const YearApiData = createContext()
 
 const YearApiDataProvider = (props) => {
+  const [paginatedYearList, setPaginatedYearList] = useState([])
   const [yearList, setYearList] = useState([])
   const [yearOptions, setYearOptions] = useState()
   const [searchYearRecord, setSearchYearRecord] = useState([])
@@ -34,11 +36,18 @@ const YearApiDataProvider = (props) => {
     }
   }
 
-  const processGetAllYear = async (data) => {
-    let response = await getAllYear(data || 1)
+  const processGetAllYear = async () => {
+    let response = await getAllYear()
     if (response) {
-      setYearList(response.data.data.data)
-      processYearOptions(response.data.data.data)
+      setYearList(response.data.data)
+      processYearOptions(response.data.data)
+    }
+  }
+
+  const processAllPaginatedYear = async (data) => {
+    let response = await getAllPaginatedYear(data || 1)
+    if (response) {
+      setPaginatedYearList(response.data.data.data)
       setPaginationData(response.data.pagination)
     }
   }
@@ -95,6 +104,9 @@ const YearApiDataProvider = (props) => {
         yearOptions,
         setYearOptions,
         processSearchYear,
+        processAllPaginatedYear,
+        paginationData,
+        paginatedYearList,
       }}
     >
       {props.children}
