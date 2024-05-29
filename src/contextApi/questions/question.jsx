@@ -185,12 +185,7 @@ export const editQuestion = async (data) => {
   try {
     let responseOnEditQuestion = await axios.put(
       `/api/questionUpdate/${data.id}`,
-      data,
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      }
+      data
     )
     if (responseOnEditQuestion) {
       if (responseOnEditQuestion.status === SUCCESS_STATUS) {
