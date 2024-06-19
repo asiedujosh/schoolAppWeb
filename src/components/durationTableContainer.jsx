@@ -1,22 +1,19 @@
 import { useContext, useEffect, useState } from "react"
-import { ExamSubjectApiData } from "../contextApi/examSubjectRelation/examRelationContextApi"
+import { DurationApiData } from "../contextApi/duration/durationContextApi"
 import SearchContainer from "./searchContainer"
-import ExamSubjectTable from "./examSubjectTable"
+import DurationTable from "./durationTable"
 import PaginationContainer from "./paginationContainer"
 // import PrintButton from "./printButton"
 
-const ExamSubjectTableContainer = () => {
-  const {
-    processSearchExamsSubjectLink,
-    paginationData,
-    processGetExamSubjectLink,
-  } = useContext(ExamSubjectApiData)
+const DurationTableContainer = () => {
+  const { processSearchDuration, paginationData, processGetAllDuration } =
+    useContext(DurationApiData)
   const [searchTerm, setSearchTerm] = useState("")
   //   const [currentPage, setCurrentPage] = useState(1)
 
-  useEffect(() => {
-    processGetExamSubjectLink(1)
-  }, [])
+  // useEffect(() => {
+  //   processGetAllDuration(1)
+  // }, [])
 
   const handleSearchChange = (data) => {
     setSearchTerm(data)
@@ -25,7 +22,7 @@ const ExamSubjectTableContainer = () => {
   const handleSearchSubmit = () => {
     //e.preventDefault()
     // console.log(searchTerm)
-    processSearchExamsSubjectLink(searchTerm)
+    processSearchDuration(searchTerm)
   }
 
   return (
@@ -43,14 +40,14 @@ const ExamSubjectTableContainer = () => {
         }}
       />
       <div className="overflow-auto" style={{ height: "80%" }}>
-        <ExamSubjectTable />
+        <DurationTable />
       </div>
       <PaginationContainer
         paginationData={paginationData}
-        paginationFunction={processGetExamSubjectLink}
+        paginationFunction={processGetAllDuration}
       />
     </div>
   )
 }
 
-export default ExamSubjectTableContainer
+export default DurationTableContainer

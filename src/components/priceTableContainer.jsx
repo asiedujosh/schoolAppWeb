@@ -1,31 +1,27 @@
-import { useContext, useEffect, useState } from "react"
-import { ExamSubjectApiData } from "../contextApi/examSubjectRelation/examRelationContextApi"
+import { useState, useEffect, useContext } from "react"
+import { PriceApiData } from "../contextApi/price/priceContextApi"
 import SearchContainer from "./searchContainer"
-import ExamSubjectTable from "./examSubjectTable"
+import PriceTable from "./priceTable"
 import PaginationContainer from "./paginationContainer"
-// import PrintButton from "./printButton"
 
-const ExamSubjectTableContainer = () => {
-  const {
-    processSearchExamsSubjectLink,
-    paginationData,
-    processGetExamSubjectLink,
-  } = useContext(ExamSubjectApiData)
+const PriceTableContainer = () => {
+  const { processSearchPricing, paginationData, processGetPrice } =
+    useContext(PriceApiData)
   const [searchTerm, setSearchTerm] = useState("")
-  //   const [currentPage, setCurrentPage] = useState(1)
 
   useEffect(() => {
-    processGetExamSubjectLink(1)
+    processGetPrice(1)
   }, [])
 
   const handleSearchChange = (data) => {
+    console.log(data)
     setSearchTerm(data)
   }
 
   const handleSearchSubmit = () => {
     //e.preventDefault()
-    // console.log(searchTerm)
-    processSearchExamsSubjectLink(searchTerm)
+    console.log(searchTerm)
+    processSearchPricing(searchTerm)
   }
 
   return (
@@ -43,14 +39,14 @@ const ExamSubjectTableContainer = () => {
         }}
       />
       <div className="overflow-auto" style={{ height: "80%" }}>
-        <ExamSubjectTable />
+        <PriceTable />
       </div>
       <PaginationContainer
         paginationData={paginationData}
-        paginationFunction={processGetExamSubjectLink}
+        paginationFunction={processGetPrice}
       />
     </div>
   )
 }
 
-export default ExamSubjectTableContainer
+export default PriceTableContainer

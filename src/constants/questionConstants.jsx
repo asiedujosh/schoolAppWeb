@@ -140,6 +140,13 @@ export const ADDQUESTIONS = {
 
 export const QUESTIONTABLE = ["Question No", "Question", "Answer", "Action"]
 
+export const ORALQUESTIONTABLE = [
+  "Question No",
+  "Question",
+  "Comment",
+  "Action",
+]
+
 export const QUESTIONSEARCH = [
   {
     name: "examType",

@@ -15,19 +15,28 @@ const AddPackage = React.lazy(() => import("./pages/addPackage"))
 const ComingSoon = React.lazy(() => import("./pages/comingSoon"))
 const EditPackage = React.lazy(() => import("./pages/editPackage"))
 const Package = React.lazy(() => import("./pages/Package"))
+const Price = React.lazy(() => import("./pages/price"))
 const Subscriber = React.lazy(() => import("./pages/subscriber"))
+const Priviledge = React.lazy(() => import("./pages/priviledge"))
 const AddExams = React.lazy(() => import("./pages/addExam"))
 const AddYear = React.lazy(() => import("./pages/addYear"))
 const AddSubject = React.lazy(() => import("./pages/addSubject"))
+const AddPriviledge = React.lazy(() => import("./pages/addPriviledge"))
 const AddQuestion = React.lazy(() => import("./pages/addQuestion"))
+const AddDuration = React.lazy(() => import("./pages/addDuration"))
+const AddPrice = React.lazy(() => import("./pages/addPrice"))
 const AddOralQuestion = React.lazy(() => import("./pages/addOralQuestion"))
 const EditOralQuestion = React.lazy(() => import("./pages/editOralQuestion"))
 const AddNews = React.lazy(() => import("./pages/addNews"))
+const Duration = React.lazy(() => import("./pages/duration"))
 const Exam = React.lazy(() => import("./pages/Exam"))
 const EditExam = React.lazy(() => import("./pages/editExam"))
 const EditLink = React.lazy(() => import("./pages/editLink"))
 const EditStaff = React.lazy(() => import("./pages/editStaff"))
 const EditTopic = React.lazy(() => import("./pages/editTopic"))
+const EditDuration = React.lazy(() => import("./pages/editDuration"))
+const EditPriviledge = React.lazy(() => import("./pages/editPriviledge"))
+const EditPrice = React.lazy(() => import("./pages/editPrice"))
 const Staff = React.lazy(() => import("./pages/Staff"))
 const Users = React.lazy(() => import("./pages/Users"))
 const AddStaff = React.lazy(() => import("./pages/addStaff"))
@@ -85,10 +94,34 @@ function App() {
             }
           />
           <Route
+            path="addDuration"
+            element={
+              <React.Suspense fallback={<div>Loading...</div>}>
+                <AddDuration />
+              </React.Suspense>
+            }
+          />
+          <Route
+            path="addPrice"
+            element={
+              <React.Suspense fallback={<div>Loading...</div>}>
+                <AddPrice />
+              </React.Suspense>
+            }
+          />
+          <Route
             path="addPackage"
             element={
               <React.Suspense fallback={<div>Loading...</div>}>
                 <AddPackage />
+              </React.Suspense>
+            }
+          />
+          <Route
+            path="addPriviledge"
+            element={
+              <React.Suspense fallback={<div>Loading...</div>}>
+                <AddPriviledge />
               </React.Suspense>
             }
           />
@@ -121,6 +154,30 @@ function App() {
             element={
               <React.Suspense fallback={<div>Loading...</div>}>
                 <Users />
+              </React.Suspense>
+            }
+          />
+          <Route
+            path="Duration"
+            element={
+              <React.Suspense fallback={<div>Loading...</div>}>
+                <Duration />
+              </React.Suspense>
+            }
+          />
+          <Route
+            path="Price"
+            element={
+              <React.Suspense fallback={<div>Loading...</div>}>
+                <Price />
+              </React.Suspense>
+            }
+          />
+          <Route
+            path="Priviledge"
+            element={
+              <React.Suspense fallback={<div>Loading...</div>}>
+                <Priviledge />
               </React.Suspense>
             }
           />
@@ -189,6 +246,14 @@ function App() {
             }
           />
           <Route
+            path="editPriviledge/:id/edit"
+            element={
+              <React.Suspense fallback={<div>Loading...</div>}>
+                <EditPriviledge />
+              </React.Suspense>
+            }
+          />
+          <Route
             path="editLink/:id/edit"
             element={
               <React.Suspense fallback={<div>Loading...</div>}>
@@ -201,6 +266,14 @@ function App() {
             element={
               <React.Suspense fallback={<div>Loading...</div>}>
                 <EditTopic />
+              </React.Suspense>
+            }
+          />
+          <Route
+            path="editDuration/:id/edit"
+            element={
+              <React.Suspense fallback={<div>Loading...</div>}>
+                <EditDuration />
               </React.Suspense>
             }
           />
@@ -249,6 +322,14 @@ function App() {
             element={
               <React.Suspense fallback={<div>Loading...</div>}>
                 <EditQuestion />
+              </React.Suspense>
+            }
+          />
+          <Route
+            path="editPrice/:id/edit"
+            element={
+              <React.Suspense fallback={<div>Loading...</div>}>
+                <EditPrice />
               </React.Suspense>
             }
           />

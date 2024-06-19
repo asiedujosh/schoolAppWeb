@@ -76,11 +76,12 @@ const AddLink = () => {
     )[0].id
 
     let newData = {
+      name: formData.name,
       examId: choseExamId,
       yearId: choseYearId,
       subjectId: choseSubjectId,
       offerType: formData.offerType,
-      price: formData.amount,
+      examTime: formData.examTime,
     }
 
     // console.log(newData)

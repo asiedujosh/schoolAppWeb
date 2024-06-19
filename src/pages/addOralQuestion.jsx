@@ -139,6 +139,7 @@ const AddOralQuestion = () => {
       topic: mapId(formData.topic, topicList, "topic"),
       questionNo: formData.questionNo,
       question: formData.audioUpload,
+      comment: formData.comment,
       hints: formData.hints ? formData.hints : null,
       answerOptions: optionalAnsString.slice(0, -1),
       answer: formData.answer,

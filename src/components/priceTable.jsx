@@ -1,30 +1,34 @@
-import React, { useContext, useEffect } from "react"
-import { examsName, subjectName, yearName } from "../utils/nameReturn"
-import { EXAMSUBJECTTABLE } from "../constants/linkConstants"
-import { SubjectApiData } from "../contextApi/subjects/subjectContextApi"
-import { ExamApiData } from "../contextApi/exams/examsContextApi"
-import { ExamSubjectApiData } from "../contextApi/examSubjectRelation/examRelationContextApi"
-
+import React, { useContext, useEffect, useState } from "react"
+import { PRICINGTABLE } from "../constants/pricingConstants"
+import { PriceApiData } from "../contextApi/price/priceContextApi"
 import { Link } from "react-router-dom"
-import { YearApiData } from "../contextApi/year/yearContextApi"
 
-const ExamSubjectTable = () => {
-  const { examsList } = useContext(ExamApiData)
-  const { subjectList } = useContext(SubjectApiData)
-  const { yearList } = useContext(YearApiData)
-  const {
-    searchExamSubjectRecord,
-    processGetAllExamSubjectLink,
-    examSubjectLinkList,
-    processDeleteExamSubject,
-  } = useContext(ExamSubjectApiData)
+const PriceTable = () => {
+  const { priceList, searchPriceRecord, processDeletePrice } =
+    useContext(PriceApiData)
+  const [showPrompt, setShowPrompt] = useState(false)
+  const [promptValue, setPromptValue] = useState("")
+
+  //   useEffect(() => {
+  //     if (searchExamRecord.length > 0) {
+  //       console.log(searchExamRecord)
+  //     }
+  //   }, [searchExamRecord])
+
+  const handlePrompt = () => {
+    const value = prompt("Delete exams with linked questions?")
+    if (value !== null) {
+      console.log(value)
+      setPromptValue(value)
+    }
+  }
 
   return (
     <>
       <table className="w-full table-auto rounded">
         <thead className="sticky top-0 z-10 bg-gray-100">
           <tr>
-            {EXAMSUBJECTTABLE.map((item) => (
+            {PRICINGTABLE.map((item) => (
               <th className="border border-gray-200 py-4 px-2">{item}</th>
             ))}
           </tr>
@@ -33,29 +37,22 @@ const ExamSubjectTable = () => {
           className="w-full overflow-y-auto"
           style={{ maxHeight: "calc(80% - 3.5rem)" }}
         >
-          {searchExamSubjectRecord.length > 0
-            ? searchExamSubjectRecord.map((item) => (
+          {searchPriceRecord.length > 0
+            ? searchPriceRecord.map((item) => (
                 <tr key={item.id} className="border-t border-gray-200">
                   <td className="border border-gray-200 py-4 px-2">
-                    {item.name}
+                    {item.examSubjectId}
                   </td>
                   <td className="border border-gray-200 py-4 px-2">
-                    {examsName(examsList, item.examId)}
+                    {item.price}
                   </td>
                   <td className="border border-gray-200 py-4 px-2">
-                    {subjectName(subjectList, item.subjectId)}({item.subjectId})
+                    {item.durationType}
                   </td>
-                  <td className="border border-gray-200 py-4 px-2">
-                    {item.offerType}
-                  </td>
-                  <td className="border border-gray-200 py-4 px-2">
-                    {item.examTime}
-                  </td>
-
                   <td className="w-1/4 border border-gray-200 py-4 px-2">
                     <div className="flex space-x-2">
                       <Link
-                        to={`/dashboard/editLink/${item.id}/edit`}
+                        to={`/dashboard/editPrice/${item.id}/edit`}
                         className="bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded"
                       >
                         Edit
@@ -63,8 +60,8 @@ const ExamSubjectTable = () => {
 
                       <span
                         onClick={() => {
-                          processDeleteExamSubject({ id: item.id })
-                          //   processDeleteCompany(item.id)
+                          // handlePrompt
+                          processDeletePrice({ id: item.id })
                         }}
                         className="bg-red-500 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded cursor-pointer"
                       >
@@ -74,28 +71,21 @@ const ExamSubjectTable = () => {
                   </td>
                 </tr>
               ))
-            : examSubjectLinkList.map((item) => (
+            : priceList.map((item) => (
                 <tr key={item.id} className="border-t border-gray-200">
                   <td className="border border-gray-200 py-4 px-2">
-                    {item.name}
+                    {item.examSubjectId}
                   </td>
                   <td className="border border-gray-200 py-4 px-2">
-                    {examsName(examsList, item.examId)}
+                    {item.price}
                   </td>
                   <td className="border border-gray-200 py-4 px-2">
-                    {subjectName(subjectList, item.subjectId)}({item.subjectId})
+                    {item.durationType}
                   </td>
-                  <td className="border border-gray-200 py-4 px-2">
-                    {item.offerType}
-                  </td>
-                  <td className="border border-gray-200 py-4 px-2">
-                    {item.examTime}
-                  </td>
-
                   <td className="w-1/4 border border-gray-200 py-4 px-2">
                     <div className="flex space-x-2">
                       <Link
-                        to={`/dashboard/editLink/${item.id}/edit`}
+                        to={`/dashboard/editPrice/${item.id}/edit`}
                         className="bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded"
                       >
                         Edit
@@ -103,10 +93,10 @@ const ExamSubjectTable = () => {
 
                       <span
                         onClick={() => {
-                          processDeleteExamSubject({ id: item.id })
-                          //   processDeleteCompany(item.id)
+                          // handlePrompt
+                          processDeletePrice({ id: item.id })
                         }}
-                        className="bg-red-500 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded cursor-pointer"
+                        className="bg-red-500 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded"
                       >
                         Delete
                       </span>
@@ -120,4 +110,4 @@ const ExamSubjectTable = () => {
   )
 }
 
-export default ExamSubjectTable
+export default PriceTable

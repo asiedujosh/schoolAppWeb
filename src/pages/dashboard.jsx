@@ -2,7 +2,9 @@ import { useContext, useEffect } from "react"
 import { ExamApiData } from "../contextApi/exams/examsContextApi"
 import { useNavigate } from "react-router-dom"
 import { YearApiData } from "../contextApi/year/yearContextApi"
+import { ExamSubjectApiData } from "../contextApi/examSubjectRelation/examRelationContextApi"
 import { SubjectApiData } from "../contextApi/subjects/subjectContextApi"
+import { DurationApiData } from "../contextApi/duration/durationContextApi"
 import { QuestionApiData } from "../contextApi/questions/questionContextApi"
 import { AuthApiData } from "../contextApi/auth/authContextApi"
 import { PackageApiData } from "../contextApi/package/packageContextApi"
@@ -19,6 +21,7 @@ const Dashboard = () => {
   const { isAuthenticated, processRetrieve } = useContext(AuthApiData)
   const { processCountQuestion, processCountOralQuestion } =
     useContext(QuestionApiData)
+  const { processGetAllExamSubjectLink } = useContext(ExamSubjectApiData)
   const { processGetAllExams } = useContext(ExamApiData)
   const { processGetAllSubject } = useContext(SubjectApiData)
   const { processGetAllYear } = useContext(YearApiData)
@@ -26,6 +29,7 @@ const Dashboard = () => {
   const { processGetAllStaff } = useContext(StaffApiData)
   const { processGetAllUser } = useContext(UserApiData)
   const { processGetAllPackage } = useContext(PackageApiData)
+  const { processGetAllDuration } = useContext(DurationApiData)
   const { processGetAllSubscribers, processCountSubscribers } =
     useContext(SubscribersApiData)
 
@@ -43,6 +47,8 @@ const Dashboard = () => {
     processGetAllUser()
     processGetAllPackage()
     processGetAllSubscribers()
+    processGetAllExamSubjectLink()
+    processGetAllDuration(1)
   }, [])
 
   useEffect(() => {

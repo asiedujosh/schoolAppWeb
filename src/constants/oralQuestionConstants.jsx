@@ -41,8 +41,8 @@ export const ADDQUESTIONS = {
 
   fieldDetail2: [
     {
-      name: "question",
-      label: "Question",
+      name: "comment",
+      label: "Comment",
       type: "textArea",
       placeholder: "Add your question",
     },

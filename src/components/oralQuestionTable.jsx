@@ -1,6 +1,6 @@
 import React, { useContext } from "react"
 import { useNavigate } from "react-router-dom"
-import { QUESTIONTABLE } from "../constants/questionConstants"
+import { ORALQUESTIONTABLE } from "../constants/questionConstants"
 import { QuestionApiData } from "../contextApi/questions/questionContextApi"
 import { Link } from "react-router-dom"
 
@@ -25,7 +25,7 @@ const OralQuestionTable = () => {
       <table className="w-full table-auto rounded">
         <thead className="sticky top-0 z-10 bg-gray-100">
           <tr>
-            {QUESTIONTABLE.map((item) => (
+            {ORALQUESTIONTABLE.map((item) => (
               <th className="border border-gray-200 py-4 px-2">{item}</th>
             ))}
           </tr>
@@ -44,6 +44,9 @@ const OralQuestionTable = () => {
                   <audio controls src={item.audio_url}>
                     Your browser does not support the audio element.
                   </audio>
+                </td>
+                <td className="border border-gray-200 py-4 px-2">
+                  {item.comment}
                 </td>
                 <td className="border border-gray-200 py-4 px-2 ">
                   {item.answer}
@@ -86,6 +89,9 @@ const OralQuestionTable = () => {
                   <audio controls src={item.audio_url}>
                     Your browser does not support the audio element.
                   </audio>
+                </td>
+                <td className="border border-gray-200 py-4 px-2">
+                  {item.comment}
                 </td>
                 <td className="border border-gray-200 py-4 px-2">
                   {item.answer}

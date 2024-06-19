@@ -78,6 +78,7 @@ const QuestionApiDataProvider = (props) => {
       year: data[0].yearId,
       subject: data[0].subjectId,
       topic: data[0].topicId,
+      comment: data[0].comment,
       answer: data[0].answer,
       questionNo: data[0].questionNo,
       oldPath: data[0].question,

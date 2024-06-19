@@ -1,22 +1,16 @@
 import { useContext, useEffect, useState } from "react"
-import { ExamSubjectApiData } from "../contextApi/examSubjectRelation/examRelationContextApi"
-import SearchContainer from "./searchContainer"
-import ExamSubjectTable from "./examSubjectTable"
 import PaginationContainer from "./paginationContainer"
+import { PriviledgeApiData } from "../contextApi/priviledge/priviledgeContextApi"
+import SearchContainer from "./searchContainer"
+import PriviledgeTable from "./priviledgeTable"
+// import PaginationContainer from "./paginationContainer"
 // import PrintButton from "./printButton"
 
-const ExamSubjectTableContainer = () => {
-  const {
-    processSearchExamsSubjectLink,
-    paginationData,
-    processGetExamSubjectLink,
-  } = useContext(ExamSubjectApiData)
+const PriviledgeTableContainer = () => {
+  const { processSearchPriviledge, processGetAllPriviledge, paginationData } =
+    useContext(PriviledgeApiData)
   const [searchTerm, setSearchTerm] = useState("")
   //   const [currentPage, setCurrentPage] = useState(1)
-
-  useEffect(() => {
-    processGetExamSubjectLink(1)
-  }, [])
 
   const handleSearchChange = (data) => {
     setSearchTerm(data)
@@ -25,7 +19,7 @@ const ExamSubjectTableContainer = () => {
   const handleSearchSubmit = () => {
     //e.preventDefault()
     // console.log(searchTerm)
-    processSearchExamsSubjectLink(searchTerm)
+    processSearchPriviledge(searchTerm)
   }
 
   return (
@@ -43,14 +37,14 @@ const ExamSubjectTableContainer = () => {
         }}
       />
       <div className="overflow-auto" style={{ height: "80%" }}>
-        <ExamSubjectTable />
+        <PriviledgeTable />
       </div>
       <PaginationContainer
         paginationData={paginationData}
-        paginationFunction={processGetExamSubjectLink}
+        paginationFunction={processGetAllPriviledge}
       />
     </div>
   )
 }
 
-export default ExamSubjectTableContainer
+export default PriviledgeTableContainer

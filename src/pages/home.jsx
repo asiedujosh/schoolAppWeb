@@ -28,13 +28,19 @@ const Home = () => {
   return (
     <>
       <div className="flex flex-wrap">
-        <div class="w-full md:w-1/2 lg:w-1/3 p-2">
+        <div class="w-full md:w-1/2 lg:w-1/5 p-2">
           <LabelBtn text="Linked Exams & Subject" path="examSubjectLinkTable" />
         </div>
-        <div class="w-full md:w-1/2 lg:w-1/3 p-2">
+        <div class="w-full md:w-1/2 lg:w-1/5 p-2">
+          <LabelBtn text="Duration" path="duration" />
+        </div>
+        <div class="w-full md:w-1/2 lg:w-1/5 p-2">
+          <LabelBtn text="Pricing" path="price" />
+        </div>
+        <div class="w-full md:w-1/2 lg:w-1/5 p-2">
           <LabelBtn text="Topics" path="topic" />
         </div>
-        <div class="w-full md:w-1/2 lg:w-1/3 p-2">
+        <div class="w-full md:w-1/2 lg:w-1/5 p-2">
           <LabelBtn text="Subscription" path="Subscriber" />
         </div>
       </div>
