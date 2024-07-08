@@ -50,7 +50,7 @@ const EditExams = () => {
       position: formData.position,
       imageUpload: formData.imageUpload || formData.image || "",
     }
-    console.log(submitData)
+    // console.log(submitData)
     processUpdateExams(submitData)
   }
 

@@ -1,14 +1,30 @@
 import { useState, useContext, useEffect } from "react"
-import { PriviledgeApiData } from "../contextApi/priviledge/priviledgeContextApi"
-import { ADDPRIVILEDGE } from "../constants/priviledgeConstants"
+import { useParams } from "react-router-dom"
+import { SystemInfoApiData } from "../contextApi/systemInfo/systemInfoContextApi"
+import { ADDTESTIMONIAL } from "../constants/pagesConstants"
 import InputField from "../components/inputField"
 import SubmitBtn from "../components/submitButton"
 import { ToastContainer, toast } from "react-toastify"
 import "react-toastify/dist/ReactToastify.css"
 
-const AddPriviledge = () => {
-  const { processAddPriviledge } = useContext(PriviledgeApiData)
-  const [formData, setFormData] = useState({})
+const EditTestimonial = () => {
+  let { id } = useParams()
+  const { processUpdateTestimonial, testimonialList } =
+    useContext(SystemInfoApiData)
+  const [formData, setFormData] = useState({
+    id: id,
+    name: null,
+    testimony: null,
+  })
+
+  useEffect(() => {
+    let data = testimonialList.filter((item) => item.id == id)
+    setFormData({
+      ...formData,
+      name: data[0].name,
+      testimony: data[0].testimony,
+    })
+  }, [])
 
   const handleInputChange = (data, field) => {
     setFormData({
@@ -17,9 +33,10 @@ const AddPriviledge = () => {
     })
   }
 
-  const handleSubmit = async () => {
-    console.log(formData)
-    processAddPriviledge(formData)
+  const handleSubmit = () => {
+    // console.log(formData)
+    processUpdateTestimonial(formData)
+    //processAddQuestion(newQuestData)
   }
 
   return (
@@ -28,7 +45,7 @@ const AddPriviledge = () => {
         <div className="w-90 m-6 md:mt-4 p-4 bg-white rounded shadow-lg">
           <div className="flex justify-center align-items mt-4">
             <h2 className="text-gray-600 text-xl font-semibold">
-              {ADDPRIVILEDGE.title}
+              {"Edit Testimonial"}
             </h2>
           </div>
           <hr class="border-t border-gray-300 w-1/2 mx-auto my-2" />
@@ -38,11 +55,11 @@ const AddPriviledge = () => {
               {/* Card 1 */}
               <div className="w-full p-6 bg-gray-100 rounded-lg shadow-md mt-2 md:mt-0 md:m-2">
                 <h2 className="text-lg font-semibold mb-2">
-                  {ADDPRIVILEDGE.title}
+                  {"Edit Testimonial"}
                 </h2>
 
-                <div className="space-y-4">
-                  {ADDPRIVILEDGE.fieldDetail.map((item) => {
+                <div className="space-y-2">
+                  {ADDTESTIMONIAL.fieldDetail.map((item) => {
                     return (
                       <InputField
                         field={item}
@@ -56,14 +73,13 @@ const AddPriviledge = () => {
                     )
                   })}
                 </div>
+                <div className="mt-2 min-w-full flex items-center justify-center">
+                  <SubmitBtn
+                    text={ADDTESTIMONIAL.buttonText}
+                    submit={handleSubmit}
+                  />
+                </div>
               </div>
-            </div>
-
-            <div className="mt-2 min-w-full flex items-center justify-center">
-              <SubmitBtn
-                text={ADDPRIVILEDGE.buttonText}
-                submit={handleSubmit}
-              />
             </div>
           </div>
         </div>
@@ -73,4 +89,4 @@ const AddPriviledge = () => {
   )
 }
 
-export default AddPriviledge
+export default EditTestimonial

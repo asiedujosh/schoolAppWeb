@@ -7,6 +7,7 @@ import { SubjectApiData } from "../contextApi/subjects/subjectContextApi"
 import { DurationApiData } from "../contextApi/duration/durationContextApi"
 import { QuestionApiData } from "../contextApi/questions/questionContextApi"
 import { AuthApiData } from "../contextApi/auth/authContextApi"
+import { PriviledgeApiData } from "../contextApi/priviledge/priviledgeContextApi"
 import { PackageApiData } from "../contextApi/package/packageContextApi"
 import { TopicApiData } from "../contextApi/topic/topicContextApi"
 import { StaffApiData } from "../contextApi/staff/staffContextApi"
@@ -22,6 +23,7 @@ const Dashboard = () => {
   const { processCountQuestion, processCountOralQuestion } =
     useContext(QuestionApiData)
   const { processGetAllExamSubjectLink } = useContext(ExamSubjectApiData)
+  const { processGetAllPriviledge } = useContext(PriviledgeApiData)
   const { processGetAllExams } = useContext(ExamApiData)
   const { processGetAllSubject } = useContext(SubjectApiData)
   const { processGetAllYear } = useContext(YearApiData)
@@ -46,6 +48,7 @@ const Dashboard = () => {
     processGetAllStaff()
     processGetAllUser()
     processGetAllPackage()
+    processGetAllPriviledge()
     processGetAllSubscribers()
     processGetAllExamSubjectLink()
     processGetAllDuration(1)

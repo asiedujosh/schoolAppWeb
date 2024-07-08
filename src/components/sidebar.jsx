@@ -9,7 +9,7 @@ const Sidebar = () => {
     "Staff",
     "Subject",
     "Priviledge",
-    "Slider",
+    // "Slider",
     "Setting",
     "Notification",
   ]

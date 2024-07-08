@@ -12,6 +12,8 @@ import "./App.css"
 
 // Lazy load components using dynamic import()
 const AddPackage = React.lazy(() => import("./pages/addPackage"))
+const AddMessage = React.lazy(() => import("./pages/addMessage"))
+const Message = React.lazy(() => import("./pages/message"))
 const ComingSoon = React.lazy(() => import("./pages/comingSoon"))
 const EditPackage = React.lazy(() => import("./pages/editPackage"))
 const Package = React.lazy(() => import("./pages/Package"))
@@ -25,6 +27,7 @@ const AddPriviledge = React.lazy(() => import("./pages/addPriviledge"))
 const AddQuestion = React.lazy(() => import("./pages/addQuestion"))
 const AddDuration = React.lazy(() => import("./pages/addDuration"))
 const AddPrice = React.lazy(() => import("./pages/addPrice"))
+const AddSlider = React.lazy(() => import("./pages/addSlider"))
 const AddOralQuestion = React.lazy(() => import("./pages/addOralQuestion"))
 const EditOralQuestion = React.lazy(() => import("./pages/editOralQuestion"))
 const AddNews = React.lazy(() => import("./pages/addNews"))
@@ -38,6 +41,7 @@ const EditDuration = React.lazy(() => import("./pages/editDuration"))
 const EditPriviledge = React.lazy(() => import("./pages/editPriviledge"))
 const EditPrice = React.lazy(() => import("./pages/editPrice"))
 const Staff = React.lazy(() => import("./pages/Staff"))
+const Slider = React.lazy(() => import("./pages/slider"))
 const Users = React.lazy(() => import("./pages/Users"))
 const AddStaff = React.lazy(() => import("./pages/addStaff"))
 const EditQuestion = React.lazy(() => import("./pages/editQuestion"))
@@ -53,6 +57,32 @@ const News = React.lazy(() => import("./pages/news"))
 const EditNews = React.lazy(() => import("./pages/editNews"))
 const AddLink = React.lazy(() => import("./pages/addLink"))
 const ExamSubjectLink = React.lazy(() => import("./pages/ExamSubjectLink"))
+const Setting = React.lazy(() => import("./pages/settings"))
+
+//Pages
+const About = React.lazy(() => import("./pages/about"))
+const Team = React.lazy(() => import("./pages/team"))
+const Tnc = React.lazy(() => import("./pages/tnc"))
+const Contact = React.lazy(() => import("./pages/contact"))
+const Testimonial = React.lazy(() => import("./pages/testimonial"))
+const Banner = React.lazy(() => import("./pages/banner"))
+const Product = React.lazy(() => import("./pages/products"))
+
+const AddAbout = React.lazy(() => import("./pages/addAbout"))
+const AddTeam = React.lazy(() => import("./pages/addTeam"))
+const AddTnc = React.lazy(() => import("./pages/addTnc"))
+const AddContact = React.lazy(() => import("./pages/addContact"))
+const AddTestimony = React.lazy(() => import("./pages/addTestimony"))
+const AddBanner = React.lazy(() => import("./pages/addBanner"))
+const AddProduct = React.lazy(() => import("./pages/addProduct"))
+
+const EditAbout = React.lazy(() => import("./pages/editAbout"))
+const EditTeam = React.lazy(() => import("./pages/editTeam"))
+const EditTnc = React.lazy(() => import("./pages/editTnc"))
+const EditContact = React.lazy(() => import("./pages/editContact"))
+const EditTestimonial = React.lazy(() => import("./pages/editTestimonial"))
+const EditBanner = React.lazy(() => import("./pages/editBanner"))
+const EditProduct = React.lazy(() => import("./pages/editProduct"))
 
 function App() {
   return (
@@ -102,6 +132,14 @@ function App() {
             }
           />
           <Route
+            path="addMessage"
+            element={
+              <React.Suspense fallback={<div>Loading...</div>}>
+                <AddMessage />
+              </React.Suspense>
+            }
+          />
+          <Route
             path="addPrice"
             element={
               <React.Suspense fallback={<div>Loading...</div>}>
@@ -134,6 +172,14 @@ function App() {
             }
           />
           <Route
+            path="addSlider"
+            element={
+              <React.Suspense fallback={<div>Loading...</div>}>
+                <AddSlider />
+              </React.Suspense>
+            }
+          />
+          <Route
             path="addOralQuestion"
             element={
               <React.Suspense fallback={<div>Loading...</div>}>
@@ -149,6 +195,16 @@ function App() {
               </React.Suspense>
             }
           />
+
+          <Route
+            path="Notification"
+            element={
+              <React.Suspense fallback={<div>Loading...</div>}>
+                <Message />
+              </React.Suspense>
+            }
+          />
+
           <Route
             path="Users"
             element={
@@ -190,6 +246,14 @@ function App() {
             }
           />
           <Route
+            path="Setting"
+            element={
+              <React.Suspense fallback={<div>Loading...</div>}>
+                <Setting />
+              </React.Suspense>
+            }
+          />
+          <Route
             path="Question"
             element={
               <React.Suspense fallback={<div>Loading...</div>}>
@@ -210,6 +274,14 @@ function App() {
             element={
               <React.Suspense fallback={<div>Loading...</div>}>
                 <Subject />
+              </React.Suspense>
+            }
+          />
+          <Route
+            path="Slider"
+            element={
+              <React.Suspense fallback={<div>Loading...</div>}>
+                <Slider />
               </React.Suspense>
             }
           />
@@ -389,27 +461,192 @@ function App() {
               </React.Suspense>
             }
           />
+
           <Route
-            path="Slider"
+            path="Setting/about"
             element={
               <React.Suspense fallback={<div>Loading...</div>}>
-                <ComingSoon />
+                <About />
               </React.Suspense>
             }
           />
+
           <Route
-            path="Setting"
+            path="Setting/team"
             element={
               <React.Suspense fallback={<div>Loading...</div>}>
-                <ComingSoon />
+                <Team />
               </React.Suspense>
             }
           />
+
           <Route
-            path="Notification"
+            path="Setting/tnc"
             element={
               <React.Suspense fallback={<div>Loading...</div>}>
-                <ComingSoon />
+                <Tnc />
+              </React.Suspense>
+            }
+          />
+
+          <Route
+            path="Setting/contact"
+            element={
+              <React.Suspense fallback={<div>Loading...</div>}>
+                <Contact />
+              </React.Suspense>
+            }
+          />
+
+          <Route
+            path="Setting/testimonial"
+            element={
+              <React.Suspense fallback={<div>Loading...</div>}>
+                <Testimonial />
+              </React.Suspense>
+            }
+          />
+
+          <Route
+            path="Setting/banner"
+            element={
+              <React.Suspense fallback={<div>Loading...</div>}>
+                <Banner />
+              </React.Suspense>
+            }
+          />
+
+          <Route
+            path="Setting/product"
+            element={
+              <React.Suspense fallback={<div>Loading...</div>}>
+                <Product />
+              </React.Suspense>
+            }
+          />
+
+          <Route
+            path="Setting/addAbout"
+            element={
+              <React.Suspense fallback={<div>Loading...</div>}>
+                <AddAbout />
+              </React.Suspense>
+            }
+          />
+
+          <Route
+            path="Setting/addTeam"
+            element={
+              <React.Suspense fallback={<div>Loading...</div>}>
+                <AddTeam />
+              </React.Suspense>
+            }
+          />
+
+          <Route
+            path="Setting/addTnc"
+            element={
+              <React.Suspense fallback={<div>Loading...</div>}>
+                <AddTnc />
+              </React.Suspense>
+            }
+          />
+
+          <Route
+            path="Setting/addContact"
+            element={
+              <React.Suspense fallback={<div>Loading...</div>}>
+                <AddContact />
+              </React.Suspense>
+            }
+          />
+
+          <Route
+            path="Setting/addTestimony"
+            element={
+              <React.Suspense fallback={<div>Loading...</div>}>
+                <AddTestimony />
+              </React.Suspense>
+            }
+          />
+
+          <Route
+            path="Setting/addBanner"
+            element={
+              <React.Suspense fallback={<div>Loading...</div>}>
+                <AddBanner />
+              </React.Suspense>
+            }
+          />
+
+          <Route
+            path="Setting/addProduct"
+            element={
+              <React.Suspense fallback={<div>Loading...</div>}>
+                <AddProduct />
+              </React.Suspense>
+            }
+          />
+
+          <Route
+            path="editAbout/:id/edit"
+            element={
+              <React.Suspense fallback={<div>Loading...</div>}>
+                <EditAbout />
+              </React.Suspense>
+            }
+          />
+
+          <Route
+            path="editTeam/:id/edit"
+            element={
+              <React.Suspense fallback={<div>Loading...</div>}>
+                <EditTeam />
+              </React.Suspense>
+            }
+          />
+
+          <Route
+            path="editTnc/:id/edit"
+            element={
+              <React.Suspense fallback={<div>Loading...</div>}>
+                <EditTnc />
+              </React.Suspense>
+            }
+          />
+
+          <Route
+            path="editContact/:id/edit"
+            element={
+              <React.Suspense fallback={<div>Loading...</div>}>
+                <EditContact />
+              </React.Suspense>
+            }
+          />
+
+          <Route
+            path="editTestimonial/:id/edit"
+            element={
+              <React.Suspense fallback={<div>Loading...</div>}>
+                <EditTestimonial />
+              </React.Suspense>
+            }
+          />
+
+          <Route
+            path="editBanner/:id/edit"
+            element={
+              <React.Suspense fallback={<div>Loading...</div>}>
+                <EditBanner />
+              </React.Suspense>
+            }
+          />
+
+          <Route
+            path="editProduct/:id/edit"
+            element={
+              <React.Suspense fallback={<div>Loading...</div>}>
+                <EditProduct />
               </React.Suspense>
             }
           />
