@@ -34,10 +34,10 @@ const Settings = () => {
 
   return (
     <div className="w-full">
-      <div className="flex space-x-4">
+      {/* <div className="flex space-x-4">
         <SubmitBtn text={"Switch Hero"} submit={goToCreateClass} />
         <SubmitBtn text={"Reports"} submit={goToCreateSubject} />
-      </div>
+      </div> */}
       <div className="flex mt-2">
         <div className="w-1/4 mx-2">
           <Card title={"About"} link={"/dashboard/editAbout/1/edit"} />
