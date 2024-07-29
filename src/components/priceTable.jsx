@@ -41,6 +41,12 @@ const PriceTable = () => {
             ? searchPriceRecord.map((item) => (
                 <tr key={item.id} className="border-t border-gray-200">
                   <td className="border border-gray-200 py-4 px-2">
+                    {item.productId}
+                  </td>
+                  <td className="border border-gray-200 py-4 px-2">
+                    {item.referenceId}
+                  </td>
+                  <td className="border border-gray-200 py-4 px-2">
                     {item.examSubjectId}
                   </td>
                   <td className="border border-gray-200 py-4 px-2">
@@ -73,6 +79,12 @@ const PriceTable = () => {
               ))
             : priceList.map((item) => (
                 <tr key={item.id} className="border-t border-gray-200">
+                  <td className="border border-gray-200 py-4 px-2">
+                    {item.productId}
+                  </td>
+                  <td className="border border-gray-200 py-4 px-2">
+                    {item.referenceId}
+                  </td>
                   <td className="border border-gray-200 py-4 px-2">
                     {item.examSubjectId}
                   </td>

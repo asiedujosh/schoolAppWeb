@@ -24,4 +24,11 @@ export const ADDPRICE = {
   ],
 }
 
-export const PRICINGTABLE = ["Exam Subject Name", "Price", "Duration", "Action"]
+export const PRICINGTABLE = [
+  "Product Id",
+  "Reference Id",
+  "Exam Subject Name",
+  "Price",
+  "Duration",
+  "Action",
+]

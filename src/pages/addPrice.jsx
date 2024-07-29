@@ -31,7 +31,9 @@ const AddPrice = () => {
   }
 
   const handleSubmit = async () => {
-    console.log(formData)
+    //console.log(formData)
+    formData.productId = `pId${Math.floor(Math.random() * 100000)}`
+    formData.referenceId = `refId${Math.floor(Math.random() * 100000)}`
     processAddPrice(formData)
   }
 
